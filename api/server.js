@@ -3,13 +3,15 @@ const express = require("express");
 const server = express();
 const model = require('./model');
 const db = require("../database/db-config");
+const cors = require('cors');
 
 console.log(process.env.NAME, process.env.ANOTHERNAME); //env variables
 //middleware
 server.use(express.json()); // parses the req.body
+server.use(cors());
 
 server.get('/', (req, res) => {
-  res.send("Find API documentation here: ")
+    res.send("Find API documentation here: ")
 })
 
 server.get('/api', (req, res) => {
