@@ -9,6 +9,10 @@ console.log(process.env.NAME, process.env.ANOTHERNAME); //env variables
 server.use(express.json()); // parses the req.body
 
 server.get('/', (req, res) => {
+  res.send("Find API documentation here: ")
+})
+
+server.get('/api', (req, res) => {
     const perPage = req.query.perPage;
     const skip = req.query.skip;
     const table = req.query.table;
@@ -22,7 +26,7 @@ server.get('/', (req, res) => {
     });
 });
 
-server.delete('/', (req, res) => {
+server.delete('/api', (req, res) => {
     // console.log('delete', req.query)
 
     model.remove(req.query.table, req.query.where)
@@ -35,7 +39,7 @@ server.delete('/', (req, res) => {
 });
 
 
-server.post('/', (req, res) => {
+server.post('/api', (req, res) => {
     console.log('post', req.query)
     model.findBy(req.query.table, Users.makeWhere(req.body))
         .then(result => {
@@ -55,7 +59,7 @@ server.post('/', (req, res) => {
         });
 });
 
-server.put('/', (req, res) => {
+server.put('/api', (req, res) => {
     console.log('put', req.query)
     model.update(req.query.table, req.query.where, req.body)
         .then(updated => {
