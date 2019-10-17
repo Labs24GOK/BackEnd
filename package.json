@@ -4,7 +4,7 @@
   "description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js",
+    "server": "nodemon index.js",
     "start": "node index.js"
   },
   "repository": {
@@ -21,6 +21,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "nodemon": "^1.19.4"
+    "knex": "^0.19.5",
+    "nodemon": "^1.19.2",
+    "pg": "^7.12.1"
   }
 }
