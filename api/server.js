@@ -12,7 +12,7 @@ server.use(cors());
 
 server.get('/', (req, res) => {
     res.send("Find API documentation here: ")
-})
+});
 
 server.get('/api', (req, res) => {
     const perPage = req.query.perPage;
