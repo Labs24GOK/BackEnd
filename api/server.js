@@ -10,7 +10,6 @@ const flash = require("express-flash");
 const session = require("express-session");
 // const methodOverride = require("method-override");
 
-console.log(process.env.NAME, process.env.ANOTHERNAME); //env variables
 //middleware
 server.use(express.json()); // parses the req.body
 server.use(cors());
@@ -18,11 +17,14 @@ server.use(cors());
 const initializePassport = require("../passport-config");
 initializePassport(
   passport,
-  username => users.find(user => user.username === username),
-  id => users.find(user => user.id === id)
+  // ******** TODO: Check if I did this correctly ********
+  username => {
+    return db("user").where({ username });
+  },
+  user_id => {
+    return db("user").where({ user_id });
+  }
 );
-
-const users = [{ id: 1, username: "larry", password: "password" }];
 
 server.use(flash());
 server.use(
@@ -37,13 +39,31 @@ server.use(passport.session());
 
 server.post(
   "/login",
-  checkNotAuthenticated,
   passport.authenticate("local", {
-    successRedirect: "/api",
-    failureRedirect: "/",
-    failureFlash: true
+    successMessage: "authenticated",
+    failureMessage: "error"
   })
 );
+
+server.post("/register", (req, res) => {
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+
+  model
+    .addUser({
+      username: req.body.username,
+      password: hashedPassword
+    })
+    .then(username => {
+      res.status(201).json({
+        message: `The user "${username}" has successfully been created!`
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: `There was an error attempting to register user: ${error}.`
+      });
+    });
+});
 
 server.get("/", (req, res) => {
   res.send("Find API documentation here: ");
@@ -83,10 +103,11 @@ server.delete("/api", (req, res) => {
 server.post("/api", (req, res) => {
   console.log("post", req.query);
   model
-    .findBy(req.query.table, Users.makeWhere(req.body))
+    .findBy(req.query.table, model.makeWhere(req.body))
     .then(result => {
       if (typeof result[0] !== "object") {
-        Users.add(req.query.table, req.body)
+        model
+          .add(req.query.table, req.body)
           .then(updated => {
             res.status(201).json(updated.rows);
           })
