@@ -13,7 +13,12 @@ const checkAuthenticated = require("../middleware/checkAuthenticated.js");
 
 // ------- Middleware --------
 server.use(express.json());
-server.use(cors());
+server.use(
+    cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    })
+);
 createSession(server);
 initializePassport(passport);
 
