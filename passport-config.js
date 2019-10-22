@@ -2,9 +2,11 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const db = require('./database/db-config');
 
-module.exports = (passport, getUserByUsername, getUserById) => {
+module.exports = passport => {
     const authenticateUser = async (username, password, done) => {
-        const user = await getUserByUsername(username);
+        const user = await db('user')
+            .where({ username })
+            .first();
 
         if (user == null) {
             return done(null, false, { message: 'No user with that username' });
@@ -25,15 +27,15 @@ module.exports = (passport, getUserByUsername, getUserById) => {
     passport.serializeUser((user, done) => {
         done(null, user.user_id);
     });
-    passport.deserializeUser((user_id, done) => {
-        db('user')
+    passport.deserializeUser(async (user_id, done) => {
+        const user = await db('user')
             .where({ user_id })
-            .first()
-            .then(user => {
-                done(null, user);
-            })
-            .catch(error => {
-                done(error, false);
-            });
+            .first();
+
+        if (user) {
+            done(null, user);
+        } else {
+            done(error, false);
+        }
     });
 };

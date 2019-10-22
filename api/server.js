@@ -6,7 +6,6 @@ const server = express();
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const db = require('../database/db-config');
 const model = require('./model.js');
 const initializePassport = require('../passport-config.js');
 const createSession = require('../middleware/createSession.js');
@@ -16,19 +15,7 @@ const checkAuthenticated = require('../middleware/checkAuthenticated.js');
 server.use(express.json());
 server.use(cors());
 createSession(server);
-initializePassport(
-    passport,
-    username => {
-        return db('user')
-            .where({ username })
-            .first();
-    },
-    user_id => {
-        return db('user')
-            .where({ user_id })
-            .first();
-    }
-);
+initializePassport(passport);
 
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
