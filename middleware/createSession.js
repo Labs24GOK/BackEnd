@@ -21,7 +21,7 @@ const sessionConfig = {
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000,
     secure: false, // true means only send cookie over https
-    httpOnly: false
+    httpOnly: true
   },
   store: store
 };
