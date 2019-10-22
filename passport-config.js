@@ -1,37 +1,39 @@
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const db = require('./database/db-config');
 
-function initialize(passport, getUserByUsername, getUserById) {
-  const authenticateUser = async (username, password, done) => {
-    const user = getUserByUsername(username);
+module.exports = (passport, getUserByUsername, getUserById) => {
+    const authenticateUser = async (username, password, done) => {
+        const user = await getUserByUsername(username);
 
-    //   console.log("User:", user);
+        if (user == null) {
+            return done(null, false, { message: 'No user with that username' });
+        }
 
-    if (user == null) {
-      return done(null, false, { message: "No user with that username" });
-    }
+        try {
+            if (await bcrypt.compareSync(password, user.password)) {
+                return done(null, user);
+            } else {
+                return done(null, false, { message: 'Password incorrect' });
+            }
+        } catch (e) {
+            return done(e);
+        }
+    };
 
-    try {
-      if (await bcrypt.compareSync(password, user.password)) {
-        return done(null, user);
-      } else {
-        return done(null, false, { message: "Password incorrect" });
-      }
-    } catch (e) {
-      return done(e);
-    }
-  };
-
-  passport.use(
-    new LocalStrategy(
-      { usernameField: "username", session: true },
-      authenticateUser
-    )
-  );
-  passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser((id, done) => {
-    return done(null, getUserById(id));
-  });
-}
-
-module.exports = initialize;
+    passport.use(new LocalStrategy({ usernameField: 'username', session: true }, authenticateUser));
+    passport.serializeUser((user, done) => {
+        done(null, user.user_id);
+    });
+    passport.deserializeUser((user_id, done) => {
+        db('user')
+            .where({ user_id })
+            .first()
+            .then(user => {
+                done(null, user);
+            })
+            .catch(error => {
+                done(error, false);
+            });
+    });
+};
