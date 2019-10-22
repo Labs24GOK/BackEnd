@@ -8,7 +8,8 @@ module.exports = {
     findAny,
     remove,
     update,
-    makeWhere
+    makeWhere,
+    addUser
 };
 
 // function find(view, where, perPage, skip) {
@@ -96,4 +97,12 @@ function update(table, where, body) {
     let id = where
     console.log('update "' + table + '" set ' + makeWhere(body, ',') + ' where ' + where)
     return db.raw('update "' + table + '" set ' + makeWhere(body, ',') + ' where ' + where)
+}
+
+function addUser(userData) {
+  console.log("Username and password:", userData);
+
+  return db("user")
+    .insert(userData)
+    .returning("username");
 }
