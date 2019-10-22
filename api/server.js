@@ -2,7 +2,6 @@ require('dotenv').config();
 
 // ------- Imports --------
 const express = require('express');
-const server = express();
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -11,14 +10,17 @@ const initializePassport = require('../passport-config.js');
 const createSession = require('../middleware/createSession.js');
 const checkAuthenticated = require('../middleware/checkAuthenticated.js');
 
+// ------- Set up server -------
+const server = express();
+
 // ------- Middleware --------
-server.use(express.json());
 server.use(
     cors({
         origin: 'http://localhost:3000',
         credentials: true
     })
 );
+server.use(express.json());
 createSession(server);
 initializePassport(passport);
 
