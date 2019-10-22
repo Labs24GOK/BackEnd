@@ -1,14 +1,15 @@
-const db = require('../database/db-config.js');
+const db = require("../database/db-config.js");
 
 module.exports = {
-    add,
-    find,
-    findBy,
-    findById,
-    findAny,
-    remove,
-    update,
-    makeWhere
+  add,
+  find,
+  findBy,
+  findById,
+  findAny,
+  remove,
+  update,
+  makeWhere,
+  addUser
 };
 
 // function find(view, where, perPage, skip) {
@@ -18,82 +19,94 @@ module.exports = {
 //     return rows
 // }
 function find(view, where) {
-    console.log('where', where)
-    console.log('select * from "' + view + '"' + (where ? ' where ' + where : ''));
-    const rows = db.raw('select * from "' + view + '"' + (where ? ' where ' + where : ''));
-    return rows
+  console.log("where", where);
+  console.log(
+    'select * from "' + view + '"' + (where ? " where " + where : "")
+  );
+  const rows = db.raw(
+    'select * from "' + view + '"' + (where ? " where " + where : "")
+  );
+  return rows;
 }
 
 function findAny(perPage, skip, table, where, orderBy) {
-    let propName;
-    let propValue;
+  let propName;
+  let propValue;
 
-    if (where) {
-        propName = where.split('=')[0];
-        propValue = where.split('=')[1];
+  if (where) {
+    propName = where.split("=")[0];
+    propValue = where.split("=")[1];
+  }
+
+  return db(table).modify(function(queryBuilder) {
+    if (orderBy) {
+      queryBuilder.orderBy(orderBy);
     }
 
-    return db(table).modify(function (queryBuilder) {
-        if (orderBy) {
-            queryBuilder.orderBy(orderBy);
-        }
+    if (where) {
+      queryBuilder.where(propName, propValue);
+    }
 
-        if (where) {
-            queryBuilder.where(propName, propValue);
-        }
+    if (perPage) {
+      queryBuilder.limit(perPage);
+    }
 
-        if (perPage) {
-            queryBuilder.limit(perPage);
-        }
-
-        if (skip) {
-            queryBuilder.offset(skip);
-        }
-
-    });
+    if (skip) {
+      queryBuilder.offset(skip);
+    }
+  });
 }
 
 function makeWhere(body, conn) {
-    if (!conn)
-        conn = 'and'
-    let where = ''
-    let i = 0
-    for (let [key, value] of Object.entries(body)) {
-        if (!i)
-            where = where + `${key} = '${value}'`
-        else
-            where = where + ` ${conn} ${key} = '${value}'`
-        console.log(`${key}: ${value}`);
-        i++
-    }
-    console.log('where', where)
-    return where
+  if (!conn) conn = "and";
+  let where = "";
+  let i = 0;
+  for (let [key, value] of Object.entries(body)) {
+    if (!i) where = where + `${key} = '${value}'`;
+    else where = where + ` ${conn} ${key} = '${value}'`;
+    console.log(`${key}: ${value}`);
+    i++;
+  }
+  console.log("where", where);
+  return where;
 }
 
 function findBy(view, filter) {
-    console.log('filter', filter)
-    return db.raw('select * from "' + view + '" where ' + filter);
+  console.log("filter", filter);
+  return db.raw('select * from "' + view + '" where ' + filter);
 }
 
 async function add(table, body) {
-    let where = makeWhere(body)
-    await db(table).insert(body);
+  let where = makeWhere(body);
+  await db(table).insert(body);
 
-    return findBy(table, where);
+  return findBy(table, where);
 }
 
 function findById(view, id) {
-    return db(view)
-        .where({ id })
-        .first();
+  return db(view)
+    .where({ id })
+    .first();
 }
 
 function remove(tab, whe) {
-    return db.raw('delete from "' + tab + '" where ' + whe)
+  return db.raw('delete from "' + tab + '" where ' + whe);
 }
 
 function update(table, where, body) {
-    let id = where
-    console.log('update "' + table + '" set ' + makeWhere(body, ',') + ' where ' + where)
-    return db.raw('update "' + table + '" set ' + makeWhere(body, ',') + ' where ' + where)
+  let id = where;
+  console.log(
+    'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
+  );
+  return db.raw(
+    'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
+  );
+}
+
+function addUser(userData) {
+  console.log("Username and password:", userData);
+
+  return db("user")
+    .insert(userData)
+    .returning("username");
 }
