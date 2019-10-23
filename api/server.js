@@ -70,21 +70,21 @@ server.get('/', (req, res) => {
 });
 
 server.get('/api', checkAuthenticated, (req, res) => {
-    //   const perPage = req.query.perPage;
-    //   const skip = req.query.skip;
-    //   const table = req.query.table;
-    //   const where = req.query.where;
-    //   const orderBy = req.query.orderBy;
+    const perPage = req.query.perPage;
+    const skip = req.query.skip;
+    const table = req.query.table;
+    const where = req.query.where;
+    const orderBy = req.query.orderBy;
 
-    //   model
-    //     .findAny(perPage, skip, table, where, orderBy)
-    //     .then(tableData => {
-    //       res.json({ tableData });
-    //     })
-    //     .catch(error => {
-    //       res.json({ error: `There was an error: ${error}` });
-    //     });
-    res.status(200).json({ message: 'You were able to pass' });
+    model
+        .findAny(perPage, skip, table, where, orderBy)
+        .then(tableData => {
+            res.json({ tableData });
+        })
+        .catch(error => {
+            res.json({ error: `There was an error: ${error}` });
+        });
+    // res.status(200).json({ message: 'You were able to pass' });
 });
 
 server.delete('/api', (req, res) => {
