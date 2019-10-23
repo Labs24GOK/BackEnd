@@ -8,7 +8,7 @@ const store = new KnexSessionStore({
     tablename: 'sessions',
     sidfieldname: 'sid',
     knex: db,
-    clearInterval: 1000 * 60 * 60 * 24,
+    clearInterval: 1 * 24 * 60 * 60 * 1000,
     createtable: true
 });
 
