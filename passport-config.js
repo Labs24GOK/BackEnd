@@ -27,15 +27,15 @@ module.exports = passport => {
     passport.serializeUser((user, done) => {
         done(null, user.user_id);
     });
-    passport.deserializeUser(async (user_id, done) => {
-        const user = await db('user')
+    passport.deserializeUser((user_id, done) => {
+        return db('user')
             .where({ user_id })
-            .first();
-
-        if (user) {
-            done(null, user);
-        } else {
-            done(error, false);
-        }
+            .first()
+            .then(user => {
+                done(null, user);
+            })
+            .catch(error => {
+                done(error, false);
+            });
     });
 };
