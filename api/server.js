@@ -48,8 +48,7 @@ server.post('/register', (req, res) => {
 server.post(
     '/login',
     passport.authenticate('local', {
-        successMessage: 'authenticated',
-        failureMessage: 'error'
+        session: true
     }),
     (req, res) => {
         if (req.isAuthenticated()) {
