@@ -25,7 +25,6 @@ module.exports = passport => {
 
     passport.use(new LocalStrategy({ usernameField: 'username', session: true }, authenticateUser));
     passport.serializeUser((user, done) => {
-        console.log('User inside serializeUser:', user);
         done(null, user.user_id);
     });
     passport.deserializeUser((user_id, done) => {
@@ -33,7 +32,6 @@ module.exports = passport => {
             .where({ user_id })
             .first()
             .then(user => {
-                console.log('User inside deserializeUser:', user);
                 done(null, user);
             })
             .catch(error => {
