@@ -13,11 +13,16 @@ const store = new KnexSessionStore({
 });
 
 const sessionConfig = {
+    name: 'somerandomname',
     secret: 'keyboard cat',
     resave: false,
     key: 'Bonafind',
     saveUninitialized: true,
-    // cookie: { maxAge: 1000 * 60 * 60 },
+    cookie: {
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+        secure: false, // true means only send cookie over https
+        httpOnly: true
+    },
     store: store
 };
 
