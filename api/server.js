@@ -2,7 +2,6 @@ require("dotenv").config();
 
 // ------- Imports --------
 const express = require("express");
-const server = express();
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
@@ -11,14 +10,17 @@ const initializePassport = require("../passport-config.js");
 const createSession = require("../middleware/createSession.js");
 const checkAuthenticated = require("../middleware/checkAuthenticated.js");
 
+// ------- Set up server -------
+const server = express();
+
 // ------- Middleware --------
-server.use(express.json());
 server.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true
   })
 );
+server.use(express.json());
 createSession(server);
 initializePassport(passport);
 
@@ -46,8 +48,7 @@ server.post("/register", (req, res) => {
 server.post(
   "/login",
   passport.authenticate("local", {
-    successMessage: "authenticated",
-    failureMessage: "error"
+    session: true
   }),
   (req, res) => {
     if (req.isAuthenticated()) {
@@ -64,26 +65,38 @@ server.get("/logout", (req, res) => {
   res.json({ message: "bye" });
 });
 
+server.get("/user", (req, res) => {
+  console.log("====USER====");
+  if (req.user) {
+    res.send({
+      authenticated: req.isAuthenticated(),
+      username: req.user.username
+    });
+  } else {
+    res.send({ authenticated: req.isAuthenticated(), username: undefined });
+  }
+});
+
 server.get("/", (req, res) => {
   res.send("Find API documentation here: ");
 });
 
 server.get("/api", checkAuthenticated, (req, res) => {
-  //   const perPage = req.query.perPage;
-  //   const skip = req.query.skip;
-  //   const table = req.query.table;
-  //   const where = req.query.where;
-  //   const orderBy = req.query.orderBy;
+  const perPage = req.query.perPage;
+  const skip = req.query.skip;
+  const table = req.query.table;
+  const where = req.query.where;
+  const orderBy = req.query.orderBy;
 
-  //   model
-  //     .findAny(perPage, skip, table, where, orderBy)
-  //     .then(tableData => {
-  //       res.json({ tableData });
-  //     })
-  //     .catch(error => {
-  //       res.json({ error: `There was an error: ${error}` });
-  //     });
-  res.status(200).json({ message: "You were able to pass" });
+  model
+    .findAny(perPage, skip, table, where, orderBy)
+    .then(tableData => {
+      res.json({ tableData });
+    })
+    .catch(error => {
+      res.json({ error: `There was an error: ${error}` });
+    });
+  // res.status(200).json({ message: 'You were able to pass' });
 });
 
 server.delete("/api", (req, res) => {
