@@ -67,11 +67,9 @@ server.get('/logout', (req, res) => {
 
 server.get('/user', (req, res) => {
     console.log('====USER====');
-    if (req.user) {
-        res.status(200).json({ authenticated: req.isAuthenticated(), username: req.user.username });
-    } else {
-        res.status(401).json({ authenticated: req.isAuthenticated(), username: undefined });
-    }
+    let userName = req.user ? req.username : undefined;
+
+    res.status(200).json({ authenticated: req.isAuthenticated(), username: userName });
 });
 
 server.get('/', (req, res) => {
