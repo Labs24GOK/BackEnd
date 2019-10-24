@@ -68,14 +68,14 @@ server.get('/logout', (req, res) => {
 server.get('/user', (req, res) => {
     console.log('====USER====');
     if (req.user) {
-        res.send({ authenticated: req.isAuthenticated(), username: req.user.username });
+        res.status(200).json({ authenticated: req.isAuthenticated(), username: req.user.username });
     } else {
-        res.send({ authenticated: req.isAuthenticated(), username: undefined });
+        res.status(401).json({ authenticated: req.isAuthenticated(), username: undefined });
     }
 });
 
 server.get('/', (req, res) => {
-    res.send('Find API documentation here: ');
+    res.status(200).send('Find API documentation here: ');
 });
 
 server.get('/api', checkAuthenticated, (req, res) => {
