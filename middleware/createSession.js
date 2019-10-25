@@ -15,7 +15,7 @@ const store = new KnexSessionStore({
 const sessionConfig = {
     name: 'somerandomname',
     secret: 'keyboard cat',
-    resave: false,
+    resave: true,
     key: 'Bonafind',
     saveUninitialized: false,
     cookie: {
