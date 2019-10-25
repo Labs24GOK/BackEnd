@@ -28,7 +28,7 @@ const sessionConfig = {
 
 module.exports = server => {
     server.use(session(sessionConfig));
-    // server.use(cookieParser());
+    server.use(cookieParser());
     server.use(passport.initialize());
     server.use(passport.session());
 };
