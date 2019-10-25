@@ -16,7 +16,7 @@ const server = express();
 // ------- Middleware --------
 server.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: ['http://localhost:3000', 'https://youthful-aryabhata-ac7ad2.netlify.com'],
         credentials: true
     })
 );
