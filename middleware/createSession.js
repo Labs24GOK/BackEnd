@@ -8,7 +8,7 @@ const store = new KnexSessionStore({
     tablename: 'sessions',
     sidfieldname: 'sid',
     knex: db,
-    clearInterval: 1000 * 60 * 60 * 24,
+    clearInterval: 1 * 24 * 60 * 60 * 1000,
     createtable: true
 });
 
@@ -17,11 +17,11 @@ const sessionConfig = {
     secret: 'keyboard cat',
     resave: false,
     key: 'Bonafind',
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         secure: false, // true means only send cookie over https
-        httpOnly: true
+        httpOnly: false
     },
     store: store
 };
