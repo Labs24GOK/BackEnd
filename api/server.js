@@ -16,7 +16,7 @@ const server = express();
 // ------- Middleware --------
 server.use(
     cors({
-        origin: /\.speakoutbh\.club$/,
+        origin: ['https://stagingspeakout.netlify.com', 'https://adminspeakout.netlify.com', 'http://localhost:3000'],
         credentials: true
     })
 );
