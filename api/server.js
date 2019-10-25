@@ -16,7 +16,7 @@ const server = express();
 // ------- Middleware --------
 server.use(
     cors({
-        origin: ['/\.speakoutbh\.club$/', 'http://localhost:3000'],
+        origin: '/\.speakoutbh\.club$/',
         credentials: true
     })
 );
