@@ -16,7 +16,7 @@ const server = express();
 // ------- Middleware --------
 server.use(
     cors({
-        origin: '/\.speakoutbh\.club$/',
+        origin: /\.speakoutbh\.club$/,
         credentials: true
     })
 );
