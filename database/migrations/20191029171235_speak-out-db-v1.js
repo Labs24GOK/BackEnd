@@ -45,6 +45,14 @@ exports.up = function (knex) {
             table.boolean('no_call').defaultTo(false);
             table.boolean('delinquent').defaultTo(false);
             table.boolean('expelled').defaultTo(false);
+            table
+                .integer('location_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('locations')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
 
         })
         .createTable('contacts', table => {
@@ -77,6 +85,10 @@ exports.up = function (knex) {
         .createTable('contact_types', table => {
             table.increments();
             table.text('method').notNullable().unique();
+        })
+        .createTable('locations', table => {
+            table.increments();
+            table.text('name').notNullable().unique();
         })
 };
 
