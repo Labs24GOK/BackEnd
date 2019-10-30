@@ -51,7 +51,7 @@ Create a view table for students table that displays actual values for all forei
 
 Create view students_view as
 select
-id,
+students.id,
            cpr,
            registration_date,
            first_name,
