@@ -1,4 +1,3 @@
-console.log('NOT NULLABLE 4')
 exports.up = function (knex) {
   return knex.schema
       .createTable('school_grades', table => {
