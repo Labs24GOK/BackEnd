@@ -45,3 +45,38 @@ LOOP
 END LOOP;
 END $$;
 /* ==================================== */
+
+/* ========================
+Create a view table for students table that displays actual values for all foreign keys
+
+Create view students_view as
+select
+id,
+           cpr,
+           registration_date,
+           first_name,
+           additional_names,
+           gender,
+           birthdate,
+school_grades.name as school_grade,
+           school_name,
+           grade_updated,
+           home_telephone,
+           mobile_telephone,
+           block,
+           road,
+           building,
+           flat,
+           email,
+           notes,
+contact_types.method as preferred_contact_method,
+           no_call,
+           delinquent,
+           expelled,
+Locations.name as location
+from students
+left join school_grades on school_grades.id = students.school_grade_id
+Left join contact_types on contact_types.id = students.contact_type_id
+Left join locations on locations.id = students.location_id
+
+============================ */
