@@ -10,6 +10,12 @@ module.exports = {
       database: process.env.DB_DB || "postgres",
       user: process.env.DB_USER,
       password: process.env.DB_PASS
+    },
+    migrations: {
+      directory: './database/migrations'
+    },
+    seeds: {
+      directory: './database/seeds'
     }
   },
 
