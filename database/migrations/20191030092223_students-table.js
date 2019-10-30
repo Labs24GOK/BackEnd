@@ -1,4 +1,4 @@
-
+console.log('NOT NULLABLE 4')
 exports.up = function (knex) {
   return knex.schema
       .createTable('school_grades', table => {
@@ -18,18 +18,15 @@ exports.up = function (knex) {
           table.text('cpr')
               .unique();
           table
-              .date('registration_date')
-              .notNullable();
-          table.text('first_name').notNullable();
-          table.text('additional_names').notNullable();
-          table.text('gender').notNullable();
+              .date('registration_date');
+          table.text('first_name');
+          table.text('additional_names');
+          table.text('gender');
           table
               .date('birthdate')
-              .notNullable();
           table
               .integer('school_grade_id')
               .unsigned()
-              .notNullable()
               .references('id')
               .inTable('school_grades')
               .onDelete('CASCADE')
@@ -37,18 +34,17 @@ exports.up = function (knex) {
           table.text('school_name');
           table
               .date('grade_updated');
-          table.text('home_telephone').notNullable();
-          table.text('mobile_telephone').notNullable();
-          table.integer('block').notNullable();
-          table.text('road').notNullable();
-          table.text('building').notNullable();
-          table.text('flat').notNullable();
+          table.text('home_telephone');
+          table.text('mobile_telephone');
+          table.integer('block');
+          table.text('road');
+          table.text('building');
+          table.text('flat');
           table.text('email');
           table.text('notes');
           table
               .integer('contact_type_id')
               .unsigned()
-              .notNullable()
               .references('id')
               .inTable('contact_types')
               .onDelete('CASCADE')
@@ -93,5 +89,10 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
   return knex.schema
+      .dropTable('locations')
+      .dropTable('school_grades')
+      .dropTable('contact_types')
       .dropTable('students')
+      .dropTable('contacts')
+      .dropTable('student_contacts')
 };
