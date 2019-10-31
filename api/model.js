@@ -100,3 +100,11 @@ function addUser(userData) {
         .insert(userData)
         .returning('username');
 }
+
+function addUser(userData) {
+  console.log("Username and password:", userData);
+
+  return db("user")
+    .insert(userData)
+    .returning("username");
+}
