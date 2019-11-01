@@ -4,6 +4,13 @@ exports.up = function(knex) {
       table.increments();
       table.text("name").notNullable();
       table.integer("subsection").notNullable();
+      table.timestamps(true, true);
+    })
+    .createTable("group_type", table => {
+      table.increments();
+      table.text("short_description").notNullable();
+      table.text("long_description").notNullable();
+      table.timestamps(true, true);
     })
     .createTable("course_type", table => {
       table.increments();
@@ -11,6 +18,7 @@ exports.up = function(knex) {
         .text("description")
         .notNullable()
         .unique();
+      table.timestamps(true, true);
     })
     .createTable("pacing_guide", table => {
       table.increments();
@@ -18,6 +26,7 @@ exports.up = function(knex) {
       table.text("section").notNullable();
       table.integer("lesson").notNullable();
       table.text("content").notNullable();
+      table.timestamps(true, true);
     })
     .createTable("level", table => {
       table.increments();
@@ -38,6 +47,7 @@ exports.up = function(knex) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
       table.text("certificate_text").notNullable();
+      table.timestamps(true, true);
     })
     .createTable("course_schedule", table => {
       table.increments();
@@ -53,11 +63,13 @@ exports.up = function(knex) {
         .text("sql")
         .notNullable()
         .unique();
+      table.timestamps(true, true);
     })
     .createTable("room", table => {
       table.increments();
       table.integer("chairs");
       table.text("availability");
+      table.timestamps(true, true);
     })
     .createTable("staff", table => {
       table.increments();
@@ -72,6 +84,7 @@ exports.up = function(knex) {
       table.text("teaching_rate");
       table.boolean("admin");
       table.boolean("active");
+      table.timestamps(true, true);
     })
     .createTable("courses", table => {
       table.increments();
@@ -93,7 +106,7 @@ exports.up = function(knex) {
         .integer("group_type_id")
         .unsigned()
         .references("id")
-        .inTable("grouptype")
+        .inTable("group_type")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
       table
@@ -127,8 +140,8 @@ exports.up = function(knex) {
         .inTable("room")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
-      table.text("start_time");
-      table.text("end_time");
+      table.time("start_time");
+      table.time("end_time");
       table
         .integer("teacher_id")
         .unsigned()
@@ -138,7 +151,18 @@ exports.up = function(knex) {
         .onUpdate("CASCADE");
       table.text("notes");
       table.text("status");
+      table.timestamps(true, true);
     });
 };
 
-exports.down = function(knex) {};
+exports.down = function(knex) {
+  return knex.schema
+    .dropTable("courses")
+    .dropTable("staff")
+    .dropTable("room")
+    .dropTable("course_schedule")
+    .dropTable("level")
+    .dropTable("pacing_guide")
+    .dropTable("course_type")
+    .dropTable("term");
+};

@@ -152,11 +152,55 @@ exports.up = function(knex) {
       table.text("notes");
       table.text("status");
       table.timestamps(true, true);
+    })
+    .createTable("result_type", table => {
+      table.increments();
+      table
+        .text("short_description")
+        .notNullable()
+        .unique();
+      table
+        .text("long_description")
+        .notNullable()
+        .unique();
+      table.timestamps(true, true);
+    })
+    .createTable("course_enrollment", table => {
+      table.increments();
+      table
+        .integer("course_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("courses")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+      table
+        .integer("student_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("students")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+      table.date("first_day");
+      table.date("last_day");
+      table
+        .integer("result_id")
+        .unsigned()
+        .references("id")
+        .inTable("result_type")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+      table.text("notes");
+      table.timestamps(true, true);
     });
 };
 
 exports.down = function(knex) {
   return knex.schema
+    .dropTable("result_type")
+    .dropTable("course_enrollment")
     .dropTable("courses")
     .dropTable("staff")
     .dropTable("room")
@@ -164,5 +208,6 @@ exports.down = function(knex) {
     .dropTable("level")
     .dropTable("pacing_guide")
     .dropTable("course_type")
+    .dropTable("group_type")
     .dropTable("term");
 };
