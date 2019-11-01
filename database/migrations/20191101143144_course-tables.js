@@ -6,6 +6,12 @@ exports.up = function(knex) {
       table.integer("subsection").notNullable();
       table.timestamps(true, true);
     })
+    .createTable("group_type", table => {
+      table.increments();
+      table.text("short_description").notNullable();
+      table.text("long_description").notNullable();
+      table.timestamps(true, true);
+    })
     .createTable("course_type", table => {
       table.increments();
       table
@@ -100,7 +106,7 @@ exports.up = function(knex) {
         .integer("group_type_id")
         .unsigned()
         .references("id")
-        .inTable("grouptype")
+        .inTable("group_type")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
       table
