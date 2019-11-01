@@ -141,7 +141,7 @@ server.put("/api", (req, res) => {
   model
     .update(req.query.table, req.query.where, req.body)
     .then(updated => {
-      res.status(201).json("updated " + updated.rows);
+      res.status(201).json(req.body);
     })
     .catch(error => {
       res.status(500).json(error + "");
