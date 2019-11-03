@@ -45,7 +45,8 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("pacing_guide")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table.text("certificate_text").notNullable();
             table.timestamps(true, true);
         })
@@ -94,35 +95,40 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("term")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table
                 .integer("course_type_id")
                 .unsigned()
                 .references("id")
                 .inTable("course_type")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table
                 .integer("group_type_id")
                 .unsigned()
                 .references("id")
                 .inTable("group_type")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table
                 .integer("grade_id")
                 .unsigned()
                 .references("id")
                 .inTable("school_grades")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table
                 .integer("level_id")
                 .unsigned()
                 .references("id")
                 .inTable("level")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table.text("section");
             table.integer("subsection");
             table.text("hourly_rate");
@@ -132,14 +138,16 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("course_schedule")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table
                 .integer("room_id")
                 .unsigned()
                 .references("id")
                 .inTable("room")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table.time("start_time");
             table.time("end_time");
             table
@@ -148,7 +156,8 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("staff")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table.text("notes");
             table.text("status");
             table.timestamps(true, true);
@@ -174,7 +183,8 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("courses")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table
                 .integer("student_id")
                 .unsigned()
@@ -182,7 +192,8 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("students")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table.date("first_day");
             table.date("last_day");
             table
@@ -191,7 +202,8 @@ exports.up = function (knex) {
                 .references("id")
                 .inTable("result_type")
                 .onDelete("CASCADE")
-                .onUpdate("CASCADE");
+                .onUpdate("CASCADE")
+                .index();
             table.text("notes");
             table.timestamps(true, true);
         });

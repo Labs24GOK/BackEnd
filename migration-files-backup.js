@@ -1,16 +1,23 @@
+// -----------------------------------------------------
+// Students
+// -----------------------------------------------------
+
 exports.up = function (knex) {
   return knex.schema
     .createTable('school_grades', table => {
       table.increments();
       table.text('name').notNullable().unique();
+      table.timestamps(true, true);
     })
     .createTable('contact_types', table => {
       table.increments();
       table.text('method').notNullable().unique();
+      table.timestamps(true, true);
     })
     .createTable('locations', table => {
       table.increments();
       table.text('name').notNullable().unique();
+      table.timestamps(true, true);
     })
     .createTable('students', table => {
       table.increments();
@@ -29,7 +36,8 @@ exports.up = function (knex) {
         .references('id')
         .inTable('school_grades')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .onUpdate('CASCADE')
+        .index();
       table.text('school_name');
       table
         .date('grade_updated');
@@ -47,7 +55,8 @@ exports.up = function (knex) {
         .references('id')
         .inTable('contact_types')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .onUpdate('CASCADE')
+        .index();
       table.boolean('no_call').defaultTo(false);
       table.boolean('delinquent').defaultTo(false);
       table.boolean('expelled').defaultTo(false);
@@ -58,12 +67,15 @@ exports.up = function (knex) {
         .references('id')
         .inTable('locations')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .onUpdate('CASCADE')
+        .index();
+      table.timestamps(true, true);
 
     })
     .createTable('contacts', table => {
       table.increments();
       table.text('name').notNullable().unique();
+      table.timestamps(true, true);
     })
     .createTable('student_contacts', table => {
       table.increments();
@@ -74,7 +86,8 @@ exports.up = function (knex) {
         .references('id')
         .inTable('students')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .onUpdate('CASCADE')
+        .index();
       table
         .integer('contact_id')
         .unsigned()
@@ -82,19 +95,25 @@ exports.up = function (knex) {
         .references('id')
         .inTable('contacts')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .onUpdate('CASCADE')
+        .index();
+      table.timestamps(true, true);
     })
 };
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTable('locations')
     .dropTable('school_grades')
     .dropTable('contact_types')
+    .dropTable('locations')
     .dropTable('students')
     .dropTable('contacts')
-    .dropTable('student_contacts')
+    .dropTable('student_contacts');
 };
+
+// -----------------------------------------------------
+// Courses
+// -----------------------------------------------------
 
 exports.up = function (knex) {
   return knex.schema
@@ -143,7 +162,8 @@ exports.up = function (knex) {
         .references("id")
         .inTable("pacing_guide")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table.text("certificate_text").notNullable();
       table.timestamps(true, true);
     })
@@ -192,35 +212,40 @@ exports.up = function (knex) {
         .references("id")
         .inTable("term")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table
         .integer("course_type_id")
         .unsigned()
         .references("id")
         .inTable("course_type")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table
         .integer("group_type_id")
         .unsigned()
         .references("id")
         .inTable("group_type")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table
         .integer("grade_id")
         .unsigned()
         .references("id")
         .inTable("school_grades")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table
         .integer("level_id")
         .unsigned()
         .references("id")
         .inTable("level")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table.text("section");
       table.integer("subsection");
       table.text("hourly_rate");
@@ -230,14 +255,16 @@ exports.up = function (knex) {
         .references("id")
         .inTable("course_schedule")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table
         .integer("room_id")
         .unsigned()
         .references("id")
         .inTable("room")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table.time("start_time");
       table.time("end_time");
       table
@@ -246,7 +273,8 @@ exports.up = function (knex) {
         .references("id")
         .inTable("staff")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table.text("notes");
       table.text("status");
       table.timestamps(true, true);
@@ -272,7 +300,8 @@ exports.up = function (knex) {
         .references("id")
         .inTable("courses")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table
         .integer("student_id")
         .unsigned()
@@ -280,7 +309,8 @@ exports.up = function (knex) {
         .references("id")
         .inTable("students")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table.date("first_day");
       table.date("last_day");
       table
@@ -289,7 +319,8 @@ exports.up = function (knex) {
         .references("id")
         .inTable("result_type")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .index();
       table.text("notes");
       table.timestamps(true, true);
     });
@@ -309,3 +340,4 @@ exports.down = function (knex) {
     .dropTable("group_type")
     .dropTable("term");
 };
+

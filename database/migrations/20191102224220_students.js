@@ -3,14 +3,17 @@ exports.up = function (knex) {
         .createTable('school_grades', table => {
             table.increments();
             table.text('name').notNullable().unique();
+            table.timestamps(true, true);
         })
         .createTable('contact_types', table => {
             table.increments();
             table.text('method').notNullable().unique();
+            table.timestamps(true, true);
         })
         .createTable('locations', table => {
             table.increments();
             table.text('name').notNullable().unique();
+            table.timestamps(true, true);
         })
         .createTable('students', table => {
             table.increments();
@@ -29,7 +32,8 @@ exports.up = function (knex) {
                 .references('id')
                 .inTable('school_grades')
                 .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+                .onUpdate('CASCADE')
+                .index();
             table.text('school_name');
             table
                 .date('grade_updated');
@@ -47,7 +51,8 @@ exports.up = function (knex) {
                 .references('id')
                 .inTable('contact_types')
                 .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+                .onUpdate('CASCADE')
+                .index();
             table.boolean('no_call').defaultTo(false);
             table.boolean('delinquent').defaultTo(false);
             table.boolean('expelled').defaultTo(false);
@@ -58,12 +63,15 @@ exports.up = function (knex) {
                 .references('id')
                 .inTable('locations')
                 .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+                .onUpdate('CASCADE')
+                .index();
+            table.timestamps(true, true);
 
         })
         .createTable('contacts', table => {
             table.increments();
             table.text('name').notNullable().unique();
+            table.timestamps(true, true);
         })
         .createTable('student_contacts', table => {
             table.increments();
@@ -74,7 +82,8 @@ exports.up = function (knex) {
                 .references('id')
                 .inTable('students')
                 .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+                .onUpdate('CASCADE')
+                .index();
             table
                 .integer('contact_id')
                 .unsigned()
@@ -82,7 +91,9 @@ exports.up = function (knex) {
                 .references('id')
                 .inTable('contacts')
                 .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+                .onUpdate('CASCADE')
+                .index();
+            table.timestamps(true, true);
         })
 };
 
@@ -93,5 +104,5 @@ exports.down = function (knex) {
         .dropTable('locations')
         .dropTable('students')
         .dropTable('contacts')
-        .dropTable('student_contacts')
+        .dropTable('student_contacts');
 };
