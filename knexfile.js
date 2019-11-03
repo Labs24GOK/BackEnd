@@ -1,10 +1,9 @@
-// Update with your config settings.
 // require("dotenv").config();
-console.log(process.env.DATABASE_URL);
+
 module.exports = {
   development: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL + '?ssl=true',
     useNullAsDefault: true,
     migrations: {
       directory: './database/migrations'
