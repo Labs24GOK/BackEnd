@@ -12,7 +12,7 @@
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
+🚫 adjust these scripts to match your project.
 
 - Clone this repo
 - **yarn install** to install all required dependencies
