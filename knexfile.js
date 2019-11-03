@@ -23,20 +23,20 @@ module.exports = {
       directory: './database/seeds'
     }
   },
-  production: {
-    client: "postgresql",
-    connection: {
-      port: process.env.DB_PORT,
-      host: "speakoutawsdev.cdnyzw3hdv8h.us-east-2.rds.amazonaws.com",
-      database: process.env.DB_DB || "postgres",
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS
-    },
-    migrations: {
-      directory: './database/migrations'
-    },
-    seeds: {
-      directory: './database/seeds'
-    }
-  }
+  // production: {
+  //   client: "postgresql",
+  //   connection: {
+  //     port: process.env.DB_PORT,
+  //     host: "speakoutawsdev.cdnyzw3hdv8h.us-east-2.rds.amazonaws.com",
+  //     database: process.env.DB_DB || "postgres",
+  //     user: process.env.DB_USER,
+  //     password: process.env.DB_PASS
+  //   },
+  //   migrations: {
+  //     directory: './database/migrations'
+  //   },
+  //   seeds: {
+  //     directory: './database/seeds'
+  //   }
+  // }
 };
