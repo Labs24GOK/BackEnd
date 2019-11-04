@@ -22,7 +22,7 @@ module.exports = {
     seeds: {
       directory: './database/seeds'
     }
-  },
+  }
   // production: {
   //   client: "postgresql",
   //   connection: {
