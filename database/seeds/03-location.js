@@ -5,7 +5,7 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('location').insert([
-        { name: 'Location 1' },
+        { name: 'Bani Jamra' },
         { name: 'Location 2' }
       ]);
     });
