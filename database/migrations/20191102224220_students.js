@@ -21,6 +21,32 @@ exports.up = function (knex) {
             table.text('neighborhood');
             table.timestamps(true, true);
         })
+        .createTable('family', table => {
+            table.increments();
+            table.text('mother_name');
+            table.text('father_name').notNullable();
+            table
+                .integer('block_code')
+                .unsigned()
+                .references('block_code')
+                .inTable('block')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
+                .index();
+            table.text('road');
+            table.text('building');
+            table.text('flat');
+            table.text('telephone');
+            table
+                .integer('user_id')
+                .unsigned()
+                .references('user_id')
+                .inTable("user")
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
+                .index();
+            table.timestamps(true, true);
+        })
         .createTable('student', table => {
             table.increments();
             table.text('cpr')
@@ -78,43 +104,23 @@ exports.up = function (knex) {
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE')
                 .index();
+            table
+                .integer('family_id')
+                .unsigned()
+                .references('id')
+                .inTable('family')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
+                .index();
             table.timestamps(true, true);
 
-        })
-        .createTable('contact', table => {
-            table.increments();
-            table.text('name').notNullable();
-            table.timestamps(true, true);
-        })
-        .createTable('student_contact', table => {
-            table.increments();
-            table
-                .integer('student_id')
-                .unsigned()
-                .notNullable()
-                .references('id')
-                .inTable('student')
-                .onDelete('CASCADE')
-                .onUpdate('CASCADE')
-                .index();
-            table
-                .integer('contact_id')
-                .unsigned()
-                .notNullable()
-                .references('id')
-                .inTable('contact')
-                .onDelete('CASCADE')
-                .onUpdate('CASCADE')
-                .index();
-            table.timestamps(true, true);
-        })
+        });
 };
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTable('student_contact')
-        .dropTable('contact')
         .dropTable('student')
+        .dropTable('family')
         .dropTable('block')
         .dropTable('location')
         .dropTable('preferred_contact_type')

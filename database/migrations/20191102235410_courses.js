@@ -85,6 +85,14 @@ exports.up = function (knex) {
             table.text("teaching_rate");
             table.boolean("admin");
             table.boolean("active");
+            table
+                .integer('user_id')
+                .unsigned()
+                .references('user_id')
+                .inTable('user')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
+                .index();
             table.timestamps(true, true);
         })
         .createTable("course", table => {
