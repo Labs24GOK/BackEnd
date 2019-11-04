@@ -76,7 +76,7 @@ exports.up = function (knex) {
             table.increments();
             table.text("name").notNullable();
             table.text("short_name").notNullable();
-            table.text("cpr");
+            table.text("cpr").unique();
             table.text("mobile_number");
             table.text("email");
             table.text("accent");
@@ -87,7 +87,7 @@ exports.up = function (knex) {
             table.boolean("active");
             table.timestamps(true, true);
         })
-        .createTable("courses", table => {
+        .createTable("course", table => {
             table.increments();
             table
                 .integer("term_id")
@@ -114,10 +114,10 @@ exports.up = function (knex) {
                 .onUpdate("CASCADE")
                 .index();
             table
-                .integer("grade_id")
+                .integer("school_grade_id")
                 .unsigned()
                 .references("id")
-                .inTable("school_grades")
+                .inTable("school_grade")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
@@ -133,7 +133,7 @@ exports.up = function (knex) {
             table.integer("subsection");
             table.text("hourly_rate");
             table
-                .integer("schedule_id")
+                .integer("course_schedule_id")
                 .unsigned()
                 .references("id")
                 .inTable("course_schedule")
@@ -164,14 +164,14 @@ exports.up = function (knex) {
         })
         .createTable("result_type", table => {
             table.increments();
+            table.integer('result_type_code').unique();
             table
                 .text("short_description")
                 .notNullable()
                 .unique();
             table
                 .text("long_description")
-                .notNullable()
-                .unique();
+                .notNullable();
             table.timestamps(true, true);
         })
         .createTable("course_enrollment", table => {
@@ -181,7 +181,7 @@ exports.up = function (knex) {
                 .unsigned()
                 .notNullable()
                 .references("id")
-                .inTable("courses")
+                .inTable("course")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
@@ -190,16 +190,15 @@ exports.up = function (knex) {
                 .unsigned()
                 .notNullable()
                 .references("id")
-                .inTable("students")
+                .inTable("student")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
             table.date("first_day");
             table.date("last_day");
             table
-                .integer("result_id")
-                .unsigned()
-                .references("id")
+                .integer("result_type_code")
+                .references("result_type_code")
                 .inTable("result_type")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
@@ -211,9 +210,9 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTable("result_type")
         .dropTable("course_enrollment")
-        .dropTable("courses")
+        .dropTable("result_type")
+        .dropTable("course")
         .dropTable("staff")
         .dropTable("room")
         .dropTable("course_schedule")

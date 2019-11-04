@@ -1,21 +1,27 @@
 exports.up = function (knex) {
     return knex.schema
-        .createTable('school_grades', table => {
+        .createTable('school_grade', table => {
             table.increments();
             table.text('name').notNullable().unique();
             table.timestamps(true, true);
         })
-        .createTable('contact_types', table => {
+        .createTable('preferred_contact_type', table => {
             table.increments();
             table.text('method').notNullable().unique();
             table.timestamps(true, true);
         })
-        .createTable('locations', table => {
+        .createTable('location', table => {
             table.increments();
             table.text('name').notNullable().unique();
             table.timestamps(true, true);
         })
-        .createTable('students', table => {
+        .createTable('block', table => {
+            table.increments();
+            table.integer('block_code').notNullable().unique();
+            table.text('neighborhood');
+            table.timestamps(true, true);
+        })
+        .createTable('student', table => {
             table.increments();
             table.text('cpr')
                 .unique();
@@ -30,7 +36,7 @@ exports.up = function (knex) {
                 .integer('school_grade_id')
                 .unsigned()
                 .references('id')
-                .inTable('school_grades')
+                .inTable('school_grade')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE')
                 .index();
@@ -39,17 +45,24 @@ exports.up = function (knex) {
                 .date('grade_updated');
             table.text('home_telephone');
             table.text('mobile_telephone');
-            table.integer('block');
+            table
+                .integer('block_code')
+                .unsigned()
+                .references('block_code')
+                .inTable('block')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
+                .index();
             table.text('road');
             table.text('building');
             table.text('flat');
             table.text('email');
             table.text('notes');
             table
-                .integer('contact_type_id')
+                .integer('preferred_contact_type_id')
                 .unsigned()
                 .references('id')
-                .inTable('contact_types')
+                .inTable('preferred_contact_type')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE')
                 .index();
@@ -61,26 +74,26 @@ exports.up = function (knex) {
                 .unsigned()
                 .notNullable()
                 .references('id')
-                .inTable('locations')
+                .inTable('location')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE')
                 .index();
             table.timestamps(true, true);
 
         })
-        .createTable('contacts', table => {
+        .createTable('contact', table => {
             table.increments();
-            table.text('name').notNullable().unique();
+            table.text('name').notNullable();
             table.timestamps(true, true);
         })
-        .createTable('student_contacts', table => {
+        .createTable('student_contact', table => {
             table.increments();
             table
                 .integer('student_id')
                 .unsigned()
                 .notNullable()
                 .references('id')
-                .inTable('students')
+                .inTable('student')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE')
                 .index();
@@ -89,7 +102,7 @@ exports.up = function (knex) {
                 .unsigned()
                 .notNullable()
                 .references('id')
-                .inTable('contacts')
+                .inTable('contact')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE')
                 .index();
@@ -99,10 +112,11 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTable('school_grades')
-        .dropTable('contact_types')
-        .dropTable('locations')
-        .dropTable('students')
-        .dropTable('contacts')
-        .dropTable('student_contacts');
+        .dropTable('student_contact')
+        .dropTable('contact')
+        .dropTable('student')
+        .dropTable('block')
+        .dropTable('location')
+        .dropTable('preferred_contact_type')
+        .dropTable('school_grade');
 };
