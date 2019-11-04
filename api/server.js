@@ -56,7 +56,7 @@ server.post(
   }),
   (req, res) => {
     if (req.isAuthenticated()) {
-      res.status(200).json({ message: "You have successfully logged in" });
+      res.status(200).json({ message: "You have successfully logged in", username: req.user.username });
     } else {
       res.status(500).json({ message: "Invalid credentials" });
     }
