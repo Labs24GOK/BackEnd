@@ -9,7 +9,8 @@ module.exports = {
   remove,
   update,
   makeWhere,
-  addUser
+  addUser,
+  addMeeting
 };
 
 // function find(view, where, perPage, skip) {
@@ -124,4 +125,10 @@ function addUser(userData) {
   return db("user")
     .insert(userData)
     .returning("username");
+}
+
+function addMeeting(meeting) {
+  return db("meeting")
+    .insert(meeting)
+    .returning({ id: "id" });
 }
