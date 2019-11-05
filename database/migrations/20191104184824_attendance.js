@@ -36,7 +36,7 @@ exports.up = function (knex) {
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
-            table.text("attendance").notNullable().defaultTo('A');
+            table.boolean("attendance").notNullable().defaultTo(true);
             table.timestamps(true, true);
         })
 };
