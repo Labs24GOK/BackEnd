@@ -24,7 +24,7 @@ exports.up = function (knex) {
         .createTable('family', table => {
             table.increments();
             table.text('mother_name');
-            table.text('father_name').notNullable();
+            table.text('father_name');
             table
                 .integer('block_code')
                 .unsigned()
@@ -36,7 +36,8 @@ exports.up = function (knex) {
             table.text('road');
             table.text('building');
             table.text('flat');
-            table.text('telephone');
+            table.text('primary_telephone').notNullable();
+            table.text('secondary_telephone').notNullable();
             table
                 .integer('user_id')
                 .unsigned()
