@@ -56,7 +56,7 @@ server.post(
   }),
   (req, res) => {
     if (req.isAuthenticated()) {
-      res.status(200).json({ message: "You have successfully logged in" });
+      res.status(200).json({ message: "You have successfully logged in", username: req.user.username });
     } else {
       res.status(500).json({ message: "Invalid credentials" });
     }
@@ -146,6 +146,32 @@ server.put("/api", (req, res) => {
     .catch(error => {
       res.status(500).json(error + "");
     });
+});
+
+server.post("/api/attendance", (req, res) => {
+  model
+    .addMeeting(req.body.meeting)
+    .then(saved => {
+      const meeting_id = saved[0];
+      console.log("SAVED : ", saved);
+      req.body.students.forEach(student => {
+        const studentAttend = { ...student, meeting_id };
+        model
+          .add("attendance", studentAttend)
+          .then(saved => {
+            console.log(saved);
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err + "", message: "Error saving students" });
+          });
+      });
+      res.status(201).json(saved);
+    })
+    .catch(err =>
+      res.status(500).json({ error: err + "", message: "Error saving meeting" })
+    );
 });
 
 //http://localhost:3000/pagination?perPage=5&skip=10&table=students
