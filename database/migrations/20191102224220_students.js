@@ -36,7 +36,8 @@ exports.up = function (knex) {
             table.text('road');
             table.text('building');
             table.text('flat');
-            table.text('telephone');
+            table.text('primary_telephone').notNullable();
+            table.text('secondary_telephone').notNullable();
             table
                 .integer('user_id')
                 .unsigned()
