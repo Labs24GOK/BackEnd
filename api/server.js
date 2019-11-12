@@ -35,7 +35,10 @@ server.post("/register", (req, res) => {
   model
     .addUser({
       username: req.body.username,
-      password: hashedPassword
+      password: hashedPassword,
+      name: req.body.name || null,
+      email: req.body.email || null,
+      user_type: "parent"
     })
     .then(username => {
       res.status(201).json({
@@ -56,7 +59,10 @@ server.post(
   }),
   (req, res) => {
     if (req.isAuthenticated()) {
-      res.status(200).json({ message: "You have successfully logged in", username: req.user.username });
+      res.status(200).json({
+        message: "You have successfully logged in",
+        username: req.user.username
+      });
     } else {
       res.status(500).json({ message: "Invalid credentials" });
     }
@@ -79,7 +85,11 @@ server.get("/user", (req, res) => {
 });
 
 server.get("/", (req, res) => {
-  res.status(200).send("Find API documentation here: ");
+  res
+    .status(200)
+    .send(
+      "Find API documentation here: https://documenter.getpostman.com/view/9384043/SW15yGLA"
+    );
 });
 
 server.get("/api", checkAuthenticated, (req, res) => {
