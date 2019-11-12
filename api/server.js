@@ -136,10 +136,10 @@ server.post("/api", (req, res) => {
     });
 });
 
-server.put("/api", (req, res) => {
+server.put("/", (req, res) => {
   console.log("put", req.query);
   model
-    .update(req.query.table, req.query.where, req.body)
+    .updateAny(req.query.table, req.query.where, req.body)
     .then(updated => {
       res.status(201).json(req.body);
     })
