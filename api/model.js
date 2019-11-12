@@ -8,6 +8,7 @@ module.exports = {
   findAny,
   remove,
   update,
+  updateAny,
   makeWhere,
   addUser,
   addMeeting
@@ -111,6 +112,21 @@ function update(table, where, body) {
   return db(table)
     .where({ id: body.id })
     .update(body);
+}
+
+function updateAny(table, where, body) {
+
+  console.log(
+    '*********************update "' +
+      table +
+      '" set ' +
+      makeWhere(body, ",") +
+      " where " +
+      where
+  );
+    return db.raw(
+      'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
+    );
 }
 
 function addUser(userData) {
