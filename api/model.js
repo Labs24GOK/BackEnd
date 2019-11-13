@@ -23,10 +23,10 @@ module.exports = {
 function find(view, where) {
   console.log("where", where);
   console.log(
-    'select * from "' + view + '"' + (where ? " where " + where : "")
+    'select * from ' + view + (where ? " where " + where : "")
   );
   const rows = db.raw(
-    'select * from "' + view + '"' + (where ? " where " + where : "")
+    'select * from ' + view + (where ? " where " + where : "")
   );
   return rows;
 }
