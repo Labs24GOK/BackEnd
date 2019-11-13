@@ -146,6 +146,18 @@ server.post("/api", (req, res) => {
     });
 });
 
+server.put("/api", (req, res) => {
+  console.log("put", req.query);
+  model
+    .update(req.query.table, req.query.where, req.body)
+    .then(updated => {
+      res.status(201).json(req.body);
+    })
+    .catch(error => {
+      res.status(500).json(error + "");
+    });
+});
+
 server.put("/", (req, res) => {
   console.log("put", req.query);
   model
