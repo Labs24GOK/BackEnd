@@ -110,6 +110,18 @@ server.get("/api", checkAuthenticated, (req, res) => {
   // res.status(200).json({ message: 'You were able to pass' });
 });
 
+server.get("/where", checkAuthenticated, (req, res) => {
+  model
+    .find(req.query.table, req.query.where, req.body)
+    .then(tableData => {
+      res.json({ tableData });
+    })
+    .catch(error => {
+      res.json({ error: `There was an error: ${error}` });
+    });
+  // res.status(200).json({ message: 'You were able to pass' });
+});
+
 server.delete("/api", (req, res) => {
   // console.log('delete', req.query)
 
