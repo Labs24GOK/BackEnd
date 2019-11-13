@@ -112,7 +112,7 @@ server.get("/api", checkAuthenticated, (req, res) => {
 
 server.get("/where", checkAuthenticated, (req, res) => {
   model
-    .find(req.query.table, req.query.where, req.body)
+    .find(req.query.table, req.query.where)
     .then(tableData => {
       res.json({ tableData });
     })
