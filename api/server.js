@@ -114,6 +114,7 @@ server.get("/where", checkAuthenticated, (req, res) => {
   model
     .find(req.query.table, req.query.where)
     .then(tableData => {
+          tableData=tableData.rows
       res.json({ tableData });
     })
     .catch(error => {
