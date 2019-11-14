@@ -24,11 +24,9 @@ module.exports = {
 // }
 function find(view, where) {
   console.log("where", where);
-  console.log(
-    'select * from ' + view + (where ? " where " + where : "")
-  );
+  console.log("select * from " + view + (where ? " where " + where : ""));
   const rows = db.raw(
-    'select * from ' + view + (where ? " where " + where : "")
+    "select * from " + view + (where ? " where " + where : "")
   );
   return rows;
 }
@@ -42,7 +40,7 @@ function findAny(perPage, skip, table, where, orderBy) {
     propValue = where.split("=")[1];
   }
 
-  return db(table).modify(function (queryBuilder) {
+  return db(table).modify(function(queryBuilder) {
     if (orderBy) {
       queryBuilder.orderBy(orderBy);
     }
@@ -102,11 +100,11 @@ function update(table, where, body) {
 
   console.log(
     '*********************update "' +
-    table +
-    '" set ' +
-    makeWhere(body, ",") +
-    " where " +
-    where
+      table +
+      '" set ' +
+      makeWhere(body, ",") +
+      " where " +
+      where
   );
   //   return db.raw(
   //     'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
@@ -117,14 +115,13 @@ function update(table, where, body) {
 }
 
 function updateAny(table, where, body) {
-
   console.log(
     '*********************update "' +
-    table +
-    '" set ' +
-    makeWhere(body, ",") +
-    " where " +
-    where
+      table +
+      '" set ' +
+      makeWhere(body, ",") +
+      " where " +
+      where
   );
   return db.raw(
     'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
@@ -134,7 +131,7 @@ function updateAny(table, where, body) {
 function addUser(userData) {
   return db("user")
     .insert(userData)
-    .returning("*");
+    .returning(["user_id", "username"]);
 }
 
 // function addUser(userData) {
@@ -154,11 +151,11 @@ function addMeeting(meeting) {
 function addFamily(familyData) {
   return db("family")
     .insert(familyData)
-    .returning("*");
+    .returning("id");
 }
 
 function addStudent(studentData) {
   return db("student")
     .insert(studentData)
-    .returning("*");
+    .returning("first_name");
 }

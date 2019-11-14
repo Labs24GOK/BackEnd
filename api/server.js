@@ -41,7 +41,7 @@ server.post("/register", (req, res) => {
     })
     .then(user => {
       res.status(201).json({
-        message: `The user '${user.username}' has successfully been created!`
+        message: `The user '${user[0].username}' has successfully been created!`
       });
     })
     .catch(error => {
@@ -52,7 +52,6 @@ server.post("/register", (req, res) => {
 });
 
 server.post("/parent-register", (req, res) => {
-
   const user = req.body.user;
   const family = req.body.family;
   const student = req.body.student;
@@ -68,35 +67,45 @@ server.post("/parent-register", (req, res) => {
       user_type: user.user_type
     })
     .then(user => {
-      model.addFamily({
-        mother_name: family.mother_name,
-        father_name: family.father_name,
-        primary_telephone: family.primary_telephone,
-        secondary_telephone: family.secondary_telephone,
-        user_id: user.id
-      }).then(family => {
-        model.addStudent({
-          first_name: student.first_name,
-          additional_names: student.additional_names,
-          cpr: student.cpr,
-          email: student.email,
-          birthdate: student.birthdate,
-          registration_date: new Date(),
-          family_id: family.id
-        }).then(student => {
-          res.status(200).json({
-            student_name: `${student.first_name} ${student.additional_names}`
-          })
-        }).catch(error => {
+      console.log("User return:", user);
+      model
+        .addFamily({
+          mother_name: family.mother_name,
+          father_name: family.father_name,
+          primary_telephone: family.primary_telephone,
+          secondary_telephone: family.secondary_telephone,
+          user_id: user[0].user_id
+        })
+        .then(family => {
+          console.log("Family return:", family);
+          model
+            .addStudent({
+              first_name: student.first_name,
+              additional_names: student.additional_names,
+              cpr: student.cpr,
+              email: student.email,
+              birthdate: student.birthdate,
+              registration_date: new Date(),
+              location_id: student.location_id,
+              family_id: family[0]
+            })
+            .then(student => {
+              console.log("Student return:", student);
+              res.status(200).json({
+                student_name: student[0]
+              });
+            })
+            .catch(error => {
+              res.status(500).json({
+                message: `There was an error attempting to register a student: ${error}.`
+              });
+            });
+        })
+        .catch(error => {
           res.status(500).json({
-            message: `There was an error attempting to register a student: ${error}.`
+            message: `There was an error attempting to add a family: ${error}.`
           });
         });
-      }).catch(error => {
-        res.status(500).json({
-          message: `There was an error attempting to add a family: ${error}.`
-        });
-      });
     })
     .catch(error => {
       res.status(500).json({
@@ -167,7 +176,7 @@ server.get("/where", checkAuthenticated, (req, res) => {
   model
     .find(req.query.table, req.query.where)
     .then(tableData => {
-      tableData = tableData.rows
+      tableData = tableData.rows;
       res.json({ tableData });
     })
     .catch(error => {
