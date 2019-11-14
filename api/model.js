@@ -11,7 +11,9 @@ module.exports = {
   updateAny,
   makeWhere,
   addUser,
-  addMeeting
+  addMeeting,
+  addFamily,
+  addStudent
 };
 
 // function find(view, where, perPage, skip) {
@@ -40,7 +42,7 @@ function findAny(perPage, skip, table, where, orderBy) {
     propValue = where.split("=")[1];
   }
 
-  return db(table).modify(function(queryBuilder) {
+  return db(table).modify(function (queryBuilder) {
     if (orderBy) {
       queryBuilder.orderBy(orderBy);
     }
@@ -100,11 +102,11 @@ function update(table, where, body) {
 
   console.log(
     '*********************update "' +
-      table +
-      '" set ' +
-      makeWhere(body, ",") +
-      " where " +
-      where
+    table +
+    '" set ' +
+    makeWhere(body, ",") +
+    " where " +
+    where
   );
   //   return db.raw(
   //     'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
@@ -118,21 +120,21 @@ function updateAny(table, where, body) {
 
   console.log(
     '*********************update "' +
-      table +
-      '" set ' +
-      makeWhere(body, ",") +
-      " where " +
-      where
+    table +
+    '" set ' +
+    makeWhere(body, ",") +
+    " where " +
+    where
   );
-    return db.raw(
-      'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
-    );
+  return db.raw(
+    'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
+  );
 }
 
 function addUser(userData) {
   return db("user")
     .insert(userData)
-    .returning("username");
+    .returning("*");
 }
 
 function addUser(userData) {
@@ -147,4 +149,16 @@ function addMeeting(meeting) {
   return db("meeting")
     .insert(meeting)
     .returning({ id: "id" });
+}
+
+function addFamily(familyData) {
+  return db("family")
+    .insert(familyData)
+    .returning("*");
+}
+
+function addStudent(studentData) {
+  return db("student")
+    .insert(studentData)
+    .returning("*");
 }
