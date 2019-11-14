@@ -11,7 +11,9 @@ module.exports = {
   updateAny,
   makeWhere,
   addUser,
-  addMeeting
+  addMeeting,
+  addFamily,
+  addStudent
 };
 
 // function find(view, where, perPage, skip) {
@@ -22,11 +24,9 @@ module.exports = {
 // }
 function find(view, where) {
   console.log("where", where);
-  console.log(
-    'select * from ' + view + (where ? " where " + where : "")
-  );
+  console.log("select * from " + view + (where ? " where " + where : ""));
   const rows = db.raw(
-    'select * from ' + view + (where ? " where " + where : "")
+    "select * from " + view + (where ? " where " + where : "")
   );
   return rows;
 }
@@ -115,7 +115,6 @@ function update(table, where, body) {
 }
 
 function updateAny(table, where, body) {
-
   console.log(
     '*********************update "' +
       table +
@@ -124,27 +123,39 @@ function updateAny(table, where, body) {
       " where " +
       where
   );
-    return db.raw(
-      'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
-    );
+  return db.raw(
+    'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
+  );
 }
 
 function addUser(userData) {
   return db("user")
     .insert(userData)
-    .returning("username");
+    .returning(["user_id", "username"]);
 }
 
-function addUser(userData) {
-  console.log("Username and password:", userData);
+// function addUser(userData) {
+//   console.log("Username and password:", userData);
 
-  return db("user")
-    .insert(userData)
-    .returning("username");
-}
+//   return db("user")
+//     .insert(userData)
+//     .returning("username");
+// }
 
 function addMeeting(meeting) {
   return db("meeting")
     .insert(meeting)
     .returning({ id: "id" });
+}
+
+function addFamily(familyData) {
+  return db("family")
+    .insert(familyData)
+    .returning("id");
+}
+
+function addStudent(studentData) {
+  return db("student")
+    .insert(studentData)
+    .returning("first_name");
 }
