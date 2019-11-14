@@ -137,13 +137,13 @@ function addUser(userData) {
     .returning("*");
 }
 
-function addUser(userData) {
-  console.log("Username and password:", userData);
+// function addUser(userData) {
+//   console.log("Username and password:", userData);
 
-  return db("user")
-    .insert(userData)
-    .returning("username");
-}
+//   return db("user")
+//     .insert(userData)
+//     .returning("username");
+// }
 
 function addMeeting(meeting) {
   return db("meeting")
