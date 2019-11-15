@@ -19,7 +19,8 @@ server.use(
     origin: [
       "https://stagingspeakout.netlify.com",
       "https://adminspeakout.netlify.com",
-      "http://localhost:3000"
+      "http://localhost:3000",
+      "https://speakout-now.com/"
     ],
     credentials: true
   })
