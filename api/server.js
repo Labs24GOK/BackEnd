@@ -124,7 +124,9 @@ server.post(
     if (req.isAuthenticated()) {
       res.status(200).json({
         message: "You have successfully logged in",
-        username: req.user.username
+        username: req.user.username,
+        user_type: req.user.user_type,
+        user_id: req.user.user_id
       });
     } else {
       res.status(500).json({ message: "Invalid credentials" });
@@ -141,10 +143,12 @@ server.get("/logout", (req, res) => {
 server.get("/user", (req, res) => {
   console.log("====USER====");
   let userName = req.user ? req.user.username : undefined;
+  let userType = req.user.user_type;
+  let userId = req.user.user_id;
 
   res
     .status(200)
-    .json({ authenticated: req.isAuthenticated(), username: userName });
+    .json({ authenticated: req.isAuthenticated(), username: userName, user_type: userType, user_id: userId });
 });
 
 server.get("/", (req, res) => {
