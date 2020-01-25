@@ -1,6 +1,10 @@
 // Update with your config settings.
 require('dotenv').config();
 
+const database_name = process.env.DB_NAME;
+const database_user = process.env.DB_USER;
+const database_password = process.env.DB_PASSWORD;
+
 module.exports = {
   production: {
     client: 'postgresql',
@@ -38,15 +42,15 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      database: 'speakout',
-      user: 'postgres',
-      password: process.env.DATABASE_PASSWORD
+      database: database_name,
+      user: database_user,
+      password: database_password
     },
     seeds: {
-      directory: "./database/seeds"
+      directory: './database/seeds'
     },
     migrations: {
-      directory: "./database/migrations"
+      directory: './database/migrations'
     }
   }
 };

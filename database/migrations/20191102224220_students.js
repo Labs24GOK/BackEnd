@@ -10,7 +10,12 @@ exports.up = function(knex) {
     })
     .createTable('user', table => {
       table.increments('user_id');
-      table.string('role');
+      table.string('user_type').notNullable();
+      table
+        .string('username')
+        .unique()
+        .notNullable();
+      table.string('password').notNullable();
     })
     .createTable('preferred_contact_type', table => {
       table.increments();
@@ -136,5 +141,6 @@ exports.down = function(knex) {
     .dropTable('block')
     .dropTable('location')
     .dropTable('preferred_contact_type')
+    .dropTable('user')
     .dropTable('school_grade');
 };
