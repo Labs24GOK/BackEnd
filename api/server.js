@@ -9,6 +9,7 @@ const model = require('./model.js');
 const initializePassport = require('../passport-config.js');
 const createSession = require('../middleware/createSession.js');
 const checkAuthenticated = require('../middleware/checkAuthenticated.js');
+const staffroutes = require('./routes/staff.routes');
 
 // ------- Set up server -------
 const server = express();
@@ -29,6 +30,7 @@ server.use(express.json());
 createSession(server);
 initializePassport(passport);
 
+server.use(staffroutes);
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -144,7 +146,7 @@ server.get('/logout', (req, res) => {
   res.json({ message: 'bye' });
 });
 
-server.get('/user', (req, res) => {
+server.get('/user', async (req, res) => {
   console.log('====USER====');
   let userName = req.body ? req.body.username : undefined;
   let userType = req.body.user_type;
