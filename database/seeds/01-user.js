@@ -27,14 +27,6 @@ exports.seed = function(knex) {
       email: 'fakeemail3@gmail.com'
     },
     {
-      user_type: 'parent',
-      username: 'parent2',
-      password,
-      name: 'Hadeel Abughulod',
-      short_name: 'Hadeel',
-      email: 'fakeemail4@gmail.com'
-    },
-    {
       user_type: 'admin',
       username: 'admin2',
       password,
