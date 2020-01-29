@@ -84,6 +84,11 @@ exports.up = function(knex) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
         .index();
+      table.text('cpr').unique();
+      table.text('mobile_number');
+      table.text('accent');
+      table.text('gender').notNullable();
+      table.date('birthdate');
       table.timestamps(true, true);
     })
     .createTable('course', table => {

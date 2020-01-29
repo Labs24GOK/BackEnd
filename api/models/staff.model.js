@@ -4,19 +4,21 @@ const returning = [
   's.id as staff_id',
   'u.name',
   'u.short_name',
-  'u.cpr',
-  'u.mobile_number',
+  'u.username',
+  's.cpr',
+  's.mobile_number',
   'u.email',
-  'u.accent',
-  'u.gender',
-  'u.birthdate',
+  's.accent',
+  's.gender',
+  's.birthdate',
   's.teaching_rate',
   'u.user_type',
   's.active',
   's.created_at as staff_created_at',
   's.updated_at as staff_updated_at',
   'u.created_at as user_created_at',
-  'u.updated_at as user_updated_at'
+  'u.updated_at as user_updated_at',
+  's.user_id'
 ];
 const find = () => {
   return db('staff as s')
@@ -28,6 +30,14 @@ const findByID = id => {
   return db('staff as s')
     .select(returning)
     .where('s.id', '=', id)
+    .join('user as u', 's.user_id', 'u.user_id')
+    .first();
+};
+
+const findByCPR = cpr => {
+  return db('staff as s')
+    .select(returning)
+    .where('s.cpr', '=', cpr)
     .join('user as u', 's.user_id', 'u.user_id')
     .first();
 };
@@ -83,6 +93,7 @@ const remove = id => {
 
 module.exports = {
   findByID,
+  findByCPR,
   create,
   find,
   edit,

@@ -1,3 +1,7 @@
+const AppError = require('../utils/AppError');
+const { catchAsync } = require('../utils/catchAsync');
+const Staff = require('../models/staff.model');
+
 const validateCreateStaff = (req, res, next) => {
   const {
     username,
@@ -11,7 +15,8 @@ const validateCreateStaff = (req, res, next) => {
     gender,
     birthdate,
     teaching_rate,
-    admin
+    admin,
+    active
   } = req.body;
   if (
     admin === null ||
@@ -22,7 +27,7 @@ const validateCreateStaff = (req, res, next) => {
     !password ||
     !gender
   ) {
-    return res.status(400).json({ error: 'Wrong Body' });
+    next(new AppError('Wrong Body', 400));
   }
   req.user = {
     user_type: admin ? 'admin' : 'staff',
@@ -30,16 +35,17 @@ const validateCreateStaff = (req, res, next) => {
     email,
     name,
     password,
-    short_name: short_name || null,
+    short_name: short_name || null
+  };
+
+  req.staff = {
+    teaching_rate,
+    active: active || true,
     cpr: cpr || null,
     mobile_number: mobile_number || null,
     gender,
     accent: accent || null,
     birthdate: birthdate || null
-  };
-
-  req.staff = {
-    teaching_rate
   };
 
   next();
@@ -57,7 +63,8 @@ const validateEditStaff = (req, res, next) => {
     gender,
     birthdate,
     teaching_rate,
-    admin
+    admin,
+    active
   } = req.body;
   if (
     admin === null ||
@@ -67,25 +74,25 @@ const validateEditStaff = (req, res, next) => {
     !name ||
     !gender
   ) {
-    return res.status(400).json({ error: 'Wrong Body' });
+    next(new AppError('Wrong Body', 400));
   }
   req.user = {
     user_type: admin ? 'admin' : 'staff',
     username,
     email,
     name,
-    short_name: short_name || null,
+    short_name: short_name || null
+  };
+
+  req.staff = {
+    teaching_rate,
     cpr: cpr || null,
     mobile_number: mobile_number || null,
     gender,
     accent: accent || null,
-    birthdate: birthdate || null
+    birthdate: birthdate || null,
+    active
   };
-
-  req.staff = {
-    teaching_rate
-  };
-
   next();
 };
 
@@ -94,11 +101,19 @@ const validateStaffID = (req, res, next) => {
   const staffID = +req.params.staffID;
   console.log(staffID);
   if (isNaN(staffID)) {
-    return res.status(401).json({ error: 'Please enter a valid ID' });
+    next(new AppError('Please enter a valid ID', 401));
   }
   req.staffID = staffID;
   next();
 };
+
+const validateUniqueFieldsInStaff = catchAsync(async (req, res, next) => {
+  const { cpr } = req.staff;
+  const staff = await Staff.findByCPR(cpr);
+  if (staff) {
+    next(new AppError('Staff member with that CPR already exists'));
+  }
+});
 
 module.exports = {
   validateCreateStaff,
