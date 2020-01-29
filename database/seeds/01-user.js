@@ -6,64 +6,79 @@ exports.seed = function(knex) {
       user_type: 'parent',
       username: 'parent',
       password,
-      email: 'email1',
-      name: 'name'
+      name: 'Victoria Labdon',
+      short_name: 'Victoria',
+      cpr: '1',
+      mobile_number: '12345678',
+      email: 'fakeemail1@gmail.com',
+      accent: 'British',
+      gender: 'F',
+      birthdate: new Date()
     },
     {
       user_type: 'admin',
       username: 'admin',
       password,
-      email: 'email2',
-      name: 'name'
+      name: 'Benny Labdon',
+      short_name: 'Benny',
+      cpr: '2',
+      mobile_number: '12345678',
+      email: 'fakeemail2@gmail.com',
+      accent: 'British',
+      gender: 'M',
+      birthdate: new Date()
     },
     {
       user_type: 'staff',
       username: 'staff',
       password,
-      email: 'email3',
-      name: 'name'
+      name: 'Layla Al Shehabi',
+      short_name: 'Layla',
+      cpr: '3',
+      mobile_number: '12345678',
+      email: 'fakeemail3@gmail.com',
+      accent: 'North American',
+      gender: 'F',
+      birthdate: new Date()
     },
     {
       user_type: 'parent',
       username: 'parent2',
       password,
-      email: 'email4',
-      name: 'name'
+      name: 'Hadeel Abughulod',
+      short_name: 'Hadeel',
+      cpr: '4',
+      mobile_number: '12345678',
+      email: 'fakeemail4@gmail.com',
+      accent: 'North American',
+      gender: 'M',
+      birthdate: new Date()
     },
     {
       user_type: 'admin',
       username: 'admin2',
       password,
-      email: 'email5',
-      name: 'name'
+      name: 'Sarah Ameer',
+      short_name: 'Sarah',
+      cpr: '5',
+      mobile_number: '12345678',
+      email: 'fakeemail5@gmail.com',
+      accent: 'North American',
+      gender: 'F',
+      birthdate: new Date()
     },
     {
       user_type: 'staff',
       username: 'staff2',
       password,
-      email: 'email6',
-      name: 'name'
-    },
-    {
-      user_type: 'parent',
-      username: 'parent3',
-      password,
-      email: 'email7',
-      name: 'name'
-    },
-    {
-      user_type: 'admin',
-      username: 'admin3',
-      password,
-      email: 'email8',
-      name: 'name'
-    },
-    {
-      user_type: 'staff',
-      username: 'staff3',
-      password,
-      email: 'email9',
-      name: 'name'
+      name: 'Linda Munoz',
+      short_name: 'Linda',
+      cpr: '6',
+      mobile_number: '12345678',
+      email: 'fakeemail6@gmail.com',
+      accent: 'North American',
+      gender: 'F',
+      birthdate: new Date()
     }
   ]);
 };
