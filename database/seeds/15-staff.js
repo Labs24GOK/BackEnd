@@ -4,7 +4,7 @@ exports.seed = function(knex) {
     {
       teaching_rate: '0.00',
       active: true,
-      user_id: 3
+      user_id: 2
     },
     {
       teaching_rate: '0.00',
@@ -14,22 +14,12 @@ exports.seed = function(knex) {
     {
       teaching_rate: '0.00',
       active: true,
-      user_id: 3
+      user_id: 5
     },
     {
       teaching_rate: '0.00',
       active: false,
-      user_id: 3
-    },
-    {
-      teaching_rate: '0.00',
-      active: true,
-      user_id: 3
-    },
-    {
-      teaching_rate: '0.00',
-      active: true,
-      user_id: 3
+      user_id: 6
     }
   ]);
 };

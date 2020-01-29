@@ -1,5 +1,4 @@
 const db = require('../../database/db-config');
-const User = require('./user.model');
 
 const returning = [
   's.id as staff_id',
@@ -56,15 +55,19 @@ const edit = async (staffID, userBody, staffBody) => {
       .transacting(trx)
       .update(staffBody)
       .where({ id: staffID })
-      .returning('user_id', 'id')
+      .returning('user_id')
       .then(res => {
         return db('user')
           .transacting(trx)
           .update(userBody)
-          .where({ id: res[0].user_id })
-          .returning('id')
+          .where({ user_id: res[0] })
+          .returning('user_id')
           .then(res => {
-            return db(staff).where({ user_id: res.id[0] });
+            return db('staff as s')
+              .select(returning)
+              .where('s.user_id', '=', res[0])
+              .join('user as u', 's.user_id', 'u.user_id')
+              .first();
           });
       })
       .then(trx.commit)
@@ -72,9 +75,16 @@ const edit = async (staffID, userBody, staffBody) => {
   });
 };
 
+const remove = id => {
+  return db('staff')
+    .where({ id })
+    .del();
+};
+
 module.exports = {
   findByID,
   create,
   find,
-  edit
+  edit,
+  remove
 };

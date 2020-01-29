@@ -28,7 +28,7 @@ const findAllStaff = async (req, res) => {
 
 const createAStaff = async (req, res) => {
   try {
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = bcrypt.hashSync(req.user.password, 10);
     req.user = { ...req.user, password: hashedPassword };
     const newStaffID = await Staff.create(req.user, req.staff);
     const newStaff = await Staff.findByID(newStaffID[0]);
@@ -41,11 +41,19 @@ const createAStaff = async (req, res) => {
 
 const editAStaff = async (req, res) => {
   try {
-    const editedStaffID = await Staff.edit(req.staffID, req.user, req.staff);
-    const editedStaff = await Staff.findByID(editedStaffID[0]);
+    const editedStaff = await Staff.edit(req.staffID, req.user, req.staff);
     return res.status(201).json(editedStaff);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ error: 'Something wrong with the server' });
+  }
+};
+
+const deleteAStaff = async (req, res) => {
+  try {
+    await Staff.remove(req.staffID);
+    return res.status(200).json({ message: 'Staff Deleted' });
+  } catch (error) {
     return res.status(500).json({ error: 'Something wrong with the server' });
   }
 };
@@ -54,5 +62,6 @@ module.exports = {
   findStaffById,
   findAllStaff,
   createAStaff,
-  editAStaff
+  editAStaff,
+  deleteAStaff
 };
