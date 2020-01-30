@@ -10,6 +10,7 @@ const initializePassport = require('../passport-config.js');
 const createSession = require('../middleware/createSession.js');
 const checkAuthenticated = require('../middleware/checkAuthenticated.js');
 const staffroutes = require('./routes/staff.routes');
+const studentroutes = require('./routes/student.routes');
 const globalErrorHandler = require('./controllers/errors.controller');
 
 // ------- Set up server -------
@@ -32,6 +33,7 @@ createSession(server);
 initializePassport(passport);
 
 server.use(staffroutes);
+server.use(studentroutes);
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -136,7 +138,9 @@ server.post(
         user_id: req.user.user_id
       });
     } else {
-      res.status(500).json({ message: 'Invalid credentials' });
+      res.status(500).json({
+        message: 'Invalid credentials'
+      });
     }
   }
 );
@@ -144,7 +148,9 @@ server.post(
 server.get('/logout', (req, res) => {
   req.logout();
   req.session.destroy();
-  res.json({ message: 'bye' });
+  res.json({
+    message: 'bye'
+  });
 });
 
 server.get('/user', async (req, res) => {
@@ -169,122 +175,137 @@ server.get('/', (req, res) => {
     );
 });
 
-// server.get('/api', checkAuthenticated, (req, res) => {
-//   const perPage = req.query.perPage;
-//   const skip = req.query.skip;
-//   const table = req.query.table;
-//   const where = req.query.where;
-//   const orderBy = req.query.orderBy;
+server.get('/api', checkAuthenticated, (req, res) => {
+  const perPage = req.query.perPage;
+  const skip = req.query.skip;
+  const table = req.query.table;
+  const where = req.query.where;
+  const orderBy = req.query.orderBy;
 
-//   model
-//     .findAny(perPage, skip, table, where, orderBy)
-//     .then(tableData => {
-//       res.json({ tableData });
-//     })
-//     .catch(error => {
-//       res.json({ error: `There was an error: ${error}` });
-//     });
-//   // res.status(200).json({ message: 'You were able to pass' });
-// });
+  model
+    .findAny(perPage, skip, table, where, orderBy)
+    .then(tableData => {
+      res.json({
+        tableData
+      });
+    })
+    .catch(error => {
+      res.json({
+        error: `There was an error: ${error}`
+      });
+    });
+  // res.status(200).json({ message: 'You were able to pass' });
+});
 
-// server.get('/where', checkAuthenticated, (req, res) => {
-//   model
-//     .find(req.query.table, req.query.where)
-//     .then(tableData => {
-//       tableData = tableData.rows;
-//       res.json({ tableData });
-//     })
-//     .catch(error => {
-//       res.json({ error: `There was an error: ${error}` });
-//     });
-//   // res.status(200).json({ message: 'You were able to pass' });
-// });
+server.get('/where', checkAuthenticated, (req, res) => {
+  model
+    .find(req.query.table, req.query.where)
+    .then(tableData => {
+      tableData = tableData.rows;
+      res.json({
+        tableData
+      });
+    })
+    .catch(error => {
+      res.json({
+        error: `There was an error: ${error}`
+      });
+    });
+  // res.status(200).json({ message: 'You were able to pass' });
+});
 
-// server.delete('/api', (req, res) => {
-//   // console.log('delete', req.query)
+server.delete('/api', (req, res) => {
+  // console.log('delete', req.query)
 
-//   model
-//     .remove(req.query.table, req.query.where)
-//     .then(removed => {
-//       res.status(200).json('number of rows removed: ' + removed.rowCount);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error + '');
-//     });
-// });
+  model
+    .remove(req.query.table, req.query.where)
+    .then(removed => {
+      res.status(200).json('number of rows removed: ' + removed.rowCount);
+    })
+    .catch(error => {
+      res.status(500).json(error + '');
+    });
+});
 
-// server.post('/api', (req, res) => {
-//   console.log('post', req.query);
-//   model
-//     .findBy(req.query.table, model.makeWhere(req.body))
-//     .then(result => {
-//       if (typeof result[0] !== 'object') {
-//         model
-//           .add(req.query.table, req.body)
-//           .then(updated => {
-//             res.status(201).json(updated.rows);
-//           })
-//           .catch(error => {
-//             res.status(500).json(error + '');
-//           });
-//       } else {
-//         res.status(201).json(result.rows);
-//       }
-//     })
-//     .catch(error => {
-//       res.status(500).json(error + '');
-//     });
-// });
+server.post('/api', (req, res) => {
+  console.log('post', req.query);
+  model
+    .findBy(req.query.table, model.makeWhere(req.body))
+    .then(result => {
+      if (typeof result[0] !== 'object') {
+        model
+          .add(req.query.table, req.body)
+          .then(updated => {
+            res.status(201).json(updated.rows);
+          })
+          .catch(error => {
+            res.status(500).json(error + '');
+          });
+      } else {
+        res.status(201).json(result.rows);
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error + '');
+    });
+});
 
-// server.put('/api', (req, res) => {
-//   console.log('put', req.query);
-//   model
-//     .update(req.query.table, req.query.where, req.body)
-//     .then(updated => {
-//       res.status(201).json(req.body);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error + '');
-//     });
-// });
+server.put('/api', (req, res) => {
+  console.log('put', req.query);
+  model
+    .update(req.query.table, req.query.where, req.body)
+    .then(updated => {
+      res.status(201).json(req.body);
+    })
+    .catch(error => {
+      res.status(500).json(error + '');
+    });
+});
 
-// server.put('/', (req, res) => {
-//   console.log('put', req.query);
-//   model
-//     .updateAny(req.query.table, req.query.where, req.body)
-//     .then(updated => {
-//       res.status(201).json(req.body);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error + '');
-//     });
-// });
+server.put('/', (req, res) => {
+  console.log('put', req.query);
+  model
+    .updateAny(req.query.table, req.query.where, req.body)
+    .then(updated => {
+      res.status(201).json(req.body);
+    })
+    .catch(error => {
+      res.status(500).json(error + '');
+    });
+});
 
-// server.post('/api/attendance', (req, res) => {
-//   model
-//     .addMeeting(req.body.meeting)
-//     .then(saved => {
-//       const meeting_id = saved[0];
-//       console.log('SAVED : ', saved);
-//       req.body.students.forEach(student => {
-//         const studentAttend = { ...student, meeting_id };
-//         model
-//           .add('attendance', studentAttend)
-//           .then(saved => {
-//             console.log(saved);
-//           })
-//           .catch(err => {
-//             res
-//               .status(500)
-//               .json({ error: err + '', message: 'Error saving students' });
-//           });
-//       });
-//       res.status(201).json(saved);
-//     })
-//     .catch(err =>
-//       res.status(500).json({ error: err + '', message: 'Error saving meeting' })
-//     );
-// });
+server.post('/api/attendance', (req, res) => {
+  model
+    .addMeeting(req.body.meeting)
+    .then(saved => {
+      const meeting_id = saved[0];
+      console.log('SAVED : ', saved);
+      req.body.students.forEach(student => {
+        const studentAttend = {
+          ...student,
+          meeting_id
+        };
+        model
+          .add('attendance', studentAttend)
+          .then(saved => {
+            console.log(saved);
+          })
+          .catch(err => {
+            res.status(500).json({
+              error: err + '',
+              message: 'Error saving students'
+            });
+          });
+      });
+      res.status(201).json(saved);
+    })
+    .catch(err =>
+      res.status(500).json({
+        error: err + '',
+        message: 'Error saving meeting'
+      })
+    );
+});
 
 server.use(globalErrorHandler);
 
