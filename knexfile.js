@@ -8,7 +8,7 @@ const database_password = process.env.DB_PASSWORD;
 module.exports = {
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_PASSWORD,
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: './database/migrations'
     },
