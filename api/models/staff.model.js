@@ -20,11 +20,23 @@ const returning = [
   'u.updated_at as user_updated_at',
   's.user_id'
 ];
-const find = () => {
+const find = queries => {
+  let limit = 15;
+  let offset = 0;
+  const { page } = queries;
+  if (page) {
+    if (!offset) {
+      offset++;
+    }
+    offset = page * limit - limit;
+  }
+
   return db('staff as s')
     .select(returning)
     .join('user as u', 's.user_id', 'u.user_id')
-    .orderBy('staff_id', 'desc');
+    .orderBy('staff_id', 'desc')
+    .offset(offset)
+    .limit(limit);
 };
 
 const findByID = id => {

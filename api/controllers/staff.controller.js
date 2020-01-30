@@ -9,7 +9,7 @@ const findStaffById = catchAsync(async (req, res, next) => {
 });
 
 const findAllStaff = catchAsync(async (req, res) => {
-  const allStaff = await Staff.find();
+  const allStaff = await Staff.find(req.query);
   return res.status(200).json(allStaff);
 });
 
