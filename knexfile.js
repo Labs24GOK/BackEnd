@@ -23,12 +23,8 @@ module.exports = {
     }
   },
   development: {
-    client: 'postgresql',
-    connection: {
-      database: database_name,
-      user: database_user,
-      password: database_password
-    },
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
     seeds: {
       directory: './database/seeds'
     },
