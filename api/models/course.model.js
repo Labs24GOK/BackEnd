@@ -50,58 +50,18 @@ const findByID = id => {
 		.join('user', 'user.user_id', 'staff.user_id');
 };
 
-// const findByTermID = termId => {
-// 	return db('term')
-// 		.select('*')
-// 		.where('id', '=', termId)
-// 		.first();
-// };
-// const findByCourseTypeID = courseTypeId => {
-// 	return db('course_type')
-// 		.select('*')
-// 		.where('id', '=', courseTypeId)
-// 		.first();
-// };
-// const findByGroupTypeID = groupTypeId => {
-// 	return db('group_type')
-// 		.select('*')
-// 		.where('id', '=', groupTypeId)
-// 		.first();
-// };
-// const findBySchoolGradeID = schoolGradeId => {
-// 	return db('school_grade')
-// 		.select('*')
-// 		.where('id', '=', schoolGradeId)
-// 		.first();
-// };
-// const findByLevelID = levelId => {
-// 	return db('level')
-// 		.select('*')
-// 		.where('id', '=', levelId)
-// 		.first();
-// };
-// const findByCourseScheduleID = courseScheduleId => {
-// 	return db('course_schedule')
-// 		.select('*')
-// 		.where('id', '=', courseScheduleId)
-// 		.first();
-// };
-// const findByRoomID = roomId => {
-// 	return db('room')
-// 		.select('*')
-// 		.where('id', '=', roomId)
-// 		.first();
-// };
-// const findByTeacherID = teacherId => {
-// 	return db('teacher')
-// 		.select('*')
-// 		.where('id', '=', teacherId)
-// 		.first();
-// };
+const create = body => {
+	return db('course')
+		.insert(body)
+		.returning('id');
+};
 
-const create = async () => {};
-
-const edit = async () => {};
+const edit = (body, id) => {
+	return db('course')
+		.update(body)
+		.where({ id })
+		.returning('id');
+};
 
 const remove = id => {
 	return db('course')
@@ -109,16 +69,39 @@ const remove = id => {
 		.del();
 };
 
+/// THIS IS FOR POPULATING DROPDOWNS IN THE CLIENT
+const findAllTerms = () => {
+	return db('term').select('id', 'name');
+};
+const findAllCourseTypes = () => {
+	return db('course_type').select('id', 'description');
+};
+
+const findAllGroupTypes = () => {
+	return db('group_type').select('id', 'short_description');
+};
+const findAllSchoolGrades = () => {
+	return db('school_grade').select('id', 'name');
+};
+const findAllLevels = () => {
+	return db('level').select('id', 'description');
+};
+const findAllCourseSchedules = () => {
+	return db('course_schedule').select('id', 'short_description');
+};
+const findAllRooms = () => {
+	return db('room').select('id', 'chairs');
+};
+
 module.exports = {
 	findByID,
-	// findByTermID,
-	// findByCourseTypeID,
-	// findByGroupTypeID,
-	// findBySchoolGradeID,
-	// findByLevelID,
-	// findByCourseScheduleID,
-	// findByRoomID,
-	// findByTeacherID,
+	findAllTerms,
+	findAllCourseTypes,
+	findAllGroupTypes,
+	findAllSchoolGrades,
+	findAllLevels,
+	findAllCourseSchedules,
+	findAllRooms,
 	create,
 	find,
 	edit,

@@ -20,7 +20,67 @@ const checkIfCourseExistsByID = async (req, res, next) => {
 	next();
 };
 
+const validateCourseBody = async (req, res, next) => {
+	const {
+		term_id,
+		course_type_id,
+		group_type_id,
+		school_grade_id,
+		level_id,
+		section,
+		subsection,
+		hourly_rate,
+		course_schedule_id,
+		room_id,
+		start_time,
+		end_time,
+		teacher_id,
+		notes,
+		status
+	} = req.body;
+
+	if (
+		!term_id ||
+		!course_type_id ||
+		!group_type_id ||
+		!school_grade_id ||
+		!level_id ||
+		!section ||
+		!subsection ||
+		!hourly_rate ||
+		!course_schedule_id ||
+		!room_id ||
+		!start_time ||
+		!end_time ||
+		!teacher_id ||
+		!notes ||
+		!status
+	) {
+		return res.status(400).json({ error: 'Wrong body' });
+	}
+
+	req.courseValidated = {
+		term_id,
+		course_type_id,
+		group_type_id,
+		school_grade_id,
+		level_id,
+		section,
+		subsection,
+		hourly_rate,
+		course_schedule_id,
+		room_id,
+		start_time,
+		end_time,
+		teacher_id,
+		notes,
+		status
+	};
+	next();
+};
+
 module.exports = {
 	validateCourseID,
-	checkIfCourseExistsByID
+	checkIfCourseExistsByID,
+	validateCourseBody
 };
