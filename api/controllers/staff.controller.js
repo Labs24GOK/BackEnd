@@ -5,7 +5,7 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const findStaffById = catchAsync(async (req, res, next) => {
-  return res.status(200).json(staff);
+  return res.status(200).json(req.staffUser);
 });
 
 const findAllStaff = catchAsync(async (req, res) => {
