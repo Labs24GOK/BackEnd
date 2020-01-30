@@ -1,29 +1,83 @@
 const db = require('../../database/db-config');
 
 const returning = [
-	'c.id as course_id',
-	'c.section',
-	'c.subsection',
-	'c.hourly_rate',
-	'c.start_time',
-	'c.end_time',
-	'c.notes',
-	'c.status',
-	'c.term',
-	'c.course_type',
-	'c.group_type',
-	'c.school_grade',
-	'c.level',
-	'c.course_schedule',
-	'c.room',
-	'c.teacher'
+	'id as course_id',
+	'section',
+	'subsection',
+	'hourly_rate',
+	'start_time',
+	'end_time',
+	'notes',
+	'status',
+	'term',
+	'course_type',
+	'group_type',
+	'school_grade',
+	'level',
+	'course_schedule',
+	'room',
+	'teacher'
 ];
 
 const find = () => {
-	return db('course as c').select(returning);
+	return db('course').select('*');
 };
 
-const findByID = id => {};
+const findByID = id => {
+	return db('course')
+		.select('*')
+		.where('id', '=', id)
+		.first();
+};
+
+const findByTermID = termId => {
+	return db('term')
+		.select('*')
+		.where('id', '=', termId)
+		.first();
+};
+const findByCourseTypeID = courseTypeId => {
+	return db('course_type')
+		.select('*')
+		.where('id', '=', courseTypeId)
+		.first();
+};
+const findByGroupTypeID = groupTypeId => {
+	return db('group_type')
+		.select('*')
+		.where('id', '=', groupTypeId)
+		.first();
+};
+const findBySchoolGradeID = schoolGradeId => {
+	return db('school_grade')
+		.select('*')
+		.where('id', '=', schoolGradeId)
+		.first();
+};
+const findByLevelID = levelId => {
+	return db('level')
+		.select('*')
+		.where('id', '=', levelId)
+		.first();
+};
+const findByCourseScheduleID = courseScheduleId => {
+	return db('course_schedule')
+		.select('*')
+		.where('id', '=', courseScheduleId)
+		.first();
+};
+const findByRoomID = roomId => {
+	return db('room')
+		.select('*')
+		.where('id', '=', roomId)
+		.first();
+};
+const findByTeacherID = teacherId => {
+	return db('teacher')
+		.select('*')
+		.where('id', '=', teacherId)
+		.first();
+};
 
 const create = async () => {};
 
@@ -37,6 +91,14 @@ const remove = id => {
 
 module.exports = {
 	findByID,
+	findByTermID,
+	findByCourseTypeID,
+	findByGroupTypeID,
+	findBySchoolGradeID,
+	findByLevelID,
+	findByCourseScheduleID,
+	findByRoomID,
+	findByTeacherID,
 	create,
 	find,
 	edit,
