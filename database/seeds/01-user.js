@@ -32,7 +32,7 @@ exports.seed = function(knex) {
       password,
       name: 'Sarah Ameer',
       short_name: 'Sarah',
-      email: 'fakeemail5@gmail.com',
+      email: 'fakeemail4@gmail.com',
     },
     {
       user_type: 'staff',
@@ -40,7 +40,7 @@ exports.seed = function(knex) {
       password,
       name: 'Linda Munoz',
       short_name: 'Linda',
-      email: 'fakeemail6@gmail.com'
+      email: 'fakeemail5@gmail.com'
     }
   ]);
 };

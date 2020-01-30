@@ -5,10 +5,6 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const findStaffById = catchAsync(async (req, res, next) => {
-  const staff = await Staff.findByID(req.staffID);
-  if (!staff) {
-    next(new AppError('No staff member found with that ID', 406));
-  }
   return res.status(200).json(staff);
 });
 

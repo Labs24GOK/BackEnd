@@ -81,7 +81,7 @@ exports.up = function(knex) {
         .unsigned()
         .references('user_id')
         .inTable('user')
-        .onDelete('CASCADE')
+        .onDelete('RESTRICT')
         .onUpdate('CASCADE')
         .index();
       table.text('cpr').unique();

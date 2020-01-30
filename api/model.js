@@ -95,14 +95,6 @@ function update(table, where, body) {
 }
 
 function updateAny(table, where, body) {
-  console.log(
-    '*********************update "' +
-      table +
-      '" set ' +
-      makeWhere(body, ',') +
-      ' where ' +
-      where
-  );
   return db.raw(
     'update "' + table + '" set ' + makeWhere(body, ',') + ' where ' + where
   );
@@ -113,14 +105,6 @@ function addUser(userData) {
     .insert(userData)
     .returning(['user_id', 'username']);
 }
-
-// function addUser(userData) {
-//   console.log("Username and password:", userData);
-
-//   return db("user")
-//     .insert(userData)
-//     .returning("username");
-// }
 
 function addMeeting(meeting) {
   return db('meeting')

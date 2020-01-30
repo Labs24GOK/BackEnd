@@ -23,7 +23,8 @@ const returning = [
 const find = () => {
   return db('staff as s')
     .select(returning)
-    .join('user as u', 's.user_id', 'u.user_id');
+    .join('user as u', 's.user_id', 'u.user_id')
+    .orderBy('staff_id', 'desc');
 };
 
 const findByID = id => {
@@ -86,9 +87,21 @@ const edit = async (staffID, userBody, staffBody) => {
 };
 
 const remove = id => {
-  return db('staff')
-    .where({ id })
-    .del();
+  return db.transaction(trx => {
+    return db('staff')
+      .transacting(trx)
+      .del()
+      .where({ id })
+      .returning('user_id')
+      .then(res => {
+        return db('user')
+          .transacting(trx)
+          .del()
+          .where({ user_id: res[0] });
+      })
+      .then(trx.commit)
+      .catch(trx.rollback);
+  });
 };
 
 module.exports = {

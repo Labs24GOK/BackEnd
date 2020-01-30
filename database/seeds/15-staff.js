@@ -24,8 +24,8 @@ exports.seed = function(knex) {
     {
       teaching_rate: '0.00',
       active: true,
-      user_id: 5,
-      cpr: '5',
+      user_id: 4,
+      cpr: '4',
       mobile_number: '12345678',
       accent: 'North American',
       gender: 'F',
@@ -34,8 +34,8 @@ exports.seed = function(knex) {
     {
       teaching_rate: '0.00',
       active: false,
-      user_id: 6,
-      cpr: '6',
+      user_id: 5,
+      cpr: '5',
       mobile_number: '12345678',
       accent: 'North American',
       gender: 'F',

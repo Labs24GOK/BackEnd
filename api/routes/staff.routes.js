@@ -11,7 +11,8 @@ const {
 const {
   validateCreateStaff,
   validateEditStaff,
-  validateStaffID
+  validateStaffID,
+  checkIfStaffExistsByID
 } = require('../controllers/staff.middleware');
 
 const router = express.Router();
@@ -20,8 +21,13 @@ router.param('staffID', validateStaffID);
 
 router.get('/staff', findAllStaff);
 router.post('/staff', validateCreateStaff, createAStaff);
-router.get('/staff/:staffID', findStaffById);
-router.put('/staff/:staffID', validateEditStaff, editAStaff);
-router.delete('/staff/:staffID', deleteAStaff);
+router.get('/staff/:staffID', checkIfStaffExistsByID, findStaffById);
+router.put(
+  '/staff/:staffID',
+  checkIfStaffExistsByID,
+  validateEditStaff,
+  editAStaff
+);
+router.delete('/staff/:staffID', checkIfStaffExistsByID, deleteAStaff);
 
 module.exports = router;
