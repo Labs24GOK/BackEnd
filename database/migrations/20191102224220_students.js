@@ -22,11 +22,6 @@ exports.up = function(knex) {
         .notNullable();
       table.text('name').notNullable();
       table.text('short_name');
-      table.text('cpr').unique();
-      table.text('mobile_number');
-      table.text('accent');
-      table.text('gender').notNullable();
-      table.date('birthdate');
       table.timestamps(true, true);
     })
     .createTable('preferred_contact_type', table => {

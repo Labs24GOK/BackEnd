@@ -1,5 +1,10 @@
 const db = require('../../database/db-config');
 
+const findBy = (field, arg) => {
+  return db('user')
+    .where(field, '=', arg)
+    .first();
+};
 const create = body => {
   return db('user')
     .insert(body)
@@ -13,6 +18,7 @@ const remove = id => {
 };
 
 module.exports = {
+  findBy,
   create,
   remove
 };

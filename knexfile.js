@@ -8,13 +8,7 @@ const database_password = process.env.DB_PASSWORD;
 module.exports = {
   production: {
     client: 'postgresql',
-    connection: {
-      port: process.env.DB_PORT,
-      host: 'speakoutawsdev.cdnyzw3hdv8h.us-east-2.rds.amazonaws.com',
-      database: process.env.DB_DB || 'postgres',
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS
-    },
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: './database/migrations'
     },
