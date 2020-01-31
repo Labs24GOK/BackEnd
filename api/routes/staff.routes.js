@@ -18,17 +18,17 @@ const {
 
 const router = express.Router();
 
-router.param('staffID', validateStaffID, checkIfStaffExistsByID);
+router.param('staffID', validateStaffID);
 
 router.get('/staff', findAllStaff);
 router.post('/staff', validateCreateStaff, createAStaff);
-router.get('/staff/:staffID', findStaffById);
+router.get('/staff/:staffID', checkIfStaffExistsByID, findStaffById);
 router.put(
   '/staff/:staffID',
   checkIfStaffExistsByID,
   validateEditStaff,
   editAStaff
 );
-router.delete('/staff/:staffID', deleteAStaff);
+router.delete('/staff/:staffID', checkIfStaffExistsByID, deleteAStaff);
 
 module.exports = router;

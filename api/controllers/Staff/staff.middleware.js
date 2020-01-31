@@ -145,8 +145,10 @@ const checkIfStaffExistsByID = catchAsync(async (req, res, next) => {
   const staff = await Staff.findByID(req.staffID);
   if (!staff) {
     next(new AppError('Staff with that ID does not exist', 406));
+    return;
   }
   req.staffUser = staff;
+  console.log(req.staffUser);
   next();
 });
 
