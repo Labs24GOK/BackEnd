@@ -29,7 +29,7 @@ router.put(
   validateEditStaff,
   editAStaff
 );
-router.delete('/staff/:staffID', deleteAStaff);
+router.delete('/staff/:staffID', checkIfStaffExistsByID, deleteAStaff);
 router.get(
   '/staff/:staffID/courses',
   checkIfStaffExistsByID,
