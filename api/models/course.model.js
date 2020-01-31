@@ -19,7 +19,16 @@ const returning = [
 	'user.name as teacher'
 ];
 
-const find = () => {
+const find = query => {
+	const limit = 5;
+	let offset = 0;
+	if (query.page) {
+		if (offset === 0) {
+			offset++;
+		}
+		offset = +query.page * limit - limit;
+	}
+
 	return db('course')
 		.select(returning)
 		.join('term', 'term.id', 'course.term_id')
@@ -31,6 +40,8 @@ const find = () => {
 		.join('room', 'room.id', 'course.room_id')
 		.join('staff', 'staff.id', 'course.teacher_id')
 		.join('user', 'user.user_id', 'staff.user_id')
+		.limit(limit)
+		.offset(offset)
 		.orderBy('course.id', 'desc');
 };
 
@@ -61,6 +72,22 @@ const edit = (body, id) => {
 		.update(body)
 		.where({ id })
 		.returning('id');
+};
+
+const findCoursesByTeacherID = teacherID => {
+	return db('course')
+		.where('teacher_id', '=', teacherID)
+		.select(returning)
+		.join('term', 'term.id', 'course.term_id')
+		.join('course_type', 'course_type.id', 'course.course_type_id')
+		.join('group_type', 'group_type.id', 'course.group_type_id')
+		.join('school_grade', 'school_grade.id', 'course.school_grade_id')
+		.join('level', 'level.id', 'course.level_id')
+		.join('course_schedule', 'course_schedule.id', 'course.course_schedule_id')
+		.join('room', 'room.id', 'course.room_id')
+		.join('staff', 'staff.id', 'course.teacher_id')
+		.join('user', 'user.user_id', 'staff.user_id')
+		.orderBy('course.id', 'desc');
 };
 
 const remove = id => {
@@ -105,5 +132,6 @@ module.exports = {
 	create,
 	find,
 	edit,
-	remove
+	remove,
+	findCoursesByTeacherID
 };

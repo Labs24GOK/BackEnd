@@ -17,7 +17,7 @@ const findCourseById = async (req, res) => {
 
 const findAllCourses = async (req, res) => {
 	try {
-		const courses = await Course.find();
+		const courses = await Course.find(req.query);
 		return res.status(200).json(courses);
 	} catch (error) {
 		console.log(error);

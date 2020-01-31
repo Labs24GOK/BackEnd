@@ -1,17 +1,18 @@
 const express = require('express');
 
 const {
-  findStaffById,
-  findAllStaff,
-  createAStaff,
-  editAStaff,
-  deleteAStaff
+	findStaffById,
+	findAllStaff,
+	createAStaff,
+	editAStaff,
+	deleteAStaff,
+	getAllCoursesByStaff
 } = require('../controllers/staff.controller');
 
 const {
-  validateCreateStaff,
-  validateEditStaff,
-  validateStaffID
+	validateCreateStaff,
+	validateEditStaff,
+	validateStaffID
 } = require('../controllers/staff.middleware');
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.post('/staff', validateCreateStaff, createAStaff);
 router.get('/staff/:staffID', findStaffById);
 router.put('/staff/:staffID', validateEditStaff, editAStaff);
 router.delete('/staff/:staffID', deleteAStaff);
+router.get('/staff/:staffID/courses', getAllCoursesByStaff);
 
 module.exports = router;
