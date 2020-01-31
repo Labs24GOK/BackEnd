@@ -5,7 +5,8 @@ const {
   findAllStaff,
   createAStaff,
   editAStaff,
-  deleteAStaff
+  deleteAStaff,
+  getAllCoursesByStaff
 } = require('../controllers/staff.controller');
 
 const {
@@ -28,6 +29,11 @@ router.put(
   validateEditStaff,
   editAStaff
 );
-router.delete('/staff/:staffID', checkIfStaffExistsByID, deleteAStaff);
+router.delete('/staff/:staffID', deleteAStaff);
+router.get(
+  '/staff/:staffID/courses',
+  checkIfStaffExistsByID,
+  getAllCoursesByStaff
+);
 
 module.exports = router;

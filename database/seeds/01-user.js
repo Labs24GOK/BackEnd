@@ -8,7 +8,7 @@ exports.seed = function(knex) {
       password,
       name: 'Victoria Labdon',
       short_name: 'Victoria',
-      email: 'fakeemail1@gmail.com',
+      email: 'fakeemail1@gmail.com'
     },
     {
       user_type: 'admin',
@@ -32,7 +32,7 @@ exports.seed = function(knex) {
       password,
       name: 'Sarah Ameer',
       short_name: 'Sarah',
-      email: 'fakeemail4@gmail.com',
+      email: 'fakeemail4@gmail.com'
     },
     {
       user_type: 'staff',

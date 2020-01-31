@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt');
+const Course = require('../models/course.model');
 
 const Staff = require('../models/staff.model');
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const findStaffById = catchAsync(async (req, res, next) => {
-  return res.status(200).json(req.staffUser);
+  console.log(req.staffUser);
+  return res.status(200).json({ ...req.staffUser, name: 'Hello' });
 });
 
 const findAllStaff = catchAsync(async (req, res) => {
@@ -31,10 +33,16 @@ const deleteAStaff = catchAsync(async (req, res) => {
   return res.status(200).json({ message: 'Staff Deleted' });
 });
 
+const getAllCoursesByStaff = catchAsync(async (req, res) => {
+  const courses = await Course.findCoursesByTeacherID(req.staffID);
+  res.status(200).json(courses);
+});
+
 module.exports = {
   findStaffById,
   findAllStaff,
   createAStaff,
   editAStaff,
-  deleteAStaff
+  deleteAStaff,
+  getAllCoursesByStaff
 };
