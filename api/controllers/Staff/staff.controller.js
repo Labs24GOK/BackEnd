@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
+const Course = require('../../models/course.model');
 
-const Staff = require('../models/staff.model');
-const AppError = require('../utils/AppError');
-const { catchAsync } = require('../utils/catchAsync');
+const Staff = require('../../models/staff.model');
+const AppError = require('../../utils/AppError');
+const { catchAsync } = require('../../utils/catchAsync');
 
 const findStaffById = catchAsync(async (req, res, next) => {
   return res.status(200).json(req.staffUser);
@@ -31,10 +32,21 @@ const deleteAStaff = catchAsync(async (req, res) => {
   return res.status(200).json({ message: 'Staff Deleted' });
 });
 
+const getAllCoursesByStaff = catchAsync(async (req, res) => {
+  try {
+    const courses = await Course.findCoursesByTeacherID(req.staffID);
+    res.status(200).json(courses);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: 'Something wrong with the server' });
+  }
+});
+
 module.exports = {
   findStaffById,
   findAllStaff,
   createAStaff,
   editAStaff,
-  deleteAStaff
+  deleteAStaff,
+  getAllCoursesByStaff
 };

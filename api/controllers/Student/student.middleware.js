@@ -1,6 +1,6 @@
-const AppError = require('../utils/AppError');
-const { catchAsync } = require('../utils/catchAsync');
-const Student = require('../models/student.model');
+const AppError = require('../../utils/AppError');
+const { catchAsync } = require('../../utils/catchAsync');
+const Student = require('../../models/student.model');
 
 const validateStudentID = (req, res, next) => {
   const studentID = +req.params.studentID;

@@ -4,12 +4,12 @@ const {
   findAllStudents,
   findStudentById,
   deleteAStudent
-} = require('../controllers/student.controller');
+} = require('../controllers/Student/student.controller');
 
 const {
   validateStudentID,
   checkIfStudentExistsByID
-} = require('../controllers/student.middleware');
+} = require('../controllers/Student/student.middleware');
 
 const router = express.Router();
 

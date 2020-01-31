@@ -5,29 +5,30 @@ const {
   findAllStaff,
   createAStaff,
   editAStaff,
-  deleteAStaff
-} = require('../controllers/staff.controller');
+  deleteAStaff,
+  getAllCoursesByStaff
+} = require('../controllers/Staff/staff.controller');
 
 const {
   validateCreateStaff,
   validateEditStaff,
   validateStaffID,
   checkIfStaffExistsByID
-} = require('../controllers/staff.middleware');
+} = require('../controllers/Staff/staff.middleware');
 
 const router = express.Router();
 
-router.param('staffID', validateStaffID);
+router.param('staffID', validateStaffID, checkIfStaffExistsByID);
 
 router.get('/staff', findAllStaff);
 router.post('/staff', validateCreateStaff, createAStaff);
-router.get('/staff/:staffID', checkIfStaffExistsByID, findStaffById);
+router.get('/staff/:staffID', findStaffById);
 router.put(
   '/staff/:staffID',
   checkIfStaffExistsByID,
   validateEditStaff,
   editAStaff
 );
-router.delete('/staff/:staffID', checkIfStaffExistsByID, deleteAStaff);
+router.delete('/staff/:staffID', deleteAStaff);
 
 module.exports = router;

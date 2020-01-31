@@ -1,6 +1,6 @@
-const Student = require('../models/student.model');
-const AppError = require('../utils/AppError');
-const { catchAsync } = require('../utils/catchAsync');
+const Student = require('../../models/student.model');
+const AppError = require('../../utils/AppError');
+const { catchAsync } = require('../../utils/catchAsync');
 
 const findAllStudents = catchAsync(async (req, res, next) => {
   const students = await Student.findAll();
