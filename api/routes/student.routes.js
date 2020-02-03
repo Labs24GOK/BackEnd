@@ -3,7 +3,8 @@ const express = require('express');
 const {
   findAllStudents,
   findStudentById,
-  deleteAStudent
+  deleteAStudent,
+  createAStudent
 } = require('../controllers/Student/student.controller');
 
 const {
@@ -16,7 +17,7 @@ const router = express.Router();
 router.param('studentID', validateStudentID);
 
 router.get('/students', findAllStudents);
-// router.post('/staff', validateCreateStaff, createAStaff);
+router.post('/student', createAStudent);
 router.get('/student/:studentID', checkIfStudentExistsByID, findStudentById);
 // router.put(
 //   '/staff/:staffID',

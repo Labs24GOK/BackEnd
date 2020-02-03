@@ -16,15 +16,20 @@ const deleteAStudent = catchAsync(async (req, res) => {
   return res.status(200).json({ message: 'Student Deleted' });
 });
 
-// const createAStudent = catchAsync(async (req, res) => {
-//   const newStaffID = await Staff.create(req.user, req.staff);
-//   const newStaff = await Staff.findByID(newStaffID[0]);
-//   return res.status(201).json(newStaff);
-// });
+const createAStudent = catchAsync(async (req, res) => {
+  const [newStudent] = await Student.create(req.body);
+  res.status(201).json(newStudent);
+});
 
+const editAStudent = catchAsync(async (req, res) => {
+  const [editedStudent] = await Student.update(req.body);
+  res.status(201).json(editedStudent);
+});
 
 module.exports = {
   findAllStudents,
   findStudentById,
-  deleteAStudent
+  deleteAStudent,
+  createAStudent,
+  editAStudent
 };

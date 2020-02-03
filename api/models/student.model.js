@@ -27,6 +27,12 @@
 
 const db = require('../../database/db-config');
 
+const create = body => {
+  return db('student')
+    .insert(body)
+    .returning('*');
+};
+
 const findAll = () => {
   return db('student')
     .select('*')
@@ -51,5 +57,6 @@ const remove = id => {
 module.exports = {
   findAll,
   findByID,
-  remove
+  remove,
+  create
 };
