@@ -3,9 +3,7 @@ const AppError = require('../../utils/AppError');
 const { catchAsync } = require('../../utils/catchAsync');
 
 const validateCourseID = (req, res, next) => {
-  console.log(req.params.courseID);
   const courseID = +req.params.courseID;
-  console.log(courseID);
   if (isNaN(courseID)) {
     return res.status(401).json({ error: 'Please enter a valid ID' });
   }
