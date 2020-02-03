@@ -39,7 +39,7 @@ const populateCourseDropdowns = catchAsync(async (req, res) => {
   const levels = await Course.findAllLevels();
   const course_schedules = await Course.findAllCourseSchedules();
   const rooms = await Course.findAllRooms();
-  const staff = await Staff.find();
+  const staff = await Staff.findAll();
   return res.status(200).json({
     terms,
     course_types,
