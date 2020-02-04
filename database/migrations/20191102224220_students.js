@@ -79,7 +79,7 @@ exports.up = function(knex) {
     .createTable('student', table => {
       table.increments();
       table.text('cpr').unique();
-      table.date('registration_date');
+      table.date('registration_date').defaultTo(knex.fn.now());
       table.text('first_name');
       table.text('additional_names');
       table.text('gender');
@@ -93,7 +93,7 @@ exports.up = function(knex) {
         .onUpdate('CASCADE')
         .index();
       table.text('school_name');
-      table.date('grade_updated');
+      table.date('grade_updated').defaultTo(knex.fn.now());
       table.text('home_telephone');
       table.text('mobile_telephone');
       table

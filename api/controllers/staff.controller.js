@@ -6,8 +6,7 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const findStaffById = catchAsync(async (req, res, next) => {
-  console.log(req.staffUser);
-  return res.status(200).json({ ...req.staffUser, name: 'Hello' });
+  return res.status(200).json(req.staffUser);
 });
 
 const findAllStaff = catchAsync(async (req, res) => {
@@ -24,8 +23,9 @@ const createAStaff = catchAsync(async (req, res) => {
 });
 
 const editAStaff = catchAsync(async (req, res) => {
-  const editedStaff = await Staff.edit(req.staffID, req.user, req.staff);
-  return res.status(201).json(editedStaff);
+  await Staff.edit(req.staffID, req.user, req.staff);
+  const edited = await Staff.findByID(req.staffID);
+  return res.status(201).json(edited);
 });
 
 const deleteAStaff = catchAsync(async (req, res) => {
