@@ -4,27 +4,33 @@ const {
   findAllStudents,
   findStudentById,
   deleteAStudent,
-  createAStudent
-} = require('../controllers/Student/student.controller');
+  createAStudent,
+  editAStudent,
+  getDropdowns
+} = require('../controllers/student.controller');
 
 const {
   validateStudentID,
-  checkIfStudentExistsByID
-} = require('../controllers/Student/student.middleware');
+  checkIfStudentExistsByID,
+  validateStudentBody
+} = require('../controllers/student.middleware');
 
 const router = express.Router();
 
 router.param('studentID', validateStudentID);
 
+router.get('/student/dropdowns', getDropdowns);
 router.get('/students', findAllStudents);
-router.post('/student', createAStudent);
+router.post('/student', validateStudentBody, createAStudent);
 router.get('/student/:studentID', checkIfStudentExistsByID, findStudentById);
-// router.put(
-//   '/staff/:staffID',
-//   checkIfStaffExistsByID,
-//   validateEditStaff,
-//   editAStaff
-// );
+router.put(
+  '/student/:studentID',
+  checkIfStudentExistsByID,
+  validateStudentBody,
+  editAStudent
+);
 router.delete('/student/:studentID', checkIfStudentExistsByID, deleteAStudent);
+
+
 
 module.exports = router;

@@ -1,7 +1,7 @@
-const Course = require('../../models/course.model');
-const Staff = require('../../models/staff.model');
-const AppError = require('../../utils/AppError');
-const { catchAsync } = require('../../utils/catchAsync');
+const Course = require('../models/course.model');
+const Staff = require('../models/staff.model');
+const AppError = require('../utils/AppError');
+const { catchAsync } = require('../utils/catchAsync');
 
 const findCourseById = catchAsync(async (req, res) => {
   return res.status(200).json(req.course);

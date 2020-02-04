@@ -7,14 +7,14 @@ const {
   editAStaff,
   deleteAStaff,
   getAllCoursesByStaff
-} = require('../controllers/Staff/staff.controller');
+} = require('../controllers/staff.controller');
 
 const {
   validateCreateStaff,
   validateEditStaff,
   validateStaffID,
   checkIfStaffExistsByID
-} = require('../controllers/Staff/staff.middleware');
+} = require('../controllers/staff.middleware');
 
 const router = express.Router();
 

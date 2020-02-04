@@ -7,13 +7,13 @@ const {
   editACourse,
   deleteACourse,
   populateCourseDropdowns
-} = require('../controllers/Courses/course.controller');
+} = require('../controllers/course.controller');
 
 const {
   validateCourseBody,
   validateCourseID,
   checkIfCourseExistsByID
-} = require('../controllers/Courses/course.middleware');
+} = require('../controllers/course.middleware');
 
 const router = express.Router();
 
