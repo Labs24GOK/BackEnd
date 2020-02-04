@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "cross-env DB_ENV=testing jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -34,6 +38,10 @@
     "pg": "^7.12.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "cross-env": "^7.0.0",
+    "jest": "^25.1.0",
+    "nodemon": "^1.19.4",
+    "npm": "^6.13.7",
+    "supertest": "^4.0.2"
   }
 }

@@ -18,16 +18,26 @@ module.exports = {
   },
   development: {
     client: 'postgresql',
-    connection: {
-      database: database_name,
-      user: database_user,
-      password: database_password
-    },
+    connection: process.env.DATABASE_URL,
     seeds: {
       directory: './database/seeds'
     },
     migrations: {
       directory: './database/migrations'
+    }
+  },
+  testing: {
+    client: 'postgresql',
+    connection: {
+      database: 'speakout_testing',
+      user: database_user,
+      password: database_password
+    },
+    migrations: {
+      directory: './database/migrations'
+    },
+    seeds: {
+      directory: './database/seeds'
     }
   }
 };
