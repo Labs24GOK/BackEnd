@@ -36,6 +36,7 @@ const populateCourseDropdowns = catchAsync(async (req, res) => {
   const dropdowns = [
     Course.findAllTerms(),
     Course.findAllCourseTypes(),
+    Course.findAllGroupTypes(),
     Course.findAllSchoolGrades(),
     Course.findAllLevels(),
     Course.findAllCourseSchedules(),
