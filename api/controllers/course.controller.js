@@ -32,14 +32,25 @@ const editACourse = catchAsync(async (req, res) => {
 });
 
 const populateCourseDropdowns = catchAsync(async (req, res) => {
-  const terms = await Course.findAllTerms();
-  const course_types = await Course.findAllCourseTypes();
-  const group_types = await Course.findAllGroupTypes();
-  const school_grades = await Course.findAllSchoolGrades();
-  const levels = await Course.findAllLevels();
-  const course_schedules = await Course.findAllCourseSchedules();
-  const rooms = await Course.findAllRooms();
-  const staff = await Staff.findAll();
+  const dropdowns = [
+    Course.findAllTerms(),
+    Course.findAllCourseTypes(),
+    Course.findAllSchoolGrades(),
+    Course.findAllLevels(),
+    Course.findAllCourseSchedules(),
+    Course.findAllRooms(),
+    Staff.findAll()
+  ];
+  const [
+    terms,
+    course_types,
+    group_types,
+    school_grades,
+    levels,
+    course_schedules,
+    rooms,
+    staff
+  ] = await Promise.all(dropdowns);
   return res.status(200).json({
     terms,
     course_types,
