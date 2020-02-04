@@ -23,7 +23,7 @@ const createAStaff = catchAsync(async (req, res) => {
 });
 
 const editAStaff = catchAsync(async (req, res) => {
-  const editedStaff = await Staff.edit(req.staffID, req.user, req.staff);
+  await Staff.edit(req.staffID, req.user, req.staff);
   const edited = await Staff.findByID(req.staffID);
   return res.status(201).json(edited);
 });
