@@ -29,7 +29,7 @@ module.exports = {
   testing: {
     client: 'postgresql',
     connection: {
-      database: 'speakout_testing',
+      database: database_name,
       user: database_user,
       password: database_password
     },

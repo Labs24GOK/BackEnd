@@ -1,10 +1,9 @@
-const server = require('../server.js');
-
+const app = require('../server.js');
 const db = require('../../database/db-config.js');
+const supertest = require('supertest');
+const request = supertest(app);
 
-const request = require('supertest');
-
-describe('environment', function() {
+describe('server', function() {
   it('should set environment to testing', function() {
     expect(process.env.DB_ENV).toBe('testing');
   });
@@ -18,7 +17,7 @@ describe('staff routes', () => {
 
   describe('GET /staff', () => {
     it('Should return a 200 status and array.', () => {
-      return request(server)
+      return request
         .get('/staff')
         .then(res => {
           expect(res.status).toEqual(200);
@@ -28,29 +27,36 @@ describe('staff routes', () => {
     });
   });
 
+  //valid request body
+  const requestBody_1 = {
+    username: 'staff_test_300',
+    password: 'staff_test_300',
+    email: 'staff300@gmail.com',
+    name: 'Merry Teacher',
+    short_name: 'Teacher',
+    cpr: 86763583101,
+    mobile_number: 4906578658,
+    accent: 'Jamaican',
+    gender: 'M',
+    teaching_rate: 7.8,
+    admin: false,
+    active: true,
+  }
+
   describe('POST /staff', () => {
-    it('Should return a 201 created status, create a user staff id, and the body should contain expected data.', () => {
-      return request(server)
-        .post('/staff')
-        .send({
-          username: 'staff_test_300',
-          password: 'staff_test_300',
-          email: 'staff300@gmail.com',
-          name: 'Merry Teacher',
-          short_name: 'Teacher',
-          cpr: 86763583101,
-          mobile_number: 4906578658,
-          accent: 'Jamaican',
-          gender: 'M',
-          teaching_rate: 7.8,
-          admin: false,
-          active: true,
-        })
-        .then(res => {
-          expect(res.status).toEqual(201);
-          expect(res.body.id);
-          expect(res.body.accent).toBe('Jamaican');
-        });
+    it('Should create a user staff id.', async () => {
+      const res = await request.post('/staff').send(requestBody_1);
+      expect(res.body.id);
+    });
+
+    it('Should contain expected body data.', async () => {
+      const res = await request.post('/staff').send(requestBody_1);
+      expect(res.body.accent).toBe('Jamaican');
+    });
+
+    it('Should return a 201 created status.', async () => {
+      const res = await request.post('/staff').send(requestBody_1);
+      expect(res.status).toEqual(201);
     });
   });
 
