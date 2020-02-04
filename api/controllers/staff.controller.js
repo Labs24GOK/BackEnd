@@ -24,7 +24,8 @@ const createAStaff = catchAsync(async (req, res) => {
 
 const editAStaff = catchAsync(async (req, res) => {
   const editedStaff = await Staff.edit(req.staffID, req.user, req.staff);
-  return res.status(201).json(editedStaff);
+  const edited = await Staff.findByID(req.staffID);
+  return res.status(201).json(edited);
 });
 
 const deleteAStaff = catchAsync(async (req, res) => {
@@ -33,13 +34,8 @@ const deleteAStaff = catchAsync(async (req, res) => {
 });
 
 const getAllCoursesByStaff = catchAsync(async (req, res) => {
-  try {
-    const courses = await Course.findCoursesByTeacherID(req.staffID);
-    res.status(200).json(courses);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: 'Something wrong with the server' });
-  }
+  const courses = await Course.findCoursesByTeacherID(req.staffID);
+  res.status(200).json(courses);
 });
 
 module.exports = {

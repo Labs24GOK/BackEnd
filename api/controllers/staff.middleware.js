@@ -29,6 +29,7 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
     !gender
   ) {
     next(new AppError('Wrong Body', 400));
+    return;
   }
   req.user = {
     user_type: admin ? 'admin' : 'staff',
@@ -44,16 +45,16 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
   const userByUsername = await User.findBy('username', username);
 
   if (userByEmail) {
-    next(new AppError('User with that email already exists', 401));
+    return next(new AppError('User with that email already exists', 401));
   }
   if (userByUsername) {
-    next(new AppError('User with that username already exists', 401));
+    return next(new AppError('User with that username already exists', 401));
   }
 
   if (cpr) {
     const staffByCPR = await Staff.findByCPR(cpr);
     if (staffByCPR) {
-      next(new AppError('Staff member with that CPR already exists', 401));
+      return next(new AppError('Staff member with that CPR already exists', 401));
     }
   }
 
@@ -93,7 +94,7 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
     !name ||
     !gender
   ) {
-    next(new AppError('Wrong Body', 400));
+    return next(new AppError('Wrong Body', 400));
   }
   req.user = {
     user_type: admin ? 'admin' : 'staff',
@@ -115,20 +116,18 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 
   const userByEmail = await User.findBy('email', email);
   const userByUsername = await User.findBy('username', username);
-  console.log(userByEmail)
-  console.log(userByUsername)
 
   if (userByEmail && userByEmail.user_id !== req.staffUser.user_id) {
-    next(new AppError('User with that email already exists', 401));
+    return next(new AppError('User with that email already exists', 401));
   }
   if (userByUsername && userByUsername.user_id !== req.staffUser.user_id) {
-    next(new AppError('User with that username already exists', 401));
+    return next(new AppError('User with that username already exists', 401));
   }
 
   if (cpr) {
     const staffByCPR = await Staff.findByCPR(cpr);
     if (staffByCPR && staffByCPR.staff_id !== req.staffUser.staff_id) {
-      next(new AppError('Staff member with that CPR already exists', 401));
+      return next(new AppError('Staff member with that CPR already exists', 401));
     }
   }
   next();
@@ -137,7 +136,7 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 const validateStaffID = (req, res, next) => {
   const staffID = +req.params.staffID;
   if (isNaN(staffID)) {
-    next(new AppError('Please enter a valid ID', 401));
+    return next(new AppError('Please enter a valid ID', 401));
   }
   req.staffID = staffID;
   next();
