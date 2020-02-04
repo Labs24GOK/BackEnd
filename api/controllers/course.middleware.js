@@ -13,6 +13,7 @@ const validateCourseID = (req, res, next) => {
 
 const checkIfCourseExistsByID = catchAsync(async (req, res, next) => {
   const course = await Course.findByID(req.courseID);
+  console.log(course);
   if (!course) {
     next(new AppError('Staff with that ID does not exist', 406));
     return;

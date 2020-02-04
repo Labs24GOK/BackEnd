@@ -4,6 +4,7 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const findCourseById = catchAsync(async (req, res) => {
+  console.log(req.course);
   return res.status(200).json(req.course);
 });
 
