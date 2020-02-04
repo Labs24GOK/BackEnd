@@ -10,6 +10,7 @@ const initializePassport = require('../passport-config.js');
 const createSession = require('../middleware/createSession.js');
 const checkAuthenticated = require('../middleware/checkAuthenticated.js');
 const staffroutes = require('./routes/staff.routes');
+const studentroutes = require('./routes/student.routes');
 const globalErrorHandler = require('./controllers/errors.controller');
 const courseroutes = require('./routes/course.routes');
 
@@ -33,6 +34,7 @@ createSession(server);
 initializePassport(passport);
 
 server.use(staffroutes);
+server.use(studentroutes);
 server.use(courseroutes);
 // -------- Endpoints --------
 server.post('/register', (req, res) => {

@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const database_name = process.env.DB_NAME;
+const database_testing_name = process.env.DB_TESTING_NAME;
 const database_user = process.env.DB_USER;
 const database_password = process.env.DB_PASSWORD;
 
@@ -38,6 +39,20 @@ module.exports = {
     },
     seeds: {
       directory: './database/seeds'
+    }
+  },
+  testing: {
+    client: 'postgresql',
+    connection: {
+      database: database_testing_name,
+      user: database_user,
+      password: database_password
+    },
+    seeds: {
+      directory: './database/seeds'
+    },
+    migrations: {
+      directory: './database/migrations'
     }
   }
 };
