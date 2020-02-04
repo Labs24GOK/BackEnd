@@ -115,17 +115,19 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 
   const userByEmail = await User.findBy('email', email);
   const userByUsername = await User.findBy('username', username);
+  console.log(userByEmail)
+  console.log(userByUsername)
 
-  if (userByEmail.user_id !== req.staffUser.user_id) {
+  if (userByEmail && userByEmail.user_id !== req.staffUser.user_id) {
     next(new AppError('User with that email already exists', 401));
   }
-  if (userByUsername.user_id !== req.staffUser.user_id) {
+  if (userByUsername && userByUsername.user_id !== req.staffUser.user_id) {
     next(new AppError('User with that username already exists', 401));
   }
 
   if (cpr) {
     const staffByCPR = await Staff.findByCPR(cpr);
-    if (staffByCPR.staff_id !== req.staffUser.staff_id) {
+    if (staffByCPR && staffByCPR.staff_id !== req.staffUser.staff_id) {
       next(new AppError('Staff member with that CPR already exists', 401));
     }
   }

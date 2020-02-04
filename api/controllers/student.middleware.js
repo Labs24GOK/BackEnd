@@ -73,10 +73,10 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
 
   const studentRes = await Student.findByCPR(cpr);
   if (req.method === 'PUT') {
-    if (studentRes.student_id !== req.student.student_id) {
+    if (studentRes && studentRes.student_id !== req.student.student_id) {
       return next(new AppError('Student with that cpr already exists', 400));
     }
-    if (school_grade_id !== req.student.school_grade_id) {
+    if (studentRes && school_grade_id !== req.student.school_grade_id) {
       grade_updated = knex.fn.now();
     }
   } else {
