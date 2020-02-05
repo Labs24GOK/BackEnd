@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1580928683635" clover="3.2.0">
-  <project timestamp="1580928683635" name="All files">
+<coverage generated="1580929185380" clover="3.2.0">
+  <project timestamp="1580929185380" name="All files">
     <metrics statements="613" coveredstatements="341" conditionals="168" coveredconditionals="34" methods="152" coveredmethods="38" elements="933" coveredelements="413" complexity="0" loc="613" ncloc="613" packages="9" files="24" classes="24"/>
     <package name="speak-out-be">
       <metrics statements="26" coveredstatements="14" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="1"/>

@@ -38,6 +38,7 @@ describe('student.routes.js', () => {
     location_id: 2,
     family_id: 2
   };
+  /// WHATS EXPECTED BACK FROM THE SERVER
   const toMatchObj = {
     student_id: expect.any(Number),
     cpr: expect.any(String),
@@ -73,7 +74,7 @@ describe('student.routes.js', () => {
     //Valid Request Body
     it('should return a json object with 201 status', async () => {
       const res = await request.post('/student').send(requestBody);
-
+      //// CHECK IF JOINS ARE WORKING PROPERLY
       const school_grade = await helpers.getSchoolGradeByID(
         requestBody.school_grade_id
       );
@@ -85,7 +86,6 @@ describe('student.routes.js', () => {
       const block = await helpers.getBlockByBlockCode(requestBody.block_code);
       expect(res.type).toBe('application/json');
       expect(res.status).toBe(201);
-
       expect(res.body).toMatchObject(toMatchObj);
       expect(res.body.parent_name).toBe(parent.name);
       expect(res.body.location).toBe(location.name);
@@ -130,6 +130,7 @@ describe('student.routes.js', () => {
   describe('GET /student/id', () => {
     it('should return a json object with 200 status', async () => {
       const res = await request.get(`/student/${seededStudent.student_id}`);
+      //// CHECK IF JOINS ARE WORKING PROPERLY
       const school_grade = await helpers.getSchoolGradeByID(
         seededStudent.school_grade_id
       );
@@ -198,8 +199,9 @@ describe('student.routes.js', () => {
           delinquent: true,
           expelled: true,
           family_id: seededParent,
-          school_grade_id: 3 
+          school_grade_id: 3
         });
+      //// CHECK IF JOINS ARE WORKING PROPERLY
       const school_grade = await helpers.getSchoolGradeByID(
         res.body.school_grade_id
       );
