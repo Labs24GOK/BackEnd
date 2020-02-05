@@ -235,12 +235,10 @@
 <a name='L176'></a><a href='#L176'>176</a>
 <a name='L177'></a><a href='#L177'>177</a>
 <a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -413,6 +411,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const db = require('../../database/db-config');
 const cleaner = require('knex-cleaner');
 const StudentModel = require('../models/student.model');
@@ -471,17 +471,17 @@ class Student {
 }
 &nbsp;
 class Staff {
-  constructor(user_id) {
-    this.teaching_rate = '0.00';
-<span class="fstat-no" title="function not covered" ></span>    this.active = true;
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(user_id) {
+<span class="cstat-no" title="statement not covered" >    this.teaching_rate = '0.00';</span>
+<span class="cstat-no" title="statement not covered" >    this.active = true;</span>
 <span class="cstat-no" title="statement not covered" >    this.user_id = user_id;</span>
-<span class="cstat-no" title="statement not covered" >    this.cpr = faker.hel</span>pers.replaceSymbolWithNumber('########');
-<span class="cstat-no" title="statement not covered" >    this.mobile_number = '12</span>345678';
+<span class="cstat-no" title="statement not covered" >    this.cpr = faker.helpers.replaceSymbolWithNumber('########');</span>
+<span class="cstat-no" title="statement not covered" >    this.mobile_number = '12345678';</span>
 <span class="cstat-no" title="statement not covered" >    this.accent = 'British';</span>
 <span class="cstat-no" title="statement not covered" >    this.gender = 'F';</span>
-<span class="cstat-no" title="statement not covered" >    this.birthdate = new Date</span>();
-  }<span class="cstat-no" title="statement not covered" ></span>
-}<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    this.birthdate = new Date();</span>
+  }
+}
 &nbsp;
 const cleanDB = async db =&gt; {
   return cleaner.clean(db, {
@@ -507,27 +507,27 @@ const cleanDB = async db =&gt; {
 };
 &nbsp;
 // IF YOU ONLY NEED USER/STAFF SEED
-const seedAStaff = async () =&gt; {
-  const user = new User('staff');
-  const [userid] = <span class="fstat-no" title="function not covered" >aw</span>ait db('user').insert(user);
-  const staff =<span class="cstat-no" title="statement not covered" > new Staff(userid)</span>;
-  const [id] = awai<span class="cstat-no" title="statement not covered" >t db('staff')</span>
-    .insert(staf<span class="cstat-no" title="statement not covered" >f)</span>
-    .returning(<span class="cstat-no" title="statement not covered" >'*');</span>
-  return StaffModel.findByID(id);
+const seedAStaff = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
+  const user = <span class="cstat-no" title="statement not covered" >new User('staff');</span>
+  const [userid] = <span class="cstat-no" title="statement not covered" >await db('user').insert(user);</span>
+  const staff = <span class="cstat-no" title="statement not covered" >new Staff(userid);</span>
+  const [id] = <span class="cstat-no" title="statement not covered" >await db('staff')</span>
+    .insert(staff)
+    .returning('*');
+<span class="cstat-no" title="statement not covered" >  return StaffModel.findByID(id);</span>
 };
-<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
 // IF YOU ONLY NEED USER/STAFF(ADMIN) SEED
-const seedAnAdmin = async () =&gt; {
-  const user = new User('admin');
-  const [userid] = a<span class="fstat-no" title="function not covered" >wa</span>it db('user').insert(user);
-  const admin =<span class="cstat-no" title="statement not covered" > new Staff(userid)</span>;
-  const [id] = awai<span class="cstat-no" title="statement not covered" >t db('staff')</span>
-    .insert(admi<span class="cstat-no" title="statement not covered" >n)</span>
-    .returning(<span class="cstat-no" title="statement not covered" >'*');</span>
-  return StaffModel.findByID(id);
+const seedAnAdmin = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
+  const user = <span class="cstat-no" title="statement not covered" >new User('admin');</span>
+  const [userid] = <span class="cstat-no" title="statement not covered" >await db('user').insert(user);</span>
+  const admin = <span class="cstat-no" title="statement not covered" >new Staff(userid);</span>
+  const [id] = <span class="cstat-no" title="statement not covered" >await db('staff')</span>
+    .insert(admin)
+    .returning('*');
+<span class="cstat-no" title="statement not covered" >  return StaffModel.findByID(id);</span>
 };
-<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
 //IF YOU ONLY NEED USER/PARENT SEED
 const seedAParent = async () =&gt; {
   const user = new User('parent');
@@ -598,7 +598,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Feb 05 2020 12:52:57 GMT-0500 (Eastern Standard Time)
+                at Wed Feb 05 2020 13:13:04 GMT-0500 (Eastern Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
