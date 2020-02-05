@@ -4,6 +4,7 @@ require('dotenv').config();
 const database_name = process.env.DB_NAME;
 const database_user = process.env.DB_USER;
 const database_password = process.env.DB_PASSWORD;
+const database_testing_name = process.env.DB_TESTING_NAME;
 
 module.exports = {
 	production: {
@@ -33,7 +34,9 @@ module.exports = {
 	testing: {
 		client: 'postgresql',
 		connection: {
-			filename: '.database/test.db3'
+			database: database_testing_name,
+			user: database_user,
+			password: database_password
 		},
 		useNullAsDefault: true,
 		migrations: {
