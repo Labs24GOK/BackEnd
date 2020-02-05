@@ -6,7 +6,7 @@ const knex = require('../../database/db-config');
 const validateStudentID = (req, res, next) => {
   const studentID = +req.params.studentID;
   if (isNaN(studentID)) {
-    next(new AppError('Please enter a valid ID', 401));
+    next(new AppError('Please enter a valid ID', 400));
     return;
   }
   req.studentID = studentID;
@@ -16,7 +16,7 @@ const validateStudentID = (req, res, next) => {
 const checkIfStudentExistsByID = catchAsync(async (req, res, next) => {
   const student = await Student.findByID(req.studentID);
   if (!student) {
-    next(new AppError('Student with that ID does not exist', 406));
+    next(new AppError('Student with that ID does not exist', 400));
   }
   req.student = student;
   next();
@@ -26,13 +26,11 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
   let {
     first_name,
     cpr,
-    registration_date,
     additional_names,
     gender,
     birthdate,
     school_grade_id,
     school_name,
-    grade_updated,
     home_telephone,
     mobile_telephone,
     block_code,
@@ -46,9 +44,10 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     family_id,
     no_call,
     delinquent,
-    expelled
+    expelled,
+    registration_date,
+    grade_updated
   } = req.body;
-
   if (
     (!first_name ||
       !cpr ||
@@ -76,25 +75,27 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     if (studentRes && studentRes.student_id !== req.student.student_id) {
       return next(new AppError('Student with that cpr already exists', 400));
     }
-    if (studentRes && school_grade_id !== req.student.school_grade_id) {
-      grade_updated = knex.fn.now();
+    if (school_grade_id !== req.student.school_grade_id) {
+      grade_updated = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+      ).toISOString();
     }
   } else {
     if (studentRes) {
       return next(new AppError('Student with that cpr already exists', 400));
     }
   }
-
   req.student = {
     first_name,
     cpr,
-    registration_date,
+    grade_updated,
     additional_names,
     gender,
     birthdate,
     school_grade_id,
     school_name,
-    grade_updated,
     home_telephone,
     mobile_telephone,
     block_code,
@@ -107,8 +108,9 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     location_id,
     family_id,
     no_call,
-    delinquent,
-    expelled
+    delinquent, 
+    expelled, 
+    registration_date
   };
   next();
 });

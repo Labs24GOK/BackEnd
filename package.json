@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env DB_ENV=testing jest --watch"
+    "test": "cross-env DB_ENV=testing jest --watch --verbose --i --forceExit --watchAll --coverage"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Lambda-School-Labs/speak-out-be/issues"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "homepage": "https://github.com/Lambda-School-Labs/speak-out-be#readme",
   "dependencies": {
