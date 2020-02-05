@@ -1,142 +1,305 @@
-const server = require('../server');
+const server = require('../server.js');
 const request = require('supertest')(server);
-const db = require('../../database/db-config');
-const helpers = require('./helper');
-const bcrypt = require('bcrypt');
-
-const seedStudent = {
-  cpr: '1',
-  registration_date: new Date(),
-  first_name: 'Mariam',
-  additional_names: 'Saleh Isa',
-  gender: 'F',
-  birthdate: new Date(),
-  school_grade_id: 1,
-  school_name: 'Alduraz',
-  grade_updated: new Date(),
-  home_telephone: '12345678',
-  mobile_telephone: '12345678',
-  block_code: 363,
-  road: '2550',
-  building: '298',
-  flat: '12',
-  email: 'fakeemail@gmail.com',
-  notes: 'This student is just alright',
-  preferred_contact_type_id: 1,
-  no_call: true,
-  delinquent: false,
-  expelled: true,
-  location_id: 1,
-  family_id: 1
-};
-
-const familySeed = {
-  mother_name: 'Mother Name',
-  father_name: 'Father Name',
-  block_code: 363,
-  road: '2550',
-  building: '298',
-  flat: '12',
-  primary_telephone: '12345678',
-  secondary_telephone: '12345678',
-  user_id: 1
-};
-
-const password = bcrypt.hashSync('pass', 8);
-const userSeed = {
-  user_type: 'parent',
-  username: 'parent',
-  password,
-  name: 'Victoria Labdon',
-  short_name: 'Victoria',
-  email: 'fakeemail1@gmail.com'
-};
+const db = require('../../database/db-config.js');
+const helpers = require('./helperFunctions.js');
+const { Staff, Student, User, Family } = require('./seedData.js');
 
 describe('student.routes.js', () => {
   it('should set the environment to testing', () => {
     expect(process.env.DB_ENV).toBe('testing');
   });
+  let seededStudent;
+  let seededParent;
+  beforeEach(async () => {
+    await helpers.cleanDB(db);
+    // THIS CREATES A STUDENT A PARENT AND THE USER PROFILE OF THE PARENT
+    student = await helpers.seedAStudent();
+    seededStudent = student;
+    // THIS CREATES A PARENT WITH NO STUDENT LINKED TO HIM
+    [parent] = await helpers.seedAParent();
+    seededParent = parent;
+  });
+  const requestBody = {
+    cpr: '103',
+    first_name: 'testing',
+    additional_names: 'Prieto Martin',
+    gender: 'M',
+    birthdate: '1997-09-05T04:00:00.000Z',
+    school_grade_id: 2,
+    school_name: "I'm a dropout",
+    home_telephone: '5555555555',
+    mobile_telephone: '5555555555',
+    block_code: 439,
+    road: 'Hello123',
+    building: 'I dont know',
+    flat: '3',
+    email: 'myemail@gmail.com',
+    notes: 'Notes',
+    preferred_contact_type_id: 2,
+    location_id: 2,
+    family_id: 2
+  };
+  const toMatchObj = {
+    student_id: expect.any(Number),
+    cpr: expect.any(String),
+    first_name: expect.any(String),
+    additional_names: expect.any(String),
+    registration_date: expect.any(String),
+    gender: expect.any(String),
+    birthdate: expect.any(String),
+    school_grade_id: expect.any(Number),
+    school_grade: expect.any(String),
+    school_name: expect.any(String),
+    grade_updated: expect.any(String),
+    home_telephone: expect.any(String),
+    mobile_telephone: expect.any(String),
+    block_code: expect.any(Number),
+    block_code_neighborhood: expect.any(String),
+    road: expect.any(String),
+    building: expect.any(String),
+    flat: expect.any(String),
+    email: expect.any(String),
+    notes: expect.any(String),
+    preferred_contact_type_id: expect.any(Number),
+    preferred_contact_type: expect.any(String),
+    no_call: expect.any(Boolean),
+    expelled: expect.any(Boolean),
+    delinquent: expect.any(Boolean),
+    location_id: expect.any(Number),
+    family_id: expect.any(Number),
+    parent_name: expect.any(String),
+    location: expect.any(String)
+  };
   describe('POST /student', () => {
-    beforeAll(async () => {
-      await helpers.cleanDB(db);
-    });
-    beforeEach(async () => {
-      await helpers.cleanDB(db);
-      await db('user').insert(userSeed);
-      await db('family').insert(familySeed);
-      await db('student').insert(seedStudent);
-    });
     //Valid Request Body
-    const requestBody_1 = {
-      cpr: 103,
-      first_name: 'testing',
-      additional_names: 'Prieto Martin',
-      gender: 'M',
-      birthdate: '1997-09-05T00:05:27.627Z',
-      school_grade_id: 2,
-      school_name: "I'm a dropout",
-      home_telephone: '5555555555',
-      mobile_telephone: '5555555555',
-      block_code: 439,
-      road: 'Hello123',
-      building: 'I dont know',
-      flat: 3,
-      email: 'myemail@gmail.com',
-      notes: 'Notes',
-      preferred_contact_type_id: 4,
-      location_id: 2,
-      family_id: 1
-    };
-    // Request Body with duplicate cpr
-    const requestBody_2 = {
-      cpr: 103, //duplicate CPR
-      first_name: 'testing',
-      additional_names: 'Martin Prieto',
-      gender: 'M',
-      birthdate: '1997-09-05T00:05:27.627Z',
-      school_grade_id: 2,
-      school_name: "I'm a scholar",
-      home_telephone: '5555555551',
-      mobile_telephone: '5555555551',
-      block_code: 439,
-      road: 'Hello123',
-      building: 'I dont know',
-      flat: 3,
-      email: 'myemail@gmail.com',
-      notes: 'Notes about me, hmm..',
-      preferred_contact_type_id: 4,
-      location_id: 2,
-      family_id: 1
-    };
-    // Malformed Request Body with missing fields
-    const requestBody_1_malformed = {
-      additional_names: 'Martin Prieto',
-      gender: 'M',
-      birthdate: '1997-09-05T00:05:27.627Z',
-      school_grade_id: 2,
-      school_name: "I'm a scholar",
-      home_telephone: '5555555551'
-    };
-    it('should return a json object', async () => {
-      const res = await request.post('/student').send(requestBody_1);
-      console.log('res.status1', res.text);
+    it('should return a json object with 201 status', async () => {
+      const res = await request.post('/student').send(requestBody);
+
+      const school_grade = await helpers.getSchoolGradeByID(
+        requestBody.school_grade_id
+      );
+      const preferred_contact_type = await helpers.getPreferredContactTypeByID(
+        requestBody.preferred_contact_type_id
+      );
+      const location = await helpers.getLocationByID(requestBody.location_id);
+      const parent = await helpers.getParentByID(requestBody.family_id);
+      const block = await helpers.getBlockByBlockCode(requestBody.block_code);
+      console.log(res.text);
       expect(res.type).toBe('application/json');
-    });
-    it('should return a 201 status code in response to a valid request', async () => {
-      const res = await request.post('/student').send(requestBody_1);
-      console.log('res.status', res.text);
       expect(res.status).toBe(201);
+
+      expect(res.body).toMatchObject(toMatchObj);
+      expect(res.body.parent_name).toBe(parent.name);
+      expect(res.body.location).toBe(location.name);
+      expect(res.body.preferred_contact_type).toBe(
+        preferred_contact_type.method
+      );
+      expect(res.body.block_code_neighborhood).toBe(block.neighborhood);
+      expect(res.body.school_grade).toBe(school_grade.name);
     });
-    // it('should return a 400 status code in response to request with missing fields on the request body', async () => {
-    //   const res = await request
-    //     .post('/auth/register')
-    //     .send(requestBody_1_malformed); // with missing fields
-    //   expect(res.status).toBe(400);
-    // });
-    // it('should return a 500 status code in response to a request with a duplicate firebase_id field', async () => {
-    //   await request.post('/student').send(requestBody_1);
-    //   const res = await request.post('/auth/register').send(requestBody_2);
-    //   expect(res.status).toBe(500);
-    // });
+    it('should return a 400 status code in response to request with missing fields on the request body', async () => {
+      const res = await request
+        .post('/student')
+        .send({ whatShouldIPutHere: 'HELLO' }); // with missing fields
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message', 'Wrong body');
+    });
+    it('should return a 400 status code in response to a request with a duplicate cpr field', async () => {
+      const res = await request
+        .post('/student')
+        .send({ ...requestBody, cpr: seededStudent.cpr });
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        'message',
+        'Student with that cpr already exists'
+      );
+    });
+    ////////// CHECK IF FOREIGN RELATIONS EXISTS
+    ////////// CHECK AUTHENTICATION
+  });
+  describe('GET /students', () => {
+    it('should return a non-empty array with 200 status code', async () => {
+      const res = await request.get('/students');
+      expect(res.type).toBe('application/json');
+      expect(res.status).toBe(200);
+      expect(Array.isArray(res.body)).toBe(true);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
+      expect(res.body[0]).toMatchObject(toMatchObj);
+    });
+    // ADD PAGINATION LATER
+    // CHECK AUTHENTICATION
+  });
+  describe('GET /student/id', () => {
+    it('should return a json object with 200 status', async () => {
+      const res = await request.get(`/student/${seededStudent.student_id}`);
+      const school_grade = await helpers.getSchoolGradeByID(
+        seededStudent.school_grade_id
+      );
+      const preferred_contact_type = await helpers.getPreferredContactTypeByID(
+        seededStudent.preferred_contact_type_id
+      );
+      const location = await helpers.getLocationByID(seededStudent.location_id);
+      const parent = await helpers.getParentByID(seededStudent.family_id);
+      const block = await helpers.getBlockByBlockCode(seededStudent.block_code);
+      expect(res.type).toBe('application/json');
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('student_id', seededStudent.student_id);
+      expect(res.body).toMatchObject(toMatchObj);
+      expect(res.body.parent_name).toBe(parent.name);
+      expect(res.body.location).toBe(location.name);
+      expect(res.body.preferred_contact_type).toBe(
+        preferred_contact_type.method
+      );
+      expect(res.body.block_code_neighborhood).toBe(block.neighborhood);
+      expect(res.body.school_grade).toBe(school_grade.name);
+    });
+    it('should return a 400 status code in response to invalid ID', async () => {
+      const res = await request.get(`/student/iAmDefNotAnID`);
+      expect(res.status).toBe(400);
+      expect(res.body.message).toBe('Please enter a valid ID');
+    });
+    it('should return a 400 status code in response to student doesnt exists', async () => {
+      const res = await request.get(`/student/99999`);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        'message',
+        'Student with that ID does not exist'
+      );
+    });
+    ////////// CHECK AUTHENTICATION
+  });
+  describe('DELETE /student/id', () => {
+    it('should return a json object with 200 status', async () => {
+      const res = await request.delete(`/student/${seededStudent.student_id}`);
+      expect(res.type).toBe('application/json');
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('message', 'Student Deleted');
+    });
+    it('should return a 400 status code in response to invalid ID', async () => {
+      const res = await request.delete(`/student/iAmDefNotAnID`);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message', 'Please enter a valid ID');
+    });
+    it('should return a 400 status code in response to student doesnt exists', async () => {
+      const res = await request.delete(`/student/99999`);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        'message',
+        'Student with that ID does not exist'
+      );
+    });
+    ////////// CHECK AUTHENTICATION
+  });
+  describe('PUT /student/id', () => {
+    it('should return a json object with 200 status', async () => {
+      const res = await request
+        .put(`/student/${seededStudent.student_id}`)
+        .send({
+          ...requestBody,
+          no_call: true,
+          delinquent: true,
+          expelled: true,
+          family_id: seededParent
+        });
+      const school_grade = await helpers.getSchoolGradeByID(
+        res.body.school_grade_id
+      );
+      const preferred_contact_type = await helpers.getPreferredContactTypeByID(
+        res.body.preferred_contact_type_id
+      );
+      const location = await helpers.getLocationByID(res.body.location_id);
+      const parent = await helpers.getParentByID(res.body.family_id);
+      console.log(res.body.family_id);
+      console.log(parent);
+      const block = await helpers.getBlockByBlockCode(res.body.block_code);
+      expect(res.type).toBe('application/json');
+      expect(res.status).toBe(200);
+      expect(res.body).toMatchObject(toMatchObj);
+      expect(res.body).toHaveProperty('student_id', seededStudent.student_id);
+      expect(res.body.family_id).not.toBe(seededStudent.family_id);
+      expect(res.body.parent_name).toBe(parent.name);
+      expect(res.body.location).toBe(location.name);
+      expect(res.body.preferred_contact_type).toBe(
+        preferred_contact_type.method
+      );
+      expect(res.body.block_code_neighborhood).toBe(block.neighborhood);
+      expect(res.body.school_grade).toBe(school_grade.name);
+      expect(res.body.delinquent).toBe(true);
+    });
+    it('should return a 400 status code in response to invalid ID', async () => {
+      const res = await request.put(`/student/iAmDefNotAnID`).send(requestBody);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message', 'Please enter a valid ID');
+    });
+    it('should return a 400 status code in response to bo student with that id', async () => {
+      const res = await request.put(`/student/99999`).send(requestBody);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        'message',
+        'Student with that ID does not exist'
+      );
+    });
+    it('should return a 400 status code in response to wrong body', async () => {
+      const res = await request
+        .put(`/student/${seededStudent.student_id}`)
+        .send({ whatShouldIPutHere: 'HELLO' });
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty('message', 'Wrong body');
+    });
+    it('should return a 400 status code in response to duplicate cpr', async () => {
+      const newStudent = await helpers.seedAStudent();
+      const res = await request
+        .put(`/student/${seededStudent.student_id}`)
+        .send({ ...requestBody, cpr: newStudent.cpr });
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        'message',
+        'Student with that cpr already exists'
+      );
+    });
+    ////////// CHECK AUTHENTICATION
+    ////////// CHECK IF FOREIGN RELATIONS EXISTS
+  });
+  describe('GET /student/dropdowns', () => {
+    it('should return a json object with 200 status', async () => {
+      const res = await request.get(`/student/dropdowns`);
+      expect(res.type).toBe('application/json');
+      expect(res.status).toBe(200);
+      expect(res.body).toStrictEqual(
+        expect.objectContaining({
+          school_grades: expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              name: expect.any(String)
+            })
+          ]),
+          blocks: expect.arrayContaining([
+            expect.objectContaining({
+              block_code: expect.any(Number),
+              neighborhood: expect.any(String)
+            })
+          ]),
+          contact_types: expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              method: expect.any(String)
+            })
+          ]),
+          locations: expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              name: expect.any(String)
+            })
+          ]),
+          families: expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              name: expect.any(String)
+            })
+          ])
+        })
+      );
+    });
+    ////////// CHECK AUTHENTICATION
   });
 });
