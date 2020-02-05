@@ -1,8 +1,7 @@
 const server = require('../server.js');
 const request = require('supertest')(server);
 const db = require('../../database/db-config.js');
-const helpers = require('./helperFunctions.js');
-const { Staff, Student, User, Family } = require('./seedData.js');
+const helpers = require('./helperfunctionsstudent');
 
 describe('student.routes.js', () => {
   it('should set the environment to testing', () => {
