@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1580929185380" clover="3.2.0">
-  <project timestamp="1580929185380" name="All files">
+<coverage generated="1580929558444" clover="3.2.0">
+  <project timestamp="1580929558445" name="All files">
     <metrics statements="613" coveredstatements="341" conditionals="168" coveredconditionals="34" methods="152" coveredmethods="38" elements="933" coveredelements="413" complexity="0" loc="613" ncloc="613" packages="9" files="24" classes="24"/>
     <package name="speak-out-be">
       <metrics statements="26" coveredstatements="14" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="1"/>
@@ -222,9 +222,9 @@
         <line num="32" count="0" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
       </file>
       <file name="course.middleware.js" path="C:\Users\Pedro\Desktop\speakout\speak-out-be\api\controllers\course.middleware.js">
         <metrics statements="25" coveredstatements="7" conditionals="21" coveredconditionals="0" methods="3" coveredmethods="0"/>
