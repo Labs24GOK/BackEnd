@@ -18,6 +18,9 @@
   "bugs": {
     "url": "https://github.com/Lambda-School-Labs/speak-out-be/issues"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "homepage": "https://github.com/Lambda-School-Labs/speak-out-be#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
