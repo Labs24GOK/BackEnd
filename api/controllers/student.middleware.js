@@ -26,13 +26,11 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
   let {
     first_name,
     cpr,
-    registration_date,
     additional_names,
     gender,
     birthdate,
     school_grade_id,
     school_name,
-    grade_updated,
     home_telephone,
     mobile_telephone,
     block_code,
@@ -46,9 +44,10 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     family_id,
     no_call,
     delinquent,
-    expelled
+    expelled,
+    registration_date,
+    grade_updated
   } = req.body;
-
   if (
     (!first_name ||
       !cpr ||
@@ -88,16 +87,15 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
       return next(new AppError('Student with that cpr already exists', 400));
     }
   }
-
   req.student = {
     first_name,
     cpr,
+    grade_updated,
     additional_names,
     gender,
     birthdate,
     school_grade_id,
     school_name,
-    grade_updated,
     home_telephone,
     mobile_telephone,
     block_code,
@@ -110,12 +108,10 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     location_id,
     family_id,
     no_call,
-    delinquent,
-    expelled
+    delinquent, 
+    expelled, 
+    registration_date
   };
-  if (req.method === 'PUT' && registration_date) {
-    req.student = { ...req.student, registration_date };
-  }
   next();
 });
 

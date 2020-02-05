@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1580926384879" clover="3.2.0">
-  <project timestamp="1580926384879" name="All files">
-    <metrics statements="615" coveredstatements="342" conditionals="172" coveredconditionals="37" methods="152" coveredmethods="38" elements="939" coveredelements="417" complexity="0" loc="615" ncloc="615" packages="9" files="24" classes="24"/>
+<coverage generated="1580928683635" clover="3.2.0">
+  <project timestamp="1580928683635" name="All files">
+    <metrics statements="613" coveredstatements="341" conditionals="168" coveredconditionals="34" methods="152" coveredmethods="38" elements="933" coveredelements="413" complexity="0" loc="613" ncloc="613" packages="9" files="24" classes="24"/>
     <package name="speak-out-be">
       <metrics statements="26" coveredstatements="14" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="1"/>
       <file name="knexfile.js" path="C:\Users\Pedro\Desktop\speakout\speak-out-be\knexfile.js">
@@ -196,7 +196,7 @@
       </file>
     </package>
     <package name="speak-out-be.api.controllers">
-      <metrics statements="204" coveredstatements="105" conditionals="132" coveredconditionals="35" methods="31" coveredmethods="11"/>
+      <metrics statements="202" coveredstatements="104" conditionals="128" coveredconditionals="32" methods="31" coveredmethods="11"/>
       <file name="course.controller.js" path="C:\Users\Pedro\Desktop\speakout\speak-out-be\api\controllers\course.controller.js">
         <metrics statements="26" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -385,7 +385,7 @@
         <line num="55" count="1" type="stmt"/>
       </file>
       <file name="student.middleware.js" path="C:\Users\Pedro\Desktop\speakout\speak-out-be\api\controllers\student.middleware.js">
-        <metrics statements="35" coveredstatements="34" conditionals="34" coveredconditionals="32" methods="3" coveredmethods="3"/>
+        <metrics statements="33" coveredstatements="33" conditionals="30" coveredconditionals="29" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -405,22 +405,20 @@
         <line num="22" count="8" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
         <line num="50" count="6" type="stmt"/>
-        <line num="52" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="69" count="2" type="stmt"/>
         <line num="70" count="2" type="stmt"/>
-        <line num="71" count="2" type="stmt"/>
-        <line num="74" count="4" type="stmt"/>
-        <line num="75" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="76" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="77" count="1" type="stmt"/>
-        <line num="79" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="80" count="1" type="stmt"/>
-        <line num="87" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="88" count="1" type="stmt"/>
-        <line num="92" count="2" type="stmt"/>
-        <line num="116" count="2" type="cond" truecount="3" falsecount="1"/>
-        <line num="117" count="0" type="stmt"/>
-        <line num="119" count="2" type="stmt"/>
-        <line num="122" count="1" type="stmt"/>
+        <line num="73" count="4" type="stmt"/>
+        <line num="74" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="75" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="78" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="86" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
       </file>
     </package>
     <package name="speak-out-be.api.models">
@@ -568,7 +566,7 @@
         <line num="25" count="1" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
       </file>
     </package>
     <package name="speak-out-be.api.testing">

@@ -83,7 +83,6 @@ describe('student.routes.js', () => {
       const location = await helpers.getLocationByID(requestBody.location_id);
       const parent = await helpers.getParentByID(requestBody.family_id);
       const block = await helpers.getBlockByBlockCode(requestBody.block_code);
-      console.log(res.text);
       expect(res.type).toBe('application/json');
       expect(res.status).toBe(201);
 
@@ -198,7 +197,8 @@ describe('student.routes.js', () => {
           no_call: true,
           delinquent: true,
           expelled: true,
-          family_id: seededParent
+          family_id: seededParent,
+          school_grade_id: 3 
         });
       const school_grade = await helpers.getSchoolGradeByID(
         res.body.school_grade_id
@@ -208,8 +208,6 @@ describe('student.routes.js', () => {
       );
       const location = await helpers.getLocationByID(res.body.location_id);
       const parent = await helpers.getParentByID(res.body.family_id);
-      console.log(res.body.family_id);
-      console.log(parent);
       const block = await helpers.getBlockByBlockCode(res.body.block_code);
       expect(res.type).toBe('application/json');
       expect(res.status).toBe(200);
