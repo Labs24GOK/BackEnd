@@ -12,10 +12,21 @@ describe('student.routes.js', () => {
   beforeEach(async () => {
     await helpers.cleanDB(db);
     // THIS CREATES A STUDENT A PARENT AND THE USER PROFILE OF THE PARENT
-    student = await helpers.seedAStudent();
+    student = await helpers.seedAStudent(
+      {
+        username: 'imUniQue2',
+        email: 'meToo@unique2.com'
+      },
+      {
+        cpr: '3793245'
+      }
+    );
     seededStudent = student;
     // THIS CREATES A PARENT WITH NO STUDENT LINKED TO HIM
-    [parent] = await helpers.seedAParent();
+    [parent] = await helpers.seedAParent({
+      username: 'imUniQue',
+      email: 'meToo@unique.com'
+    });
     seededParent = parent;
   });
   const requestBody = {
@@ -246,7 +257,15 @@ describe('student.routes.js', () => {
       expect(res.body).toHaveProperty('message', 'Wrong body');
     });
     it('should return a 400 status code in response to duplicate cpr', async () => {
-      const newStudent = await helpers.seedAStudent();
+      const newStudent = await helpers.seedAStudent(
+        {
+          username: 'imUniQue3',
+          email: 'meToo@unique3.com'
+        },
+        {
+          cpr: '33333'
+        }
+      );
       const res = await request
         .put(`/student/${seededStudent.student_id}`)
         .send({ ...requestBody, cpr: newStudent.cpr });

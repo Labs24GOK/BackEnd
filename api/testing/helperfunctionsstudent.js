@@ -3,7 +3,6 @@ const cleaner = require('knex-cleaner');
 const StudentModel = require('../models/student.model');
 const StaffModel = require('../models/staff.model');
 const bcrypt = require('bcrypt');
-const faker = require('faker');
 const password = bcrypt.hashSync('pass', 8);
 
 class Family {
@@ -20,18 +19,18 @@ class Family {
   }
 }
 class User {
-  constructor(role) {
+  constructor(role, username, email) {
     this.user_type = role;
-    this.username = faker.internet.userName();
+    this.username = username;
     this.password = password;
     this.name = 'Really long name';
     this.short_name = 'OneWordName';
-    this.email = faker.internet.email();
+    this.email = email;
   }
 }
 class Student {
-  constructor(family_id) {
-    this.cpr = faker.helpers.replaceSymbolWithNumber('########');
+  constructor(family_id, cpr) {
+    this.cpr = cpr;
     this.first_name = 'Onename';
     this.additional_names = 'A lot of names';
     this.gender = 'F';
@@ -44,7 +43,7 @@ class Student {
     this.road = '2550';
     this.building = '298';
     this.flat = '12';
-    this.email = faker.internet.email();
+    this.email = 'Whatever';
     this.notes = 'This student is just alright';
     this.preferred_contact_type_id = 1;
     this.no_call = true;
@@ -56,11 +55,11 @@ class Student {
 }
 
 class Staff {
-  constructor(user_id) {
+  constructor(user_id, cpr) {
     this.teaching_rate = '0.00';
     this.active = true;
     this.user_id = user_id;
-    this.cpr = faker.helpers.replaceSymbolWithNumber('########');
+    this.cpr = cpr;
     this.mobile_number = '12345678';
     this.accent = 'British';
     this.gender = 'F';
@@ -92,10 +91,10 @@ const cleanDB = async db => {
 };
 
 // IF YOU ONLY NEED USER/STAFF SEED
-const seedAStaff = async () => {
-  const user = new User('staff');
+const seedAStaff = async obj => {
+  const user = new User('staff', obj.username, obj.email);
   const [userid] = await db('user').insert(user);
-  const staff = new Staff(userid);
+  const staff = new Staff(userid, obj.cpr);
   const [id] = await db('staff')
     .insert(staff)
     .returning('*');
@@ -103,10 +102,10 @@ const seedAStaff = async () => {
 };
 
 // IF YOU ONLY NEED USER/STAFF(ADMIN) SEED
-const seedAnAdmin = async () => {
-  const user = new User('admin');
+const seedAnAdmin = async obj => {
+  const user = new User('admin', obj.username, obj.email);
   const [userid] = await db('user').insert(user);
-  const admin = new Staff(userid);
+  const admin = new Staff(userid, obj.cpr);
   const [id] = await db('staff')
     .insert(admin)
     .returning('*');
@@ -114,8 +113,8 @@ const seedAnAdmin = async () => {
 };
 
 //IF YOU ONLY NEED USER/PARENT SEED
-const seedAParent = async () => {
-  const user = new User('parent');
+const seedAParent = async obj => { 
+  const user = new User('parent', obj.username, obj.email);
   const [id] = await db('user')
     .insert(user)
     .returning('user_id');
@@ -126,9 +125,9 @@ const seedAParent = async () => {
 };
 
 // IF YOU ONLY NEED USER/PARENT/STUDENT SEED
-const seedAStudent = async () => {
-  const [parentID] = await seedAParent();
-  const student = new Student(parentID);
+const seedAStudent = async (parentObj, studentObj) => {
+  const [parentID] = await seedAParent(parentObj);
+  const student = new Student(parentID, studentObj.cpr);
   const [id] = await db('student')
     .insert(student)
     .returning('id');

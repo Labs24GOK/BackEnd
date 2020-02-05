@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1580929558444" clover="3.2.0">
-  <project timestamp="1580929558445" name="All files">
-    <metrics statements="613" coveredstatements="341" conditionals="168" coveredconditionals="34" methods="152" coveredmethods="38" elements="933" coveredelements="413" complexity="0" loc="613" ncloc="613" packages="9" files="24" classes="24"/>
+<coverage generated="1580931465829" clover="3.2.0">
+  <project timestamp="1580931465829" name="All files">
+    <metrics statements="612" coveredstatements="340" conditionals="168" coveredconditionals="34" methods="152" coveredmethods="38" elements="932" coveredelements="412" complexity="0" loc="612" ncloc="612" packages="9" files="24" classes="24"/>
     <package name="speak-out-be">
       <metrics statements="26" coveredstatements="14" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="1"/>
       <file name="knexfile.js" path="C:\Users\Pedro\Desktop\speakout\speak-out-be\knexfile.js">
@@ -570,16 +570,16 @@
       </file>
     </package>
     <package name="speak-out-be.api.testing">
-      <metrics statements="86" coveredstatements="68" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="11"/>
+      <metrics statements="85" coveredstatements="67" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="11"/>
       <file name="helperfunctionsstudent.js" path="C:\Users\Pedro\Desktop\speakout\speak-out-be\api\testing\helperfunctionsstudent.js">
-        <metrics statements="86" coveredstatements="68" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="11"/>
+        <metrics statements="85" coveredstatements="67" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="11"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="35" type="stmt"/>
         <line num="11" count="35" type="stmt"/>
         <line num="12" count="35" type="stmt"/>
         <line num="13" count="35" type="stmt"/>
@@ -588,13 +588,13 @@
         <line num="16" count="35" type="stmt"/>
         <line num="17" count="35" type="stmt"/>
         <line num="18" count="35" type="stmt"/>
-        <line num="19" count="35" type="stmt"/>
+        <line num="23" count="35" type="stmt"/>
         <line num="24" count="35" type="stmt"/>
         <line num="25" count="35" type="stmt"/>
         <line num="26" count="35" type="stmt"/>
         <line num="27" count="35" type="stmt"/>
         <line num="28" count="35" type="stmt"/>
-        <line num="29" count="35" type="stmt"/>
+        <line num="33" count="18" type="stmt"/>
         <line num="34" count="18" type="stmt"/>
         <line num="35" count="18" type="stmt"/>
         <line num="36" count="18" type="stmt"/>
@@ -615,7 +615,7 @@
         <line num="51" count="18" type="stmt"/>
         <line num="52" count="18" type="stmt"/>
         <line num="53" count="18" type="stmt"/>
-        <line num="54" count="18" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
@@ -623,42 +623,41 @@
         <line num="64" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="71" count="1" type="stmt"/>
-        <line num="72" count="17" type="stmt"/>
-        <line num="95" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="17" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
         <line num="96" count="0" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
         <line num="98" count="0" type="stmt"/>
-        <line num="99" count="0" type="stmt"/>
-        <line num="102" count="0" type="stmt"/>
-        <line num="106" count="1" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="106" count="0" type="stmt"/>
         <line num="107" count="0" type="stmt"/>
         <line num="108" count="0" type="stmt"/>
         <line num="109" count="0" type="stmt"/>
-        <line num="110" count="0" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="117" count="1" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="116" count="1" type="stmt"/>
+        <line num="117" count="35" type="stmt"/>
         <line num="118" count="35" type="stmt"/>
-        <line num="119" count="35" type="stmt"/>
+        <line num="121" count="35" type="stmt"/>
         <line num="122" count="35" type="stmt"/>
-        <line num="123" count="35" type="stmt"/>
-        <line num="129" count="1" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="129" count="18" type="stmt"/>
         <line num="130" count="18" type="stmt"/>
         <line num="131" count="18" type="stmt"/>
-        <line num="132" count="18" type="stmt"/>
-        <line num="135" count="18" type="stmt"/>
-        <line num="139" count="1" type="stmt"/>
-        <line num="140" count="3" type="stmt"/>
-        <line num="144" count="1" type="stmt"/>
-        <line num="145" count="3" type="stmt"/>
-        <line num="149" count="1" type="stmt"/>
-        <line num="150" count="3" type="stmt"/>
-        <line num="154" count="1" type="stmt"/>
-        <line num="155" count="3" type="stmt"/>
-        <line num="160" count="1" type="stmt"/>
-        <line num="161" count="3" type="stmt"/>
-        <line num="167" count="1" type="stmt"/>
+        <line num="134" count="18" type="stmt"/>
+        <line num="138" count="1" type="stmt"/>
+        <line num="139" count="3" type="stmt"/>
+        <line num="143" count="1" type="stmt"/>
+        <line num="144" count="3" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="153" count="1" type="stmt"/>
+        <line num="154" count="3" type="stmt"/>
+        <line num="159" count="1" type="stmt"/>
+        <line num="160" count="3" type="stmt"/>
+        <line num="166" count="1" type="stmt"/>
       </file>
     </package>
     <package name="speak-out-be.api.utils">

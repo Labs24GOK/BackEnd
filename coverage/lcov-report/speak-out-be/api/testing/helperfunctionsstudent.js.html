@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.07% </span>
+                <span class="strong">78.82% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>68/86</span>
+                <span class='fraction'>67/85</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.07% </span>
+                <span class="strong">78.82% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>68/86</span>
+                <span class='fraction'>67/85</span>
             </div>
         
             
@@ -234,9 +234,7 @@
 <a name='L175'></a><a href='#L175'>175</a>
 <a name='L176'></a><a href='#L176'>176</a>
 <a name='L177'></a><a href='#L177'>177</a>
-<a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L178'></a><a href='#L178'>178</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -418,7 +416,6 @@ const cleaner = require('knex-cleaner');
 const StudentModel = require('../models/student.model');
 const StaffModel = require('../models/staff.model');
 const bcrypt = require('bcrypt');
-const faker = require('faker');
 const password = bcrypt.hashSync('pass', 8);
 &nbsp;
 class Family {
@@ -435,18 +432,18 @@ class Family {
   }
 }
 class User {
-  constructor(role) {
+  constructor(role, username, email) {
     this.user_type = role;
-    this.username = faker.internet.userName();
+    this.username = username;
     this.password = password;
     this.name = 'Really long name';
     this.short_name = 'OneWordName';
-    this.email = faker.internet.email();
+    this.email = email;
   }
 }
 class Student {
-  constructor(family_id) {
-    this.cpr = faker.helpers.replaceSymbolWithNumber('########');
+  constructor(family_id, cpr) {
+    this.cpr = cpr;
     this.first_name = 'Onename';
     this.additional_names = 'A lot of names';
     this.gender = 'F';
@@ -459,7 +456,7 @@ class Student {
     this.road = '2550';
     this.building = '298';
     this.flat = '12';
-    this.email = faker.internet.email();
+    this.email = 'Whatever';
     this.notes = 'This student is just alright';
     this.preferred_contact_type_id = 1;
     this.no_call = true;
@@ -471,11 +468,11 @@ class Student {
 }
 &nbsp;
 class Staff {
-<span class="fstat-no" title="function not covered" >  co</span>nstructor(user_id) {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(user_id, cpr) {
 <span class="cstat-no" title="statement not covered" >    this.teaching_rate = '0.00';</span>
 <span class="cstat-no" title="statement not covered" >    this.active = true;</span>
 <span class="cstat-no" title="statement not covered" >    this.user_id = user_id;</span>
-<span class="cstat-no" title="statement not covered" >    this.cpr = faker.helpers.replaceSymbolWithNumber('########');</span>
+<span class="cstat-no" title="statement not covered" >    this.cpr = cpr;</span>
 <span class="cstat-no" title="statement not covered" >    this.mobile_number = '12345678';</span>
 <span class="cstat-no" title="statement not covered" >    this.accent = 'British';</span>
 <span class="cstat-no" title="statement not covered" >    this.gender = 'F';</span>
@@ -507,10 +504,10 @@ const cleanDB = async db =&gt; {
 };
 &nbsp;
 // IF YOU ONLY NEED USER/STAFF SEED
-const seedAStaff = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
-  const user = <span class="cstat-no" title="statement not covered" >new User('staff');</span>
+const seedAStaff = <span class="fstat-no" title="function not covered" >as</span>ync obj =&gt; {
+  const user = <span class="cstat-no" title="statement not covered" >new User('staff', obj.username, obj.email);</span>
   const [userid] = <span class="cstat-no" title="statement not covered" >await db('user').insert(user);</span>
-  const staff = <span class="cstat-no" title="statement not covered" >new Staff(userid);</span>
+  const staff = <span class="cstat-no" title="statement not covered" >new Staff(userid, obj.cpr);</span>
   const [id] = <span class="cstat-no" title="statement not covered" >await db('staff')</span>
     .insert(staff)
     .returning('*');
@@ -518,10 +515,10 @@ const seedAStaff = <span class="fstat-no" title="function not covered" >as</span
 };
 &nbsp;
 // IF YOU ONLY NEED USER/STAFF(ADMIN) SEED
-const seedAnAdmin = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
-  const user = <span class="cstat-no" title="statement not covered" >new User('admin');</span>
+const seedAnAdmin = <span class="fstat-no" title="function not covered" >as</span>ync obj =&gt; {
+  const user = <span class="cstat-no" title="statement not covered" >new User('admin', obj.username, obj.email);</span>
   const [userid] = <span class="cstat-no" title="statement not covered" >await db('user').insert(user);</span>
-  const admin = <span class="cstat-no" title="statement not covered" >new Staff(userid);</span>
+  const admin = <span class="cstat-no" title="statement not covered" >new Staff(userid, obj.cpr);</span>
   const [id] = <span class="cstat-no" title="statement not covered" >await db('staff')</span>
     .insert(admin)
     .returning('*');
@@ -529,8 +526,8 @@ const seedAnAdmin = <span class="fstat-no" title="function not covered" >as</spa
 };
 &nbsp;
 //IF YOU ONLY NEED USER/PARENT SEED
-const seedAParent = async () =&gt; {
-  const user = new User('parent');
+const seedAParent = async obj =&gt; { 
+  const user = new User('parent', obj.username, obj.email);
   const [id] = await db('user')
     .insert(user)
     .returning('user_id');
@@ -541,9 +538,9 @@ const seedAParent = async () =&gt; {
 };
 &nbsp;
 // IF YOU ONLY NEED USER/PARENT/STUDENT SEED
-const seedAStudent = async () =&gt; {
-  const [parentID] = await seedAParent();
-  const student = new Student(parentID);
+const seedAStudent = async (parentObj, studentObj) =&gt; {
+  const [parentID] = await seedAParent(parentObj);
+  const student = new Student(parentID, studentObj.cpr);
   const [id] = await db('student')
     .insert(student)
     .returning('id');
@@ -598,7 +595,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Feb 05 2020 14:05:58 GMT-0500 (Eastern Standard Time)
+                at Wed Feb 05 2020 14:37:45 GMT-0500 (Eastern Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
