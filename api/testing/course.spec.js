@@ -1,5 +1,7 @@
 const server = require('../server.js');
-// const db = require('../../database/db-config.js');
+const db = require('../../database/db-config.js');
+const helpers = require('./helperfunctionsstudent');
+
 const request = require('supertest');
 
 const createObj = {
@@ -38,75 +40,89 @@ const editObj = {
 	status: 'active'
 };
 
+let seededTeacher;
 describe('server.js', () => {
 	describe('environment', () => {
-		it('should set environment to testing', () => {
+		it('should set environment to testing', async () => {
 			expect(process.env.DB_ENV).toBe('testing');
 		});
 	});
+	beforeAll(async () => {
+		await helpers.cleanDB(db);
+		//do not delete
+		const res = await helpers.seedAStaff({
+			username: 'veryuniqueusername',
+			email: 'veryuniqueemail@gmail.com',
+			cpr: '8257235'
+		});
+		seededTeacher = res;
+	});
+	afterAll(async () => {
+		await helpers.cleanDB(db);
+	});
 
 	describe('FIND /course', () => {
-		it('should return a 200 OK', () => {
-			return request(server)
-				.get('/course')
-				.then(res => {
-					expect(res.status).toBe(200);
-				});
+		it('should return a 200 OK', async () => {
+			const res = await request(server).get('/course');
+			expect(res.status).toBe(200);
 		});
-		it('should return a JSON', () => {
-			return request(server)
-				.get('/course')
-				.then(res => {
-					expect(res.type).toMatch(/json/i);
-				});
+		it('should return a JSON', async () => {
+			const res = await request(server).get('/course');
+			expect(res.type).toMatch(/json/i);
+		});
+	});
+	describe('FIND BY ID /course/:id', () => {
+		it('should return a 200', async () => {
+			const res = await request(server).get(
+				`/course/${seededTeacher.staff_id}`
+			);
+			console.log('Find by ID', res.text);
+			console.log('Find by ID - ID', seededTeacher.staff_id);
+			expect(res.status).toBe(200);
+		});
+		it('should return a JSON', async () => {
+			const res = await request(server).get('/course/:id');
+			expect(res.type).toMatch(/json/i);
 		});
 	});
 	describe('CREATE /course', () => {
-		it('should return a 200', () => {
-			return request(server)
-				.post('/course', createObj)
-				.then(res => {
-					expect(res.status).toBe(200);
-				});
-		});
-		it('should return a JSON', () => {
-			return request(server)
+		it('should return a 200', async () => {
+			console.log('SEEDED TEACHER', seededTeacher);
+			const res = await request(server)
 				.post('/course')
-				.then(res => {
-					expect(res.type).toMatch(/json/i);
-				});
+				.send(createObj);
+			console.log('resBODY', res.text);
+			expect(res.status).toBe(200);
+		});
+		it('should return a JSON', async () => {
+			const res = await request(server).post('/course');
+			expect(res.type).toMatch(/json/i);
 		});
 	});
 	describe('EDIT /course/:id', () => {
-		it('should return a 200', () => {
-			return request(server)
-				.put('/course/:id', editObj)
-				.then(res => {
-					expect(res.status).toBe(200);
-				});
+		it('should return a 200', async () => {
+			const res = await request(server)
+				.put(`/course/${seededTeacher.staff_id}`)
+				.send(editObj);
+			expect(res.status).toBe(200);
 		});
-		it('should return a JSON', () => {
-			return request(server)
-				.put('/course/:id')
-				.then(res => {
-					expect(res.type).toMatch(/json/i);
-				});
+		it('should return a JSON', async () => {
+			const res = await request(server).put('/course/:id');
+
+			console.log(res.text);
+			expect(res.type).toMatch(/json/i);
 		});
 	});
 	describe('DELETE /course/:id', () => {
-		it('should return a 200', () => {
-			return request(server)
-				.delete('/course/:id')
-				.then(res => {
-					expect(res.status).toBe(200);
-				});
+		it('should return a 200', async () => {
+			const res = await request(server).delete(
+				`/course/${seededTeacher.staff_id}`
+			);
+			expect(res.status).toBe(200);
 		});
-		it('should return a JSON', () => {
-			return request(server)
-				.delete('/course/:id')
-				.then(res => {
-					expect(res.type).toMatch(/json/i);
-				});
+		it('should return a JSON', async () => {
+			const res = await request(server).delete('/course/:id');
+			expect(res.type).toMatch(/json/i);
 		});
 	});
 });

@@ -30,10 +30,5 @@ router.put(
   editAStaff
 );
 router.delete('/staff/:staffID', checkIfStaffExistsByID, deleteAStaff);
-router.get(
-  '/staff/:staffID/courses',
-  checkIfStaffExistsByID,
-  getAllCoursesByStaff
-);
 
 module.exports = router;

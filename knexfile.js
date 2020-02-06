@@ -38,12 +38,11 @@ module.exports = {
 			user: database_user,
 			password: database_password
 		},
-		useNullAsDefault: true,
-		migrations: {
-			directory: './database/migrations'
-		},
 		seeds: {
 			directory: './database/seeds'
+		},
+		migrations: {
+			directory: './database/migrations'
 		}
 	}
 };

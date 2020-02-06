@@ -1,9 +1,9 @@
 const Course = require('../models/course.model');
+const AppError = require('../utils/AppError');
+const { catchAsync } = require('../utils/catchAsync');
 
 const validateCourseID = (req, res, next) => {
-	console.log(req.params.courseID);
 	const courseID = +req.params.courseID;
-	console.log(courseID);
 	if (isNaN(courseID)) {
 		return res.status(401).json({ error: 'Please enter a valid ID' });
 	}
@@ -11,16 +11,18 @@ const validateCourseID = (req, res, next) => {
 	next();
 };
 
-const checkIfCourseExistsByID = async (req, res, next) => {
+const checkIfCourseExistsByID = catchAsync(async (req, res, next) => {
 	const course = await Course.findByID(req.courseID);
+	console.log(course);
 	if (!course) {
-		return res.status(406).json({ error: 'Staff with that ID does not exist' });
+		next(new AppError('Staff with that ID does not exist', 406));
+		return;
 	}
 	req.course = course;
 	next();
-};
+});
 
-const validateCourseBody = async (req, res, next) => {
+const validateCourseBody = (req, res, next) => {
 	const {
 		term_id,
 		course_type_id,
@@ -56,7 +58,8 @@ const validateCourseBody = async (req, res, next) => {
 		!notes ||
 		!status
 	) {
-		return res.status(400).json({ error: 'Wrong body' });
+		next(new AppError('Wrong body', 400));
+		return;
 	}
 
 	req.courseValidated = {
