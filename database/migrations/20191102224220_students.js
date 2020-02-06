@@ -2,50 +2,32 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('school_grade', table => {
       table.increments();
-      table
-        .text('name')
-        .notNullable()
-        .unique();
+      table.text('name').notNullable().unique();
       table.timestamps(true, true);
     })
     .createTable('user', table => {
       table.increments('user_id');
       table.string('user_type').notNullable();
-      table
-        .text('username')
-        .unique()
-        .notNullable();
+      table.text('username').unique().notNullable();
       table.text('password').notNullable();
-      table
-        .text('email')
-        .unique()
-        .notNullable();
-      table.text('name').notNullable();
+      table.text('email').unique().notNullable();
+      table.text('name');
       table.text('short_name');
       table.timestamps(true, true);
     })
     .createTable('preferred_contact_type', table => {
       table.increments();
-      table
-        .text('method')
-        .notNullable()
-        .unique();
+      table.text('method').notNullable().unique();
       table.timestamps(true, true);
     })
     .createTable('location', table => {
       table.increments();
-      table
-        .text('name')
-        .notNullable()
-        .unique();
+      table.text('name').notNullable().unique();
       table.timestamps(true, true);
     })
     .createTable('block', table => {
       table.increments();
-      table
-        .integer('block_code')
-        .notNullable()
-        .unique();
+      table.integer('block_code').notNullable().unique();
       table.text('neighborhood');
       table.timestamps(true, true);
     })

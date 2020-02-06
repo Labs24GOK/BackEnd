@@ -36,8 +36,10 @@ initializePassport(passport);
 server.use(staffroutes);
 server.use(studentroutes);
 server.use(courseroutes);
+
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
+  console.log('register');
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   model
     .addUser({
@@ -61,6 +63,7 @@ server.post('/register', (req, res) => {
 });
 
 server.post('/parent-register', (req, res) => {
+  console.log('parent-register');
   const user = req.body.user;
   const family = req.body.family;
   const student = req.body.student;
