@@ -64,6 +64,22 @@ describe('staff routes', () => {
     active: true,
   };
 
+  //edited request body
+    const requestBody3 = {
+      username: 'staff_test_3001',
+      password: 'staff_test_3001',
+      email: 'staff3001@gmail.com',
+      name: 'Gloomy Instructor',
+      short_name: 'Teacher',
+      cpr: 86763583101,
+      mobile_number: 4906578658,
+      accent: 'Jamaican',
+      gender: 'M',
+      teaching_rate: 7.8,
+      admin: false,
+      active: true,
+    };
+
   describe('GET /staff', () => {
     it('Should return a 200 status and array.', () => {
       return request(server)
@@ -114,52 +130,74 @@ describe('staff routes', () => {
 
   describe('GET /staff/:staffID', () => {
 
-    it('Should return a 200 status and array.', () => {
+    it("Should return a 200 status and json data including 'name: Merry Teacher1'.", () => {
       return request(server)
         .post('/staff')
         .send(requestBody1)
         .then(res => {
-          console.log("RES", res)
+          // console.log("RES", res)
           return request(server)
           .get(`/staff/${res.body.staff_id}`)
-              .then(res => {
-                expect(res.status).toEqual(200);
-                expect(res.type).toMatch(/json/i);
+              .then(resp => {
+                expect(resp.status).toEqual(200);
+                expect(resp.type).toMatch(/json/i);
+                expect(resp.body.name).toBe('Merry Teacher1');
             });
         });
     });
   });
 
   describe('PUT /staff/:staffID', () => {
-    // it('Should return a 200 status and array.', () => {
-    //   return request(server)
-    //     .get('/staff')
-    //     .then(res => {
-    //       expect(res.status).toEqual(200);
-    //       expect(Array.isArray(res.body)).toBe(true);
-    //       expect(res.type).toMatch(/json/i);
-    //     });
+    it("Should return a 200 status and json data including 'name: Gloomy Instructor'.", () => {
+      return request(server)
+        .post('/staff')
+        .send(requestBody1)
+        .then(res => {
+          return request(server)
+          .put(`/staff/${res.body.staff_id}`)
+          .send(requestBody3)
+          .then(resp => {
+            // console.log("RESP", resp)
+                expect(resp.status).toEqual(201);
+                expect(resp.type).toMatch(/json/i);
+                expect(resp.body.name).toBe('Gloomy Instructor');
+            });
+        });
+    });
   });
 
   describe('DELETE /staff/:staffID', () => {
-    // it('Should return a 200 status and array.', () => {
-    //   return request(server)
-    //     .get('/staff')
-    //     .then(res => {
-    //       expect(res.status).toEqual(200);
-    //       expect(Array.isArray(res.body)).toBe(true);
-    //       expect(res.type).toMatch(/json/i);
-    //     });
+    
+    it("Should return a 200 status and message 'staff deleted'.", () => {
+    return request(server)
+        .post('/staff')
+        .send(requestBody1)
+        .then(res => {
+          return request(server)
+          .del(`/staff/${res.body.staff_id}`)
+          .then(resp => {
+            // console.log("RESP", resp)
+              expect(resp.status).toEqual(200);
+              expect(resp.body.message).toBe('Staff Deleted');
+            });
+        });
+      });
   });
 
   describe('GET /staff/:staffID/courses', () => {
-    // it('Should return a 200 status and array.', () => {
-    //   return request(server)
-    //     .get('/staff')
-    //     .then(res => {
-    //       expect(res.status).toEqual(200);
-    //       expect(Array.isArray(res.body)).toBe(true);
-    //       expect(res.type).toMatch(/json/i);
-    //     });
+    it("Should return a 404 not found status (there are no courses for this ID).", () => {
+      return request(server)
+        .post('/staff')
+        .send(requestBody1)
+        .then(res => {
+          return request(server)
+          .get(`/staff/${res.body.staff_id}/courses`)
+          .then(resp => {
+            // console.log("RESP", resp)
+                expect(resp.status).toEqual(404);
+            });
+        });
+    });
   });
+
 });
