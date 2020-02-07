@@ -68,6 +68,8 @@ server.post('/register', (req, res) => {
     });
 });
 
+// ***********       OLD PARENT-REGISTER API      **********************
+
 // server.post('/parent-register', (req, res) => {
 //   console.log('parent-register');
 //   const user = req.body.user;
@@ -134,6 +136,8 @@ server.post('/register', (req, res) => {
 //       });
 //     });
 // });
+
+// ***********       OLD PARENT-REGISTER API      **********************
 
 server.post(
   '/login',
