@@ -24,7 +24,8 @@ server.use(
       'https://stagingspeakout.netlify.com',
       'https://adminspeakout.netlify.com',
       'http://localhost:3000',
-      'https://speakout-now.com'
+      'https://speakout-now.com',
+      'https://speakout-bh.netlify.com'
     ],
     credentials: true
   })
@@ -38,7 +39,10 @@ server.use(studentroutes);
 server.use(courseroutes);
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+  const hashedPassword = bcrypt.hashSync(
+    req.body.password,
+    10
+  );
   model
     .addUser({
       user_type: req.body.user_type,
@@ -49,7 +53,8 @@ server.post('/register', (req, res) => {
     })
     .then(user => {
       res.status(201).json({
-        message: `The user '${user[0].username}' has successfully been created!`
+        message: `The user '${user[0]
+          .username}' has successfully been created!`
       });
     })
     .catch(error => {
@@ -140,7 +145,9 @@ server.post(
         user_id: req.user.user_id
       });
     } else {
-      res.status(500).json({ message: 'Invalid credentials' });
+      res
+        .status(500)
+        .json({ message: 'Invalid credentials' });
     }
   }
 );
@@ -210,7 +217,11 @@ server.delete('/api', (req, res) => {
   model
     .remove(req.query.table, req.query.where)
     .then(removed => {
-      res.status(200).json('number of rows removed: ' + removed.rowCount);
+      res
+        .status(200)
+        .json(
+          'number of rows removed: ' + removed.rowCount
+        );
     })
     .catch(error => {
       res.status(500).json(error + '');
@@ -280,13 +291,21 @@ server.post('/api/attendance', (req, res) => {
           .catch(err => {
             res
               .status(500)
-              .json({ error: err + '', message: 'Error saving students' });
+              .json({
+                error: err + '',
+                message: 'Error saving students'
+              });
           });
       });
       res.status(201).json(saved);
     })
     .catch(err =>
-      res.status(500).json({ error: err + '', message: 'Error saving meeting' })
+      res
+        .status(500)
+        .json({
+          error: err + '',
+          message: 'Error saving meeting'
+        })
     );
 });
 

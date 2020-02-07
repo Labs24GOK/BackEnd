@@ -31,6 +31,4 @@ router.put(
 );
 router.delete('/student/:studentID', checkIfStudentExistsByID, deleteAStudent);
 
-
-
 module.exports = router;

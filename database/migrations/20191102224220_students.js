@@ -79,7 +79,15 @@ exports.up = function(knex) {
     .createTable('student', table => {
       table.increments();
       table.text('cpr').unique();
-      table.date('registration_date').defaultTo(knex.fn.now());
+      table
+        .date('registration_date')
+        .defaultTo(
+          new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate()
+          ).toUTCString()
+        );
       table.text('first_name');
       table.text('additional_names');
       table.text('gender');
@@ -93,7 +101,15 @@ exports.up = function(knex) {
         .onUpdate('CASCADE')
         .index();
       table.text('school_name');
-      table.date('grade_updated').defaultTo(knex.fn.now());
+      table
+        .date('grade_updated')
+        .defaultTo(
+          new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate()
+          ).toUTCString()
+        );
       table.text('home_telephone');
       table.text('mobile_telephone');
       table
@@ -137,7 +153,7 @@ exports.up = function(knex) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
         .index();
-      table.timestamps(true, true);
+      // table.timestamps(true, true);
     });
 };
 

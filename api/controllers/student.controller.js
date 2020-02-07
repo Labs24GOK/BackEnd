@@ -25,7 +25,7 @@ const createAStudent = catchAsync(async (req, res) => {
 const editAStudent = catchAsync(async (req, res) => {
   const [editedStudent] = await Student.update(req.studentID, req.student);
   const student = await Student.findByID(editedStudent.id);
-  res.status(201).json(student);
+  res.status(200).json(student);
 });
 
 const getDropdowns = catchAsync(async (req, res) => {
