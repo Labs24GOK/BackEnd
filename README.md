@@ -2,15 +2,10 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5639a94bef21c852db5f/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/speak-out-be/test_coverage)
 
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### 1️⃣ Backend delpoyed at [Heroku](https://speakout-lambda.herokuapp.com/) <br>
+#### 2️⃣ [Postman Documentation](https://documenter.getpostman.com/view/8230639/SWTD8wyQ?version=latest#ab443920-3ba6-46b2-bff9-0de953af9172)
 
 ## 1️⃣ Getting started
 
@@ -19,9 +14,9 @@ To get the server running locally:
 🚫 adjust these scripts to match your project.
 
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **npm install** to install all required dependencies
+- **npm run server** to start the local server
+- **npm run test** to start server using testing environment
 
 ### Backend framework goes here
 
@@ -127,12 +122,14 @@ In order for the app to function correctly, the user must set up their own envir
 create a .env file that includes the following:
 
 🚫 These are just examples, replace them with the specifics for your app
-    
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+
+    * PORT - Port number (4000 by default)
+    * NODE_ENV - set to "development" until ready for "production"
+    * DB_NAME - local database name
+    * DB_TESTING_NAME - local testing-database name
+    * DB_USER - local database role
+    * DB_ENV - local database environment
+    * DB_PASSWORD local database role password 
     
 ## Contributing
 
