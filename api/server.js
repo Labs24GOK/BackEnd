@@ -12,6 +12,7 @@ const checkAuthenticated = require('../middleware/checkAuthenticated.js');
 const staffroutes = require('./routes/staff.routes');
 const studentroutes = require('./routes/student.routes');
 const globalErrorHandler = require('./controllers/errors.controller');
+const authroutes = require('./routes/auth.routes');
 const courseroutes = require('./routes/course.routes');
 
 // ------- Set up server -------
@@ -36,11 +37,15 @@ initializePassport(passport);
 server.use(staffroutes);
 server.use(studentroutes);
 server.use(courseroutes);
+server.use(authroutes);
 
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
   console.log('register');
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+  const hashedPassword = bcrypt.hashSync(
+    req.body.password,
+    10
+  );
   model
     .addUser({
       user_type: req.body.user_type,
@@ -51,7 +56,8 @@ server.post('/register', (req, res) => {
     })
     .then(user => {
       res.status(201).json({
-        message: `The user '${user[0].username}' has successfully been created!`
+        message: `The user '${user[0]
+          .username}' has successfully been created!`
       });
     })
     .catch(error => {
@@ -62,72 +68,72 @@ server.post('/register', (req, res) => {
     });
 });
 
-server.post('/parent-register', (req, res) => {
-  console.log('parent-register');
-  const user = req.body.user;
-  const family = req.body.family;
-  const student = req.body.student;
+// server.post('/parent-register', (req, res) => {
+//   console.log('parent-register');
+//   const user = req.body.user;
+//   const family = req.body.family;
+//   const student = req.body.student;
 
-  const hashedPassword = bcrypt.hashSync(user.password, 10);
+//   const hashedPassword = bcrypt.hashSync(user.password, 10);
 
-  model
-    .addUser({
-      username: user.username,
-      password: hashedPassword,
-      name: user.name || null,
-      email: user.email || null,
-      user_type: user.user_type
-    })
-    .then(user => {
-      console.log('User return:', user);
-      model
-        .addFamily({
-          mother_name: family.mother_name,
-          father_name: family.father_name,
-          primary_telephone: family.primary_telephone,
-          secondary_telephone: family.secondary_telephone,
-          user_id: user[0].user_id
-        })
-        .then(family => {
-          console.log('Family return:', family);
-          model
-            .addStudent({
-              first_name: student.first_name,
-              additional_names: student.additional_names,
-              cpr: student.cpr,
-              email: student.email,
-              birthdate: student.birthdate,
-              registration_date: new Date(),
-              location_id: student.location_id,
-              family_id: family[0].user_id
-            })
-            .then(student => {
-              console.log('Student return:', student);
-              res.status(200).json({
-                student_name: student[0]
-              });
-            })
-            .catch(error => {
-              console.log('student', error);
-              res.status(500).json({
-                message: `There was an error attempting to register a student: ${error}.`
-              });
-            });
-        })
-        .catch(error => {
-          console.log('family', error);
-          res.status(500).json({
-            message: `There was an error attempting to add a family: ${error}.`
-          });
-        });
-    })
-    .catch(error => {
-      console.log('user', error);
-      res.status(500).json({
-        message: `There was an error attempting to register user: ${error}.`
-      });
-    });
-});
+//   model
+//     .addUser({
+//       username: user.username,
+//       password: hashedPassword,
+//       name: user.name || null,
+//       email: user.email || null,
+//       user_type: user.user_type
+//     })
+//     .then(user => {
+//       console.log('User return:', user);
+//       model
+//         .addFamily({
+//           mother_name: family.mother_name,
+//           father_name: family.father_name,
+//           primary_telephone: family.primary_telephone,
+//           secondary_telephone: family.secondary_telephone,
+//           user_id: user[0].user_id
+//         })
+//         .then(family => {
+//           console.log('Family return:', family);
+//           model
+//             .addStudent({
+//               first_name: student.first_name,
+//               additional_names: student.additional_names,
+//               cpr: student.cpr,
+//               email: student.email,
+//               birthdate: student.birthdate,
+//               registration_date: new Date(),
+//               location_id: student.location_id,
+//               family_id: family[0].user_id
+//             })
+//             .then(student => {
+//               console.log('Student return:', student);
+//               res.status(200).json({
+//                 student_name: student[0]
+//               });
+//             })
+//             .catch(error => {
+//               console.log('student', error);
+//               res.status(500).json({
+//                 message: `There was an error attempting to register a student: ${error}.`
+//               });
+//             });
+//         })
+//         .catch(error => {
+//           console.log('family', error);
+//           res.status(500).json({
+//             message: `There was an error attempting to add a family: ${error}.`
+//           });
+//         });
+//     })
+//     .catch(error => {
+//       console.log('user', error);
+//       res.status(500).json({
+//         message: `There was an error attempting to register user: ${error}.`
+//       });
+//     });
+// });
 
 server.post(
   '/login',
@@ -143,7 +149,9 @@ server.post(
         user_id: req.user.user_id
       });
     } else {
-      res.status(500).json({ message: 'Invalid credentials' });
+      res
+        .status(500)
+        .json({ message: 'Invalid credentials' });
     }
   }
 );
@@ -213,7 +221,11 @@ server.delete('/api', (req, res) => {
   model
     .remove(req.query.table, req.query.where)
     .then(removed => {
-      res.status(200).json('number of rows removed: ' + removed.rowCount);
+      res
+        .status(200)
+        .json(
+          'number of rows removed: ' + removed.rowCount
+        );
     })
     .catch(error => {
       res.status(500).json(error + '');
@@ -281,15 +293,19 @@ server.post('/api/attendance', (req, res) => {
             console.log(saved);
           })
           .catch(err => {
-            res
-              .status(500)
-              .json({ error: err + '', message: 'Error saving students' });
+            res.status(500).json({
+              error: err + '',
+              message: 'Error saving students'
+            });
           });
       });
       res.status(201).json(saved);
     })
     .catch(err =>
-      res.status(500).json({ error: err + '', message: 'Error saving meeting' })
+      res.status(500).json({
+        error: err + '',
+        message: 'Error saving meeting'
+      })
     );
 });
 
