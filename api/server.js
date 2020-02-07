@@ -25,7 +25,8 @@ server.use(
       'https://stagingspeakout.netlify.com',
       'https://adminspeakout.netlify.com',
       'http://localhost:3000',
-      'https://speakout-now.com'
+      'https://speakout-now.com',
+      'https://speakout-bh.netlify.com'
     ],
     credentials: true
   })
@@ -41,7 +42,6 @@ server.use(authroutes);
 
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
-  console.log('register');
   const hashedPassword = bcrypt.hashSync(
     req.body.password,
     10
