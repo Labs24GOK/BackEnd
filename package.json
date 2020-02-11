@@ -4,9 +4,11 @@
 	"description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
 	"main": "index.js",
 	"scripts": {
-		"test": "cross-env DB_ENV=testing jest --verbose --i --forceExit --watchAll --coverage",
 		"server": "nodemon index.js",
-		"start": "node index.js"
+		"start": "node index.js",
+		"test": "cross-env DB_ENV=testing jest --verbose --i --forceExit --detectOpenHandles",
+		"test-watch": "cross-env DB_ENV=testing jest --verbose --i --watchAll",
+		"coverage": "cross-env DB_ENV=testing jest --verbose --i --forceExit --coverage || true"
 	},
 	"jest": {
 		"testEnvironment": "node"
