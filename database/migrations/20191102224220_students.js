@@ -127,7 +127,7 @@ exports.up = function(knex) {
 			table.text('primary_emergency_contact_name');
 			table.text('primary_emergency_relationship');
 			table.text('primary_emergency_phone');
-			table.text('emergency_contact_phone');
+			table.text('emergency_contact_name');
 			table.text('emergency_relationship');
 			table.text('emergency_phone');
 			table.text('notes');
