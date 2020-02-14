@@ -46,7 +46,14 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     delinquent,
     expelled,
     registration_date,
-    grade_updated
+    grade_updated,
+    primary_emergency_contact_name,
+    primary_emergency_relationship,
+    primary_emergency_phone,
+    emergency_contact_name,
+    emergency_relationship,
+    emergency_phone,
+
   } = req.body;
   if (
     (!first_name ||
@@ -110,7 +117,13 @@ const validateStudentBody = catchAsync(async (req, res, next) => {
     no_call,
     delinquent, 
     expelled, 
-    registration_date
+    registration_date,
+    primary_emergency_contact_name,
+    primary_emergency_relationship,
+    primary_emergency_phone,
+    emergency_contact_name,
+    emergency_relationship,
+    emergency_phone,
   };
   next();
 });
