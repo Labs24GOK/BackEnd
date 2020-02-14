@@ -52,6 +52,12 @@ class Student {
 		this.expelled = true;
 		this.location_id = 1;
 		this.family_id = family_id;
+		this.primary_emergency_contact_name = "Father name"
+		this.primary_emergency_relationship = "Father"
+		this.primary_emergency_phone = "2335643636"
+		this.emergency_contact_name = "Mother name"
+		this.emergency_relationship = "Mother"
+		this.emergency_phone = "456457434"
 	}
 }
 

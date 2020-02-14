@@ -27,7 +27,13 @@ const returning = [
   's.location_id',
   'l.name as location',
   's.family_id',
-  'u.name as parent_name'
+  'u.name as parent_name',
+  's.primary_emergency_contact_name',
+  's.primary_emergency_relationship',
+  's.primary_emergency_phone',
+  's.emergency_contact_name',
+  's.emergency_relationship',
+  's.emergency_phone'
 ];
 
 const db = require('../../database/db-config');
@@ -102,24 +108,26 @@ const update = (id, body) => {
 };
 
 const getAllSchoolGrades = () => {
-  return db('school_grade').select(["id",'name'])
-}
+  return db('school_grade').select(['id', 'name']);
+};
 
 const getAllBlocks = () => {
-  return db('block').select(["block_code","neighborhood"])
-}
+  return db('block').select(['block_code', 'neighborhood']);
+};
 
 const getAllPreferredContactType = () => {
-  return db('preferred_contact_type').select(["id","method"])
-}
+  return db('preferred_contact_type').select(['id', 'method']);
+};
 
 const getAllLocations = () => {
-  return db('location').select(["id","name"])
-}
+  return db('location').select(['id', 'name']);
+};
 
 const getAllFamilies = () => {
-  return db('family as f').join('user as u','u.user_id',"f.user_id").select(["f.id","u.name"])
-}
+  return db('family as f')
+    .join('user as u', 'u.user_id', 'f.user_id')
+    .select(['f.id', 'u.name']);
+};
 
 module.exports = {
   findAll,
