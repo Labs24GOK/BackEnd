@@ -134,5 +134,6 @@ module.exports = {
 	find,
 	edit,
 	remove,
-	findCoursesByTeacherID
+	findCoursesByTeacherID,
+	findCoursesByStudentID
 };

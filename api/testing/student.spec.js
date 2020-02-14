@@ -50,7 +50,13 @@ describe('student.routes.js', () => {
 		notes: 'Notes',
 		preferred_contact_type_id: 2,
 		location_id: 2,
-		family_id: 2
+		family_id: 2,
+		primary_emergency_contact_name: "Luis",
+    primary_emergency_relationship: "Father",
+    primary_emergency_phone: "7855887522",
+    emergency_contact_name: "Lissette",
+    emergency_relationship: "Mother",
+    emergency_phone:"231864102"
 	};
 	/// WHATS EXPECTED BACK FROM THE SERVER
 	const toMatchObj = {
@@ -82,7 +88,13 @@ describe('student.routes.js', () => {
 		location_id: expect.any(Number),
 		family_id: expect.any(Number),
 		parent_name: expect.any(String),
-		location: expect.any(String)
+		location: expect.any(String),
+		primary_emergency_contact_name: expect.any(String),
+    primary_emergency_relationship: expect.any(String),
+    primary_emergency_phone: expect.any(String),
+    emergency_contact_name: expect.any(String),
+    emergency_relationship: expect.any(String),
+    emergency_phone: expect.any(String)
 	};
 	describe('POST /student', () => {
 		//Valid Request Body
