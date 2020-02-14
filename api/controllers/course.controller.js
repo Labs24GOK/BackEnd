@@ -8,10 +8,6 @@ const findCourseById = catchAsync(async (req, res) => {
 	return res.status(200).json(req.course);
 });
 
-const findCourseByStaffId = catchAsync(async (req, res) => {});
-
-const findCourseByStudentId = catchAsync(async (req, res) => {});
-
 const findAllCourses = catchAsync(async (req, res) => {
 	const courses = await Course.find(req.query);
 	return res.status(200).json(courses);
@@ -73,7 +69,6 @@ const populateCourseDropdowns = catchAsync(async (req, res) => {
 module.exports = {
 	findCourseById,
 	findCourseByStaffId,
-	findCourseByStudentId,
 	findAllCourses,
 	deleteACourse,
 	createACourse,
