@@ -68,7 +68,6 @@ const populateCourseDropdowns = catchAsync(async (req, res) => {
 
 module.exports = {
 	findCourseById,
-	findCourseByStaffId,
 	findAllCourses,
 	deleteACourse,
 	createACourse,

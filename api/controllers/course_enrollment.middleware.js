@@ -11,8 +11,8 @@ const validateCourseEnrollmentBody = (req, res, next) => {
   }
 
   req.courseEnrollment = {
-    first_day: first_day || new Date(),
-    last_day: last_day || new Date(),
+    first_day: first_day || req.course.start_date,
+    last_day: last_day || req.course.end_date,
     result_type_code,
     notes,
     course_id: req.courseID,

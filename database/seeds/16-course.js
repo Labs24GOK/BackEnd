@@ -18,6 +18,8 @@ exports.seed = function(knex) {
           room_id: 1,
           start_time: '16:30',
           end_time: '18:30',
+          start_date: knex.fn.now(6),
+          end_date: new Date(2020, 5, 6),
           teacher_id: 3,
           notes: 'Some notes about this course',
           status: 'completed'
@@ -35,6 +37,8 @@ exports.seed = function(knex) {
           room_id: 2,
           start_time: '16:30',
           end_time: '18:30',
+          start_date: knex.fn.now(6),
+          end_date: new Date(2020, 5, 6),
           teacher_id: 3,
           notes: 'Some notes about this course',
           status: 'completed'
@@ -52,6 +56,8 @@ exports.seed = function(knex) {
           room_id: 3,
           start_time: '16:30',
           end_time: '18:30',
+          start_date: knex.fn.now(6),
+          end_date: new Date(2020, 5, 6),
           teacher_id: 3,
           notes: 'Some notes about this course',
           status: 'completed'
@@ -69,6 +75,8 @@ exports.seed = function(knex) {
           room_id: 4,
           start_time: '16:30',
           end_time: '18:30',
+          start_date: knex.fn.now(6),
+          end_date: new Date(2020, 5, 6),
           teacher_id: 3,
           notes: 'Some notes about this course',
           status: 'completed'
@@ -86,6 +94,8 @@ exports.seed = function(knex) {
           room_id: 5,
           start_time: '16:30',
           end_time: '18:30',
+          start_date: knex.fn.now(6),
+          end_date: new Date(2020, 5, 6),
           teacher_id: 3,
           notes: 'Some notes about this course',
           status: 'completed'
@@ -103,6 +113,8 @@ exports.seed = function(knex) {
           room_id: 6,
           start_time: '16:30',
           end_time: '18:30',
+          start_date: knex.fn.now(6),
+          end_date: new Date(2020, 5, 6),
           teacher_id: 3,
           notes: 'Some notes about this course',
           status: 'completed'
