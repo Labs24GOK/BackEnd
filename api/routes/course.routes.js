@@ -6,7 +6,8 @@ const {
   createACourse,
   editACourse,
   deleteACourse,
-  populateCourseDropdowns
+  populateCourseDropdowns,
+  getAllStudentsInACourse
 } = require('../controllers/course.controller');
 
 const {
@@ -23,6 +24,11 @@ router.get('/course', findAllCourses);
 router.post('/course', validateCourseBody, createACourse);
 router.get('/course/dropdowns', populateCourseDropdowns);
 router.get('/course/:courseID', checkIfCourseExistsByID, findCourseById);
+router.get(
+  '/course/:courseID/students',
+  checkIfCourseExistsByID,
+  getAllStudentsInACourse
+);
 router.put(
   '/course/:courseID',
   checkIfCourseExistsByID,

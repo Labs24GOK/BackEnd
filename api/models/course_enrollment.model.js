@@ -53,7 +53,11 @@ const find = (studentID, courseID) => {
 
 const findByCourseID = courseID => {
   return db('course_enrollment as ce')
-    .select(studentView)
+    .select([
+      ...studentView,
+      's.first_name as student_first_name',
+      's.additional_names as student_additional_names'
+    ])
     .where({
       'ce.course_id': courseID
     })
@@ -63,7 +67,8 @@ const findByCourseID = courseID => {
     .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
     .join('course_schedule as cs', 'cs.id', 'c.course_schedule_id')
-    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code');
+    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code')
+    .join('student as s', 's.id', 'ce.student_id');
 };
 
 const findAll = () => {

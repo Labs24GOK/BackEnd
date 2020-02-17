@@ -12,7 +12,7 @@ const findCourseById = catchAsync(async (req, res) => {
 const findAllCourses = catchAsync(async (req, res) => {
   const courses = await Course.find(req.query);
   /// GET ALL ACTIVE AND NON ACTIVE STUDENTS --> NEEDS TO BE REFACTORED INTO A QUERY FOR BETTER PERFORMANCE
-  const modifiedCourses = await courses.map(async course => {
+  const modifiedCourses = courses.map(async course => {
     const students = await CourseEnrollment.findByCourseID(course.course_id);
     let activeStudents = 0;
     for (student of students) {
@@ -54,6 +54,11 @@ const editACourse = catchAsync(async (req, res) => {
   return res.status(200).json(course);
 });
 
+const getAllStudentsInACourse = catchAsync(async (req, res) => {
+  const students = await CourseEnrollment.findByCourseID(req.courseID);
+  return res.status(200).json(students);
+});
+
 const populateCourseDropdowns = catchAsync(async (req, res) => {
   const dropdowns = [
     Course.findAllTerms(),
@@ -93,5 +98,6 @@ module.exports = {
   deleteACourse,
   createACourse,
   editACourse,
-  populateCourseDropdowns
+  populateCourseDropdowns,
+  getAllStudentsInACourse
 };
