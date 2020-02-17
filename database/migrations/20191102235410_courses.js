@@ -154,6 +154,8 @@ exports.up = function(knex) {
         .index();
       table.time('start_time');
       table.time('end_time');
+      table.date('start_date');
+      table.date('end_date');
       table
         .integer('teacher_id')
         .unsigned()

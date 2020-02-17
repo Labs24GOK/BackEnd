@@ -14,6 +14,7 @@ const studentroutes = require('./routes/student.routes');
 const globalErrorHandler = require('./controllers/errors.controller');
 const authroutes = require('./routes/auth.routes');
 const courseroutes = require('./routes/course.routes');
+const courseenrollmentroutes = require('./routes/course_enrollment.routes');
 
 // ------- Set up server -------
 const server = express();
@@ -40,13 +41,11 @@ server.use(staffroutes);
 server.use(studentroutes);
 server.use(courseroutes);
 server.use(authroutes);
+server.use(courseenrollmentroutes);
 
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
-  const hashedPassword = bcrypt.hashSync(
-    req.body.password,
-    10
-  );
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   model
     .addUser({
       user_type: req.body.user_type,
@@ -57,8 +56,7 @@ server.post('/register', (req, res) => {
     })
     .then(user => {
       res.status(201).json({
-        message: `The user '${user[0]
-          .username}' has successfully been created!`
+        message: `The user '${user[0].username}' has successfully been created!`
       });
     })
     .catch(error => {
@@ -154,9 +152,7 @@ server.post(
         user_id: req.user.user_id
       });
     } else {
-      res
-        .status(500)
-        .json({ message: 'Invalid credentials' });
+      res.status(500).json({ message: 'Invalid credentials' });
     }
   }
 );
@@ -226,11 +222,7 @@ server.delete('/api', (req, res) => {
   model
     .remove(req.query.table, req.query.where)
     .then(removed => {
-      res
-        .status(200)
-        .json(
-          'number of rows removed: ' + removed.rowCount
-        );
+      res.status(200).json('number of rows removed: ' + removed.rowCount);
     })
     .catch(error => {
       res.status(500).json(error + '');
