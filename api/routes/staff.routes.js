@@ -23,6 +23,11 @@ router.param('staffID', validateStaffID);
 router.get('/staff', findAllStaff);
 router.post('/staff', validateCreateStaff, createAStaff);
 router.get('/staff/:staffID', checkIfStaffExistsByID, findStaffById);
+router.get(
+  '/staff/:staffID/courses',
+  checkIfStaffExistsByID,
+  getAllCoursesByStaff
+);
 router.put(
   '/staff/:staffID',
   checkIfStaffExistsByID,

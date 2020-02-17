@@ -41,6 +41,7 @@ const editEnrollment = catchAsync(async (req, res, next) => {
 
 const getAllEnrollmentsOfCourses = catchAsync(async (req, res, next) => {
   const enrollments = await CourseEnrollment.findAll();
+  console.log(enrollments);
   res.status(200).json(enrollments);
 });
 

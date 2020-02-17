@@ -6,7 +6,8 @@ const {
   deleteAStudent,
   createAStudent,
   editAStudent,
-  getDropdowns
+  getDropdowns,
+  getAllCoursesOfStudent
 } = require('../controllers/student.controller');
 
 const {
@@ -23,6 +24,11 @@ router.get('/student/dropdowns', getDropdowns);
 router.get('/students', findAllStudents);
 router.post('/student', validateStudentBody, createAStudent);
 router.get('/student/:studentID', checkIfStudentExistsByID, findStudentById);
+router.get(
+  '/student/:studentID/courses',
+  checkIfStudentExistsByID,
+  getAllCoursesOfStudent
+);
 router.put(
   '/student/:studentID',
   checkIfStudentExistsByID,
