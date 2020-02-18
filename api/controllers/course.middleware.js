@@ -30,7 +30,6 @@ const validateCourseBody = (req, res, next) => {
     school_grade_id,
     level_id,
     section,
-    subsection,
     hourly_rate,
     course_schedule_id,
     room_id,
@@ -48,7 +47,6 @@ const validateCourseBody = (req, res, next) => {
     !school_grade_id ||
     !level_id ||
     !section ||
-    !subsection ||
     !hourly_rate ||
     !course_schedule_id ||
     !room_id ||
@@ -69,7 +67,6 @@ const validateCourseBody = (req, res, next) => {
     school_grade_id,
     level_id,
     section,
-    subsection,
     hourly_rate,
     course_schedule_id,
     room_id,
