@@ -20,7 +20,7 @@ const returning = [
   'course.school_grade_id as school_grade_id',
   'course.level_id as level_id',
   'level.description as level',
-  'course_schedule.long_description as course_schedule',
+  'course_schedule.short_description as course_schedule',
   'course.course_schedule_id as course_schedule_id',
   'room.chairs as room',
   'course.room_id as room_id',
