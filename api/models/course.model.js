@@ -13,12 +13,18 @@ const returning = [
   'course.notes',
   'course.status',
   'course_type.description as course_type',
+  'course.course_type_id as course_type_id',
   'group_type.long_description as group_type',
+  'course.group_type_id as group_type_id',
   'school_grade.name as school_grade',
+  'course.school_grade_id as school_grade_id',
   'course.level_id as level_id',
   'level.description as level',
   'course_schedule.long_description as course_schedule',
+  'course.course_schedule_id as course_schedule_id',
   'room.chairs as room',
+  'course.room_id as room_id',
+  'course.teacher_id as teacher_id',
   'user.name as teacher'
 ];
 
