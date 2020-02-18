@@ -35,6 +35,8 @@ const validateCourseBody = (req, res, next) => {
     room_id,
     start_time,
     end_time,
+    start_date,
+    end_date,
     teacher_id,
     notes,
     status
@@ -74,6 +76,8 @@ const validateCourseBody = (req, res, next) => {
     end_time,
     teacher_id,
     notes,
+    start_date,
+    end_date,
     status
   };
   next();
