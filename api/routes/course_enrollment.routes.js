@@ -5,7 +5,8 @@ const {
   unenrollAStudentInCourse,
   editEnrollment,
   getAllEnrollmentsOfCourses,
-  getOneEnrollment
+  getOneEnrollment,
+  getCourseEnrollmentDropdowns
 } = require('../controllers/course_enrollment.controller');
 
 const {
@@ -66,5 +67,7 @@ router.put(
   validateCourseEnrollmentBody,
   editEnrollment
 );
+
+router.get('/resultTypes', getCourseEnrollmentDropdowns);
 
 module.exports = router;

@@ -2,9 +2,9 @@ const db = require('../../database/db-config');
 
 const returning = [
   'course.id as course_id',
+  'course.term_id as term_id',
   'term.name as term',
   'course.section',
-  'course.subsection',
   'course.hourly_rate',
   'course.start_time',
   'course.end_time',
@@ -13,25 +13,23 @@ const returning = [
   'course.notes',
   'course.status',
   'course_type.description as course_type',
+  'course.course_type_id as course_type_id',
   'group_type.long_description as group_type',
+  'course.group_type_id as group_type_id',
   'school_grade.name as school_grade',
+  'course.school_grade_id as school_grade_id',
+  'course.level_id as level_id',
   'level.description as level',
-  'course_schedule.long_description as course_schedule',
+  'course_schedule.short_description as course_schedule',
+  'course.course_schedule_id as course_schedule_id',
   'room.chairs as room',
+  'course.room_id as room_id',
+  'course.teacher_id as teacher_id',
   'user.name as teacher'
 ];
 
-const find = query => {
-  // const limit = 5;
-  // let offset = 0;
-  // if (query.page) {
-  // 	if (offset === 0) {
-  // 		offset++;
-  // 	}
-  // 	offset = +query.page * limit - limit;
-  // }
-
-  return db('course')
+const find = queries => {
+  const query = db('course')
     .select(returning)
     .join('term', 'term.id', 'course.term_id')
     .join('course_type', 'course_type.id', 'course.course_type_id')
@@ -43,8 +41,18 @@ const find = query => {
     .join('staff', 'staff.id', 'course.teacher_id')
     .join('user', 'user.user_id', 'staff.user_id')
     .orderBy('course.id', 'desc');
-  // .limit(limit)
-  // .offset(offset)
+
+  const { term, section, level } = queries;
+  if (term) {
+    query.where('course.term_id', '=', term);
+  }
+  if (section) {
+    query.where('course.section', '=', section);
+  }
+  if (level) {
+    query.where('course.level_id', '=', level);
+  }
+  return query;
 };
 
 const findByID = id => {

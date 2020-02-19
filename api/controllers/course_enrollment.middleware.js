@@ -5,7 +5,7 @@ const CourseEnrollment = require('../models/course_enrollment.model');
 const validateCourseEnrollmentBody = (req, res, next) => {
   const { first_day, last_day, result_type_code, notes } = req.body;
 
-  if (!result_type_code || !notes) {
+  if (result_type_code === undefined || !notes) {
     next(new AppError('Wrong body', 400));
     return;
   }

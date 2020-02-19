@@ -108,6 +108,9 @@ const edit = (studentID, courseID, body) => {
     .update(body)
     .returning('id');
 };
+const getResultTypes = () => {
+  return db('result_type').select(['result_type_code', 'short_description']);
+};
 
 const findCoursesByStudentID = studentID => {
   return db('course_enrollment as ce')
@@ -131,5 +134,6 @@ module.exports = {
   edit,
   remove,
   findCoursesByStudentID,
-  findByCourseID
+  findByCourseID,
+  getResultTypes
 };
