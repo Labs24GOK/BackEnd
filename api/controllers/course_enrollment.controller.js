@@ -54,10 +54,16 @@ const getOneEnrollment = catchAsync(async (req, res, next) => {
   res.status(200).json(req.enrolledStudent);
 });
 
+const getCourseEnrollmentDropdowns = catchAsync(async (req, res, next) => {
+  const resultTypes = await CourseEnrollment.getResultTypes();
+  res.status(200).json(resultTypes);
+});
+
 module.exports = {
   enrollAStudentInCourse,
   unenrollAStudentInCourse,
   editEnrollment,
   getAllEnrollmentsOfCourses,
-  getOneEnrollment
+  getOneEnrollment,
+  getCourseEnrollmentDropdowns
 };

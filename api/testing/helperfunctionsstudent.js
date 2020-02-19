@@ -82,7 +82,6 @@ class Course {
 		this.school_grade_id = 1;
 		this.level_id = 1;
 		this.section = 'A';
-		this.subsection = 1;
 		this.hourly_rate = 7.0;
 		this.course_schedule_id = 1;
 		this.room_id = 1;
