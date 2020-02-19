@@ -42,7 +42,7 @@ exports.up = function(knex) {
         .onUpdate('CASCADE')
         .index();
       table
-        .boolean('attendance')
+        .enu('attendance', ['present', 'late', 'absent'])
         .notNullable()
         .defaultTo(true);
       table.timestamps(true, true);
