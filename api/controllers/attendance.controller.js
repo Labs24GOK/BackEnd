@@ -8,7 +8,7 @@ const takeAttendance = catchAsync(async (req, res) => {
 
 const getAttendanceRecord = catchAsync(async (req, res) => {
 	//get list of all teachers from staff model
-	const attendanceList = await Attendance.getAttendanceRecord(req.param.date);
+	const attendanceList = await Attendance.getAttendanceRecord(req.params.date);
 	res.status(200).json({ attendanceList });
 });
 

@@ -32,7 +32,7 @@ const getAttendanceRecord = date => {
 			's.additional_names',
 			'a.attendance'
 		])
-		.orderBy('a.student_id', 'desc');
+		.orderBy('a.student_id', 'asc');
 };
 
 module.exports = {
