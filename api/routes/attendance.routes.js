@@ -1,5 +1,9 @@
 const express = require('express');
 
-const {} = require('../controllers/attendance.controller');
+const { takeAttendance } = require('../controllers/attendance.controller');
+
+const router = express.Router();
+
+router.post('/attendance', takeAttendance);
 
 module.exports = router;
