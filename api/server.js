@@ -15,6 +15,7 @@ const globalErrorHandler = require('./controllers/errors.controller');
 const authroutes = require('./routes/auth.routes');
 const courseroutes = require('./routes/course.routes');
 const courseenrollmentroutes = require('./routes/course_enrollment.routes');
+const attendanceroutes = require('./routes/attendance.routes');
 
 // ------- Set up server -------
 const server = express();
@@ -42,6 +43,7 @@ server.use(studentroutes);
 server.use(courseroutes);
 server.use(authroutes);
 server.use(courseenrollmentroutes);
+server.use(attendanceroutes);
 
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
