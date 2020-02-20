@@ -8,6 +8,6 @@ const {
 const router = express.Router();
 
 router.post('/attendance', takeAttendance);
-router.get('/attendance/:date', getAttendanceRecord);
+router.get('/attendance/:course_enrollment_id', getAttendanceRecord);
 
 module.exports = router;

@@ -7,12 +7,23 @@ const takeAttendance = catchAsync(async (req, res) => {
 	res.status(201).json({ message: 'Attendance submitted' });
 });
 
+// const getAttendanceRecord = catchAsync(async (req, res) => {
+// 	// get list of all teachers from staff model
+// 	const teachers = await Staff.findAll();
+// 	const attendanceList = await Attendance.getAttendanceRecord(req.params.date);
+// 	res.status(200).json({
+// 		teachers,
+// 		attendanceList
+// 	});
+// });
+
 const getAttendanceRecord = catchAsync(async (req, res) => {
 	// get list of all teachers from staff model
-	const teachers = await Staff.findAll();
-	const attendanceList = await Attendance.getAttendanceRecord(req.params.date);
+	const { course_enrollment_id } = req.params;
+	const attendanceList = await Attendance.getAttendanceRecordByStudent(
+		+course_enrollment_id
+	);
 	res.status(200).json({
-		teachers,
 		attendanceList
 	});
 });
