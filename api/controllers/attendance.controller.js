@@ -3,6 +3,15 @@ const Attendance = require('../models/attendance.model');
 const Staff = require('../models/staff.model');
 
 const takeAttendance = catchAsync(async (req, res) => {
+	if (req.meetingId) {
+		await Attendance.editAttendance(
+			req.meetingId,
+			req.body.meeting,
+			req.body.students
+		);
+		res.status(200).json({ message: 'Attendance edited' });
+		return;
+	}
 	await Attendance.takeAttendance(req.body.meeting, req.body.students);
 	res.status(201).json({ message: 'Attendance submitted' });
 });

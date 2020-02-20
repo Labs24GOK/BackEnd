@@ -9,7 +9,7 @@ const takeAttendance = (meeting, students) => {
 			.then(res => {
 				const [id] = res;
 				const attendance = students.map(student => {
-					student.meeting_id = id;
+					return { ...student, meeting_id: id };
 				});
 				return db('attendance')
 					.transacting(trx)
@@ -21,6 +21,15 @@ const takeAttendance = (meeting, students) => {
 	});
 };
 
+const findMeeting = (date, course_id) => {
+	return db('meeting')
+		.where({
+			meeting_date: date,
+			course_id: course_id
+		})
+		.select('id')
+		.first();
+};
 // const getAttendanceRecordByStudent = (course_id, student_id) => {
 // 	return db('attendance as a')
 // 		.join('student as s', 's.id', 'a.student_id')
@@ -57,7 +66,33 @@ const getAttendanceRecordByStudent = course_enrollment_id => {
 		.orderBy('a.student_id', 'asc');
 };
 
+const editAttendance = (meeting_id, meeting, students) => {
+	return db.transaction(trx => {
+		return db('meeting')
+			.transacting(trx)
+			.update(meeting)
+			.where('id', '=', meeting_id)
+			.returning('id')
+			.then(async res => {
+				const [id] = res;
+				const attendance = students.map(student => {
+					student.meeting_id = id;
+					return db('attendance')
+						.transacting(trx)
+						.where({ meeting_id: id, student_id: student.student_id })
+						.update(student)
+						.returning('id');
+				});
+				await Promise.all(attendance);
+			})
+			.then(trx.commit)
+			.catch(trx.rollback);
+	});
+};
+
 module.exports = {
 	takeAttendance,
-	getAttendanceRecordByStudent
+	getAttendanceRecordByStudent,
+	findMeeting,
+	editAttendance
 };
