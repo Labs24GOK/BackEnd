@@ -31,14 +31,14 @@ const findMeeting = (date, course_id) => {
 		.first();
 };
 // const getAttendanceRecordByStudent = (course_id, student_id) => {
-// 	return db('attendance as a')
+// 	return db('anttendance as a')
 // 		.join('student as s', 's.id', 'a.student_id')
 // 		.join('meeting as m', 'm.id', 'a.meeting_id')
 // 		.where('m.meeting_date', '=', date)
 // 		.select([
 // 			'a.student_id',
 // 			's.first_name',
-// 			's.additional_names',
+// 			's.additional_ames',
 // 			'a.attendance'
 // 		])
 // 		.orderBy('a.student_id', 'asc');
