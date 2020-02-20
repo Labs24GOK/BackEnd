@@ -24,7 +24,7 @@ server.use(
   cors({
     origin: [
       'https://stagingspeakout.netlify.com',
-      'https://speakout-lambda-staging.herokuapp.com',
+      'https://speakout-stage.netlify.com',
       'https://adminspeakout.netlify.com',
       'http://localhost:3000',
       'https://speakout-now.com',
