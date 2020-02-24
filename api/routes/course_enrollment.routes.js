@@ -20,7 +20,6 @@ const {
 } = require('../controllers/course.middleware');
 
 const {
-  checkIfStudentExistsByID,
   validateStudentID
 } = require('../controllers/student.middleware');
 
@@ -36,7 +35,6 @@ const validation = [
   validateCourseID,
   checkIfCourseExistsByID,
   validateStudentID,
-  checkIfStudentExistsByID,
   validateIfStudentIsEnrolled
 ];
 
