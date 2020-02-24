@@ -16,7 +16,8 @@ const studentView = [
   'ce.first_day as first_day',
   'ce.last_day as last_day',
   'ce.result_type_code as result_type_code',
-  'rt.short_description as student_result_type'
+  'rt.short_description as student_result_type',
+  'ce.notes'
 ];
 
 const findByID = id => {

@@ -1,7 +1,11 @@
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 const Student = require('../models/student.model');
-const knex = require('../../database/db-config');
+const Joi = require('@hapi/joi');
+
+const schema = Joi.object({
+  cpr: Joi.string()
+})
 
 const validateStudentID = (req, res, next) => {
   const studentID = +req.params.studentID;

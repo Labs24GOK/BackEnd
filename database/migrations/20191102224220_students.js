@@ -78,7 +78,7 @@ exports.up = function(knex) {
 		})
 		.createTable('student', table => {
 			table.increments();
-			table.text('cpr').unique();
+			table.text('cpr').unique().notNullable();
 			table
 				.date('registration_date')
 				.defaultTo(
