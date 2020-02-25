@@ -3,137 +3,81 @@ const { catchAsync } = require('../utils/catchAsync');
 const Student = require('../models/student.model');
 const Joi = require('@hapi/joi');
 
-const schema = Joi.object({
-  cpr: Joi.string()
-})
-
-const validateStudentID = (req, res, next) => {
+const validateStudentID = catchAsync(async (req, res, next) => {
   const studentID = +req.params.studentID;
   if (isNaN(studentID)) {
     next(new AppError('Please enter a valid ID', 400));
     return;
   }
-  req.studentID = studentID;
-  next();
-};
-
-const checkIfStudentExistsByID = catchAsync(async (req, res, next) => {
-  const student = await Student.findByID(req.studentID);
+  const student = await Student.findByID(studentID);
   if (!student) {
-    next(new AppError('Student with that ID does not exist', 400));
+    return next(new AppError('Student with that ID does not exist', 400));
   }
+  req.studentID = studentID;
   req.student = student;
   next();
 });
 
 const validateStudentBody = catchAsync(async (req, res, next) => {
-  let {
-    first_name,
-    cpr,
-    additional_names,
-    gender,
-    birthdate,
-    school_grade_id,
-    school_name,
-    home_telephone,
-    mobile_telephone,
-    block_code,
-    road,
-    building,
-    flat,
-    email,
-    notes,
-    preferred_contact_type_id,
-    location_id,
-    family_id,
-    no_call,
-    delinquent,
-    expelled,
-    registration_date,
-    grade_updated,
-    primary_emergency_contact_name,
-    primary_emergency_relationship,
-    primary_emergency_phone,
-    emergency_contact_name,
-    emergency_relationship,
-    emergency_phone,
-
-  } = req.body;
-  if (
-    (!first_name ||
-      !cpr ||
-      !additional_names ||
-      !gender ||
-      !birthdate ||
-      !school_name ||
-      !home_telephone ||
-      !mobile_telephone ||
-      !block_code ||
-      !road ||
-      !building ||
-      !flat ||
-      !email ||
-      !location_id,
-    !preferred_contact_type_id,
-    !family_id)
-  ) {
-    next(new AppError('Wrong body', 400));
-    return;
+  if (!req.body.registration_date) {
+    delete req.body.registration_date;
   }
-
-  const studentRes = await Student.findByCPR(cpr);
-  if (req.method === 'PUT') {
-    if (studentRes && studentRes.student_id !== req.student.student_id) {
-      return next(new AppError('Student with that cpr already exists', 400));
-    }
-    if (school_grade_id !== req.student.school_grade_id) {
-      grade_updated = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth(),
-        new Date().getDate()
-      ).toISOString();
-    }
-  } else {
-    if (studentRes) {
-      return next(new AppError('Student with that cpr already exists', 400));
-    }
+  if (!req.body.grade_updated) {
+    delete req.body.grade_updated;
   }
-  req.student = {
-    first_name,
-    cpr,
-    grade_updated,
-    additional_names,
-    gender,
-    birthdate,
-    school_grade_id,
-    school_name,
-    home_telephone,
-    mobile_telephone,
-    block_code,
-    road,
-    building,
-    flat,
-    email,
-    notes,
-    preferred_contact_type_id,
-    location_id,
-    family_id,
-    no_call,
-    delinquent, 
-    expelled, 
-    registration_date,
-    primary_emergency_contact_name,
-    primary_emergency_relationship,
-    primary_emergency_phone,
-    emergency_contact_name,
-    emergency_relationship,
-    emergency_phone,
-  };
+  if (!req.body.school_grade_id) {
+    //// DEFAULTS TO N/A
+    req.body.school_grade_id = 1;
+  }
+  const schema = Joi.object({
+    // REQUIRED
+    cpr: Joi.string().required(),
+    additional_names: Joi.string().required(),
+    first_name: Joi.string().required(),
+    gender: Joi.string().required(),
+    birthdate: Joi.string().required(),
+    primary_emergency_contact_name: Joi.string().required(),
+    primary_emergency_relationship: Joi.string().required(),
+    primary_emergency_phone: Joi.string().required(),
+    school_grade_id: Joi.number()
+      .integer()
+      .required(),
+    block_code: Joi.number()
+      .integer()
+      .required(),
+    preferred_contact_type_id: Joi.number()
+      .integer()
+      .required(),
+    location_id: Joi.number()
+      .integer()
+      .required(),
+    family_id: Joi.number()
+      .integer()
+      .required(),
+
+    /// NOT REQUIRED
+    registration_date: Joi.string(),
+    school_name: Joi.string(),
+    grade_updated: Joi.string(),
+    home_telephone: Joi.string(),
+    mobile_telephone: Joi.string(),
+    road: Joi.string(),
+    building: Joi.string(),
+    flat: Joi.string(),
+    email: Joi.string(),
+    emergency_relationship: Joi.string(),
+    emergency_contact_name: Joi.string(),
+    emergency_phone: Joi.string(),
+    notes: Joi.string(),
+    no_call: Joi.boolean(),
+    delinquent: Joi.boolean(),
+    expelled: Joi.boolean()
+  });
+  await schema.validateAsync(req.body);
   next();
 });
 
 module.exports = {
   validateStudentID,
-  checkIfStudentExistsByID,
   validateStudentBody
 };

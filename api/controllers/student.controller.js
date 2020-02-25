@@ -18,13 +18,13 @@ const deleteAStudent = catchAsync(async (req, res) => {
 });
 
 const createAStudent = catchAsync(async (req, res) => {
-  const [newStudent] = await Student.create(req.student);
+  const [newStudent] = await Student.create(req.body);
   const student = await Student.findByID(newStudent.id);
   res.status(201).json(student);
 });
 
 const editAStudent = catchAsync(async (req, res) => {
-  const [editedStudent] = await Student.update(req.studentID, req.student);
+  const [editedStudent] = await Student.update(req.studentID, req.body);
   const student = await Student.findByID(editedStudent.id);
   res.status(200).json(student);
 });

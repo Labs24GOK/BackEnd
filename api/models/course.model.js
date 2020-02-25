@@ -31,6 +31,26 @@ const returning = [
 const find = queries => {
   const query = db('course')
     .select(returning)
+    .select(function() {
+      this.from('course_enrollment as ce')
+        .whereRaw('ce.course_id = course.id')
+        .count()
+        .as('total_students');
+    })
+    .select(function() {
+      this.from('course_enrollment as ce')
+        .whereRaw('ce.course_id = course.id')
+        .andWhere('ce.result_type_code', 6)
+        .count()
+        .as('confirmed_students');
+    })
+    .select(function() {
+      this.from('course_enrollment as ce')
+        .whereRaw('ce.course_id = course.id')
+        .andWhere('ce.result_type_code', -3)
+        .count()
+        .as('unconfirmed_students');
+    })
     .join('term', 'term.id', 'course.term_id')
     .join('course_type', 'course_type.id', 'course.course_type_id')
     .join('group_type', 'group_type.id', 'course.group_type_id')
