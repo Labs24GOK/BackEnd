@@ -31,23 +31,29 @@ const returning = [
 const find = queries => {
   const query = db('course')
     .select(returning)
-    .join('course_enrollment as ce', 'ce.course_id', 'course.id')
+    //.join('course_enrollment as ce', 'ce.course_id', 'course.id')
+    // FIRST ONE WORKS BUT I'M JUST DOING IT IN THE CONTROLLER UNTIL THE REST WORKS
     .select(function() {
       this.from('course_enrollment as ce')
         .whereRaw('ce.course_id = course.id')
         .count()
-        .as('totalStudents');
+        .as('total_students');
     })
-    // .select(function() {
-    //   this.from('result_type as rt')
-    //     .join('course_enrollment as ce', 'rt.result_type_code', 'ce.result_type_code')
-    //     .whereRaw('ce.course_id = course.id')
-    //     // .andWhere(function() {
-    //     //   this.whereRaw('ce.result_type_code = rt.result_type_code');
-    //     // })
-    //     .count()
-    //     .as('activeStudents');
-    // })
+    // DOESNT WORK, TRYING TO GET ALL STUDENTS THAT ARE UNCONFIRMED AND CONFIRMED
+    .select(function() {
+      this.from('course_enrollment as ce')
+        .whereRaw('ce.course_id = course.id')
+        .andWhere('ce.result_type_code', 6)
+        .count()
+        .as('confirmed_students');
+    })
+    .select(function() {
+      this.from('course_enrollment as ce')
+        .whereRaw('ce.course_id = course.id')
+        .andWhere('ce.result_type_code', -3)
+        .count()
+        .as('unconfirmed_students');
+    })
     .join('term', 'term.id', 'course.term_id')
     .join('course_type', 'course_type.id', 'course.course_type_id')
     .join('group_type', 'group_type.id', 'course.group_type_id')

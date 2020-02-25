@@ -19,6 +19,16 @@ const validateStudentID = catchAsync(async (req, res, next) => {
 });
 
 const validateStudentBody = catchAsync(async (req, res, next) => {
+  if (!req.body.registration_date) {
+    delete req.body.registration_date;
+  }
+  if (!req.body.grade_updated) {
+    delete req.body.grade_updated;
+  }
+  if (!req.body.school_grade_id) {
+    //// DEFAULTS TO N/A
+    req.body.school_grade_id = 1;
+  }
   const schema = Joi.object({
     // REQUIRED
     cpr: Joi.string().required(),

@@ -11,26 +11,28 @@ const findCourseById = catchAsync(async (req, res) => {
 
 const findAllCourses = catchAsync(async (req, res) => {
   const courses = await Course.find(req.query);
-  /// GET ALL ACTIVE AND NON ACTIVE STUDENTS --> NEEDS TO BE REFACTORED INTO A QUERY FOR BETTER PERFORMANCE
-  const modifiedCourses = courses.map(async course => {
-    const students = await CourseEnrollment.findByCourseID(course.course_id);
-    let activeStudents = 0;
-    for (student of students) {
-      if (
-        student.student_result_type === 'confirm' ||
-        student.student_result_type === 'pass'
-      ) {
-        activeStudents++;
-      }
-    }
-    const modifiedCourse = {
-      ...course,
-      activeStudents,
-    };
-    return modifiedCourse;
-  });
-  const returning = await Promise.all(modifiedCourses);
-  return res.status(200).json(returning);
+  /// BEEN REFACTORED INTO A QUERY BUT JUST IN CASE :| ///
+
+  // const modifiedCourses = courses.map(async course => {
+  //   const students = await CourseEnrollment.findByCourseID(course.course_id);
+  //   let confirmed_students = 0;
+  //   let unconfirmed_students = 0;
+  //   for (student of students) {
+  //     if (student.student_result_type === 'confirm') confirmed_students++;
+  //     if (student.student_result_type === 'unconfirmed') unconfirmed_students++;
+  //   }
+  //   const modifiedCourse = {
+  //     ...course,
+  //     confirmed_students,
+  //     unconfirmed_students,
+  //     total_sutdents: students.length
+  //   };
+  //   return modifiedCourse;
+  // });
+  // const returning = await Promise.all(modifiedCourses);
+  //console.log(returning);
+
+  return res.status(200).json(courses);
 });
 
 const deleteACourse = catchAsync(async (req, res) => {
