@@ -30,7 +30,7 @@ const findAllCourses = catchAsync(async (req, res) => {
     return modifiedCourse;
   });
   const returning = await Promise.all(modifiedCourses);
-  return res.status(200).json(courses);
+  return res.status(200).json(returning);
 });
 
 const deleteACourse = catchAsync(async (req, res) => {
