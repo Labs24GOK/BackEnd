@@ -11,7 +11,7 @@ const validateStudentID = catchAsync(async (req, res, next) => {
   }
   const student = await Student.findByID(studentID);
   if (!student) {
-    next(new AppError('Student with that ID does not exist', 400));
+    return next(new AppError('Student with that ID does not exist', 400));
   }
   req.studentID = studentID;
   req.student = student;

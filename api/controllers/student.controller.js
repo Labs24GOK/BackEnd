@@ -24,7 +24,7 @@ const createAStudent = catchAsync(async (req, res) => {
 });
 
 const editAStudent = catchAsync(async (req, res) => {
-  const [editedStudent] = await Student.update(req.studentID, req.student);
+  const [editedStudent] = await Student.update(req.studentID, req.body);
   const student = await Student.findByID(editedStudent.id);
   res.status(200).json(student);
 });

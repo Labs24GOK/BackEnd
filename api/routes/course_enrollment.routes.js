@@ -16,7 +16,6 @@ const {
 
 const {
   validateCourseID,
-  checkIfCourseExistsByID
 } = require('../controllers/course.middleware');
 
 const {
@@ -33,7 +32,6 @@ const router = express.Router();
 
 const validation = [
   validateCourseID,
-  checkIfCourseExistsByID,
   validateStudentID,
   validateIfStudentIsEnrolled
 ];
