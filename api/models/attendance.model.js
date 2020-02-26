@@ -23,11 +23,13 @@ const takeAttendance = (meeting, students) => {
 
 const findMeeting = (date, course_id) => {
   return db('meeting')
+    .join('staff as s', 's.id', 'meeting.teacher_id')
+    .join('user as u', 'u.user_id', 's.user_id')
     .where({
       meeting_date: date,
       course_id: course_id
     })
-    .select('id')
+    .select(['meeting.id', 'meeting.teacher_id', 'u.name as teacher'])
     .first();
 };
 const getAttendanceRecord = (date, course_id) => {
@@ -39,8 +41,8 @@ const getAttendanceRecord = (date, course_id) => {
     .select([
       's.id as student_id',
       's.first_name as student_name',
-			's.additional_names as student_additional_names',
-			'a.attendance'
+      's.additional_names as student_additional_names',
+      'a.attendance'
     ]);
   // .orderBy('a.student_id', 'asc');
 };

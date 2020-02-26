@@ -1,6 +1,7 @@
 const { catchAsync } = require('../utils/catchAsync');
 const Attendance = require('../models/attendance.model');
 const Staff = require('../models/staff.model');
+const Course = require('../models/course.model');
 const CourseEnrollment = require('../models/course_enrollment.model');
 
 const takeAttendance = catchAsync(async (req, res) => {
@@ -19,18 +20,28 @@ const takeAttendance = catchAsync(async (req, res) => {
 
 const getAttendanceRecord = catchAsync(async (req, res) => {
   // get list of all teachers from staff model
-  const teachers = await Staff.findAll();
+  // const teachers = await Staff.findAll();
+  let staff = await Attendance.findMeeting(
+    req.params.date,
+    +req.params.course_id
+  );
+  if (!staff) {
+    staff = await Course.findByID(+req.params.course_id);
+  }
+  const { teacher_id, teacher } = staff;
   let attendanceRecord = await Attendance.getAttendanceRecord(
     req.params.date,
     +req.params.course_id
-	);
+  );
 
   let response = {
-    teachers,
-		attendanceRecord,
+    meeting: {
+      teacher_id,
+      teacher
+    },
+    attendanceRecord,
     attendanceExists: true
   };
-  console.log(attendanceRecord);
   if (attendanceRecord.length === 0) {
     attendance = await CourseEnrollment.findByCourseID(+req.params.course_id);
     attendance.forEach(student => {

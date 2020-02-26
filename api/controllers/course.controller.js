@@ -5,7 +5,6 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const findCourseById = catchAsync(async (req, res) => {
-  console.log(req.course);
   return res.status(200).json(req.course);
 });
 
@@ -30,7 +29,6 @@ const findAllCourses = catchAsync(async (req, res) => {
   //   return modifiedCourse;
   // });
   // const returning = await Promise.all(modifiedCourses);
-  //console.log(returning);
 
   return res.status(200).json(courses);
 });

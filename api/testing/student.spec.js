@@ -121,23 +121,6 @@ describe('student.routes.js', () => {
 			expect(res.body.block_code_neighborhood).toBe(block.neighborhood);
 			expect(res.body.school_grade).toBe(school_grade.name);
 		});
-		it('should return a 400 status code in response to request with missing fields on the request body', async () => {
-			const res = await request
-				.post('/student')
-				.send({ whatShouldIPutHere: 'HELLO' }); // with missing fields
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty('message', 'Wrong body');
-		});
-		it('should return a 400 status code in response to a request with a duplicate cpr field', async () => {
-			const res = await request
-				.post('/student')
-				.send({ ...requestBody, cpr: seededStudent.cpr });
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty(
-				'message',
-				'Student with that cpr already exists'
-			);
-		});
 		////////// CHECK IF FOREIGN RELATIONS EXISTS
 		////////// CHECK AUTHENTICATION
 	});
@@ -262,32 +245,6 @@ describe('student.routes.js', () => {
 			expect(res.body).toHaveProperty(
 				'message',
 				'Student with that ID does not exist'
-			);
-		});
-		it('should return a 400 status code in response to wrong body', async () => {
-			const res = await request
-				.put(`/student/${seededStudent.student_id}`)
-				.send({ whatShouldIPutHere: 'HELLO' });
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty('message', 'Wrong body');
-		});
-		it('should return a 400 status code in response to duplicate cpr', async () => {
-			const newStudent = await helpers.seedAStudent(
-				{
-					username: 'imUniQue3',
-					email: 'meToo@unique3.com'
-				},
-				{
-					cpr: '33333'
-				}
-			);
-			const res = await request
-				.put(`/student/${seededStudent.student_id}`)
-				.send({ ...requestBody, cpr: newStudent.cpr });
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty(
-				'message',
-				'Student with that cpr already exists'
 			);
 		});
 		////////// CHECK AUTHENTICATION

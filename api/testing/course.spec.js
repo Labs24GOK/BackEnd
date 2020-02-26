@@ -16,6 +16,8 @@ const createObj = {
   room_id: 1,
   start_time: '16:30:00',
   end_time: '18:30:00',
+  start_date: '2020-09-04',
+  end_date: '2020-09-05',
   teacher_id: 1,
   notes: 'Notes',
   status: 'active'
@@ -33,6 +35,8 @@ const editObj = {
   room_id: 1,
   start_time: '16:30:00',
   end_time: '18:30:00',
+  start_date: '2020-09-04',
+  end_date: '2020-09-05',
   teacher_id: 1,
   notes: 'Notes',
   status: 'active'
@@ -62,6 +66,7 @@ describe('server.js', () => {
   describe('FIND /course', () => {
     it('should return a 200 OK', async () => {
       const res = await request(server).get('/course');
+      console.log(res.text);
       expect(res.status).toBe(200);
     });
     it('should return a JSON', async () => {

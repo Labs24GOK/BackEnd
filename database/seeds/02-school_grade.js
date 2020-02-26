@@ -1,7 +1,7 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('school_grade').insert([
-    { name: 'Null' },
+    { name: 'N/A' },
     { name: 'Nursery' },
     { name: 'KG 1' },
     { name: 'KG 2' },
