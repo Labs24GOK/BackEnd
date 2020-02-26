@@ -92,7 +92,6 @@ const findByID = id => {
 };
 
 const create = body => {
-  console.log(body);
   return db('course')
     .insert(body)
     .returning('id');

@@ -29,7 +29,7 @@ const editEnrollment = catchAsync(async (req, res, next) => {
       new AppError('This student is not enrolled in the course', 400)
     );
   }
-  console.log(req.enrolledStudent);
+
   const [id] = await CourseEnrollment.edit(
     req.studentID,
     req.courseID,
@@ -41,7 +41,7 @@ const editEnrollment = catchAsync(async (req, res, next) => {
 
 const getAllEnrollmentsOfCourses = catchAsync(async (req, res, next) => {
   const enrollments = await CourseEnrollment.findAll();
-  console.log(enrollments);
+
   res.status(200).json(enrollments);
 });
 

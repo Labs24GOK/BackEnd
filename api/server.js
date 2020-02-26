@@ -67,7 +67,6 @@ server.post('/register', (req, res) => {
       });
     })
     .catch(error => {
-      console.log('register', error);
       res.status(500).json({
         message: `There was an error attempting to register user: ${error}.`
       });
@@ -243,7 +242,7 @@ server.delete('/api', (req, res) => {
 });
 
 server.post('/api', (req, res) => {
-  console.log('post', req.query);
+  //console.log('post', req.query);
   model
     .findBy(req.query.table, model.makeWhere(req.body))
     .then(result => {
@@ -266,7 +265,7 @@ server.post('/api', (req, res) => {
 });
 
 server.put('/api', (req, res) => {
-  console.log('put', req.query);
+  //console.log('put', req.query);
   model
     .update(req.query.table, req.query.where, req.body)
     .then(updated => {
@@ -278,7 +277,7 @@ server.put('/api', (req, res) => {
 });
 
 server.put('/', (req, res) => {
-  console.log('put', req.query);
+  //console.log('put', req.query);
   model
     .updateAny(req.query.table, req.query.where, req.body)
     .then(updated => {
@@ -294,13 +293,13 @@ server.post('/api/attendance', (req, res) => {
     .addMeeting(req.body.meeting)
     .then(saved => {
       const meeting_id = saved[0];
-      console.log('SAVED : ', saved);
+      //console.log('SAVED : ', saved);
       req.body.students.forEach(student => {
         const studentAttend = { ...student, meeting_id };
         model
           .add('attendance', studentAttend)
           .then(saved => {
-            console.log(saved);
+            //console.log(saved);
           })
           .catch(err => {
             res.status(500).json({

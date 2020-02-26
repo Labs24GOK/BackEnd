@@ -150,7 +150,6 @@ const checkIfStaffExistsByID = catchAsync(async (req, res, next) => {
     return;
   }
   req.staffUser = staff;
-  console.log(req.staffUser);
   next();
 });
 

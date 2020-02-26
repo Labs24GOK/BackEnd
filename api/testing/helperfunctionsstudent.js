@@ -147,7 +147,6 @@ const seedAStaff = async obj => {
 		.insert(staff)
 		.returning('id');
 	const staffreturned = await StaffModel.findByID(id);
-	console.log('Staff Returned', staffreturned);
 	return staffreturned;
 };
 
