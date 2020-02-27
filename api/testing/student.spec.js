@@ -50,7 +50,13 @@ describe('student.routes.js', () => {
 		notes: 'Notes',
 		preferred_contact_type_id: 2,
 		location_id: 2,
-		family_id: 2
+		family_id: 2,
+		primary_emergency_contact_name: "Luis",
+    primary_emergency_relationship: "Father",
+    primary_emergency_phone: "7855887522",
+    emergency_contact_name: "Lissette",
+    emergency_relationship: "Mother",
+    emergency_phone:"231864102"
 	};
 	/// WHATS EXPECTED BACK FROM THE SERVER
 	const toMatchObj = {
@@ -82,7 +88,13 @@ describe('student.routes.js', () => {
 		location_id: expect.any(Number),
 		family_id: expect.any(Number),
 		parent_name: expect.any(String),
-		location: expect.any(String)
+		location: expect.any(String),
+		primary_emergency_contact_name: expect.any(String),
+    primary_emergency_relationship: expect.any(String),
+    primary_emergency_phone: expect.any(String),
+    emergency_contact_name: expect.any(String),
+    emergency_relationship: expect.any(String),
+    emergency_phone: expect.any(String)
 	};
 	describe('POST /student', () => {
 		//Valid Request Body
@@ -108,23 +120,6 @@ describe('student.routes.js', () => {
 			);
 			expect(res.body.block_code_neighborhood).toBe(block.neighborhood);
 			expect(res.body.school_grade).toBe(school_grade.name);
-		});
-		it('should return a 400 status code in response to request with missing fields on the request body', async () => {
-			const res = await request
-				.post('/student')
-				.send({ whatShouldIPutHere: 'HELLO' }); // with missing fields
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty('message', 'Wrong body');
-		});
-		it('should return a 400 status code in response to a request with a duplicate cpr field', async () => {
-			const res = await request
-				.post('/student')
-				.send({ ...requestBody, cpr: seededStudent.cpr });
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty(
-				'message',
-				'Student with that cpr already exists'
-			);
 		});
 		////////// CHECK IF FOREIGN RELATIONS EXISTS
 		////////// CHECK AUTHENTICATION
@@ -250,32 +245,6 @@ describe('student.routes.js', () => {
 			expect(res.body).toHaveProperty(
 				'message',
 				'Student with that ID does not exist'
-			);
-		});
-		it('should return a 400 status code in response to wrong body', async () => {
-			const res = await request
-				.put(`/student/${seededStudent.student_id}`)
-				.send({ whatShouldIPutHere: 'HELLO' });
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty('message', 'Wrong body');
-		});
-		it('should return a 400 status code in response to duplicate cpr', async () => {
-			const newStudent = await helpers.seedAStudent(
-				{
-					username: 'imUniQue3',
-					email: 'meToo@unique3.com'
-				},
-				{
-					cpr: '33333'
-				}
-			);
-			const res = await request
-				.put(`/student/${seededStudent.student_id}`)
-				.send({ ...requestBody, cpr: newStudent.cpr });
-			expect(res.status).toBe(400);
-			expect(res.body).toHaveProperty(
-				'message',
-				'Student with that cpr already exists'
 			);
 		});
 		////////// CHECK AUTHENTICATION

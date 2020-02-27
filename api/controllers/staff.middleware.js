@@ -2,6 +2,7 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 const Staff = require('../models/staff.model');
 const User = require('../models/user.model');
+const Joi = require('@hapi/joi');
 
 const validateCreateStaff = catchAsync(async (req, res, next) => {
   const {
@@ -149,7 +150,6 @@ const checkIfStaffExistsByID = catchAsync(async (req, res, next) => {
     return;
   }
   req.staffUser = staff;
-  console.log(req.staffUser);
   next();
 });
 

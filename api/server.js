@@ -14,6 +14,8 @@ const studentroutes = require('./routes/student.routes');
 const globalErrorHandler = require('./controllers/errors.controller');
 const authroutes = require('./routes/auth.routes');
 const courseroutes = require('./routes/course.routes');
+const courseenrollmentroutes = require('./routes/course_enrollment.routes');
+const attendanceroutes = require('./routes/attendance.routes');
 
 // ------- Set up server -------
 const server = express();
@@ -23,6 +25,7 @@ server.use(
   cors({
     origin: [
       'https://stagingspeakout.netlify.com',
+      'https://speakout-stage.netlify.com',
       'https://adminspeakout.netlify.com',
       'http://localhost:3000',
       'https://speakout-now.com',
@@ -40,6 +43,8 @@ server.use(staffroutes);
 server.use(studentroutes);
 server.use(courseroutes);
 server.use(authroutes);
+server.use(courseenrollmentroutes);
+server.use(attendanceroutes);
 
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
@@ -62,7 +67,6 @@ server.post('/register', (req, res) => {
       });
     })
     .catch(error => {
-      console.log('register', error);
       res.status(500).json({
         message: `There was an error attempting to register user: ${error}.`
       });
@@ -185,7 +189,7 @@ server.get('/', (req, res) => {
   res
     .status(200)
     .send(
-      'Find API documentation here: https://documenter.getpostman.com/view/9384043/SW15yGLA'
+      'Find API documentation here: https://documenter.getpostman.com/view/8230639/SWTD8wyQ?version=latest#ab443920-3ba6-46b2-bff9-0de953af9172'
     );
 });
 
@@ -238,7 +242,7 @@ server.delete('/api', (req, res) => {
 });
 
 server.post('/api', (req, res) => {
-  console.log('post', req.query);
+  //console.log('post', req.query);
   model
     .findBy(req.query.table, model.makeWhere(req.body))
     .then(result => {
@@ -261,7 +265,7 @@ server.post('/api', (req, res) => {
 });
 
 server.put('/api', (req, res) => {
-  console.log('put', req.query);
+  //console.log('put', req.query);
   model
     .update(req.query.table, req.query.where, req.body)
     .then(updated => {
@@ -273,7 +277,7 @@ server.put('/api', (req, res) => {
 });
 
 server.put('/', (req, res) => {
-  console.log('put', req.query);
+  //console.log('put', req.query);
   model
     .updateAny(req.query.table, req.query.where, req.body)
     .then(updated => {
@@ -289,13 +293,13 @@ server.post('/api/attendance', (req, res) => {
     .addMeeting(req.body.meeting)
     .then(saved => {
       const meeting_id = saved[0];
-      console.log('SAVED : ', saved);
+      //console.log('SAVED : ', saved);
       req.body.students.forEach(student => {
         const studentAttend = { ...student, meeting_id };
         model
           .add('attendance', studentAttend)
           .then(saved => {
-            console.log(saved);
+            //console.log(saved);
           })
           .catch(err => {
             res.status(500).json({

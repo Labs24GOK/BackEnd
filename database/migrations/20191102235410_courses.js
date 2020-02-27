@@ -3,7 +3,6 @@ exports.up = function(knex) {
     .createTable('term', table => {
       table.increments();
       table.text('name').notNullable();
-      table.integer('subsection').notNullable();
       table.timestamps(true, true);
     })
     .createTable('group_type', table => {
@@ -134,7 +133,6 @@ exports.up = function(knex) {
         .onUpdate('CASCADE')
         .index();
       table.text('section');
-      table.integer('subsection');
       table.text('hourly_rate');
       table
         .integer('course_schedule_id')
@@ -154,6 +152,8 @@ exports.up = function(knex) {
         .index();
       table.time('start_time');
       table.time('end_time');
+      table.date('start_date');
+      table.date('end_date');
       table
         .integer('teacher_id')
         .unsigned()

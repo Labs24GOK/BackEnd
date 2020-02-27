@@ -52,6 +52,12 @@ class Student {
 		this.expelled = true;
 		this.location_id = 1;
 		this.family_id = family_id;
+		this.primary_emergency_contact_name = "Father name"
+		this.primary_emergency_relationship = "Father"
+		this.primary_emergency_phone = "2335643636"
+		this.emergency_contact_name = "Mother name"
+		this.emergency_relationship = "Mother"
+		this.emergency_phone = "456457434"
 	}
 }
 
@@ -76,7 +82,6 @@ class Course {
 		this.school_grade_id = 1;
 		this.level_id = 1;
 		this.section = 'A';
-		this.subsection = 1;
 		this.hourly_rate = 7.0;
 		this.course_schedule_id = 1;
 		this.room_id = 1;
@@ -142,7 +147,6 @@ const seedAStaff = async obj => {
 		.insert(staff)
 		.returning('id');
 	const staffreturned = await StaffModel.findByID(id);
-	console.log('Staff Returned', staffreturned);
 	return staffreturned;
 };
 

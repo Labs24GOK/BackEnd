@@ -1,4 +1,5 @@
 const Student = require('../models/student.model');
+const CourseEnrollment = require('../models/course_enrollment.model');
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
@@ -17,15 +18,20 @@ const deleteAStudent = catchAsync(async (req, res) => {
 });
 
 const createAStudent = catchAsync(async (req, res) => {
-  const [newStudent] = await Student.create(req.student);
+  const [newStudent] = await Student.create(req.body);
   const student = await Student.findByID(newStudent.id);
   res.status(201).json(student);
 });
 
 const editAStudent = catchAsync(async (req, res) => {
-  const [editedStudent] = await Student.update(req.studentID, req.student);
+  const [editedStudent] = await Student.update(req.studentID, req.body);
   const student = await Student.findByID(editedStudent.id);
   res.status(200).json(student);
+});
+
+const getAllCoursesOfStudent = catchAsync(async (req, res) => {
+  const courses = await CourseEnrollment.findCoursesByStudentID(req.studentID);
+  res.status(200).json(courses);
 });
 
 const getDropdowns = catchAsync(async (req, res) => {
@@ -58,5 +64,6 @@ module.exports = {
   deleteAStudent,
   createAStudent,
   editAStudent,
-  getDropdowns
+  getDropdowns,
+  getAllCoursesOfStudent
 };

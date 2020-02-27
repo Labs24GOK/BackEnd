@@ -6,13 +6,13 @@ const {
   createACourse,
   editACourse,
   deleteACourse,
-  populateCourseDropdowns
+  populateCourseDropdowns,
+  getAllStudentsInACourse
 } = require('../controllers/course.controller');
 
 const {
   validateCourseBody,
-  validateCourseID,
-  checkIfCourseExistsByID
+  validateCourseID
 } = require('../controllers/course.middleware');
 
 const router = express.Router();
@@ -22,13 +22,9 @@ router.param('courseID', validateCourseID);
 router.get('/course', findAllCourses);
 router.post('/course', validateCourseBody, createACourse);
 router.get('/course/dropdowns', populateCourseDropdowns);
-router.get('/course/:courseID', checkIfCourseExistsByID, findCourseById);
-router.put(
-  '/course/:courseID',
-  checkIfCourseExistsByID,
-  validateCourseBody,
-  editACourse
-);
-router.delete('/course/:courseID', checkIfCourseExistsByID, deleteACourse);
+router.get('/course/:courseID', findCourseById);
+router.get('/course/:courseID/students', getAllStudentsInACourse);
+router.put('/course/:courseID', validateCourseBody, editACourse);
+router.delete('/course/:courseID', deleteACourse);
 
 module.exports = router;
