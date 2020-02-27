@@ -52,6 +52,7 @@ const validateCourseBody = catchAsync(
 
       /// NOT REQUIRED
       hourly_rate: Joi.number(),
+      notes: Joi.string().allow(''),
       status: Joi.string()
     });
     await schema.validateAsync(req.body);
