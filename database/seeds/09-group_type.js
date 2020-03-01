@@ -4,7 +4,7 @@ exports.seed = function(knex) {
     // Inserts seed entries
     return knex('group_type').insert([
       {
-        short_description: 'KG',
+        short_description: 'KG 1-3',
         long_description: 'Kindergarten 1-3'
       },
       {
@@ -20,11 +20,11 @@ exports.seed = function(knex) {
         long_description: 'Primary 4-6'
       },
       {
-        short_description: 'Int',
+        short_description: 'Int 1-3',
         long_description: 'Intermediate'
       },
       {
-        short_description: 'Sec',
+        short_description: 'Sec 1-3',
         long_description: 'Secondary'
       },
       {

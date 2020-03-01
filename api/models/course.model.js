@@ -40,7 +40,9 @@ const find = queries => {
     .select(function() {
       this.from('course_enrollment as ce')
         .whereRaw('ce.course_id = course.id')
-        .andWhere('ce.result_type_code', 6)
+        .andWhere(function() {
+          this.whereIn('ce.result_type_code', [5, 6]);
+        })
         .count()
         .as('confirmed_students');
     })
@@ -52,11 +54,27 @@ const find = queries => {
         .as('unconfirmed_students');
     })
     .join('term', 'term.id', 'course.term_id')
-    .join('course_type', 'course_type.id', 'course.course_type_id')
-    .join('group_type', 'group_type.id', 'course.group_type_id')
-    .join('school_grade', 'school_grade.id', 'course.school_grade_id')
+    .join(
+      'course_type',
+      'course_type.id',
+      'course.course_type_id'
+    )
+    .join(
+      'group_type',
+      'group_type.id',
+      'course.group_type_id'
+    )
+    .join(
+      'school_grade',
+      'school_grade.id',
+      'course.school_grade_id'
+    )
     .join('level', 'level.id', 'course.level_id')
-    .join('course_schedule', 'course_schedule.id', 'course.course_schedule_id')
+    .join(
+      'course_schedule',
+      'course_schedule.id',
+      'course.course_schedule_id'
+    )
     .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
     .join('user', 'user.user_id', 'staff.user_id')
@@ -81,20 +99,34 @@ const findByID = id => {
     .where('course.id', '=', id)
     .first()
     .join('term', 'term.id', 'course.term_id')
-    .join('course_type', 'course_type.id', 'course.course_type_id')
-    .join('group_type', 'group_type.id', 'course.group_type_id')
-    .join('school_grade', 'school_grade.id', 'course.school_grade_id')
+    .join(
+      'course_type',
+      'course_type.id',
+      'course.course_type_id'
+    )
+    .join(
+      'group_type',
+      'group_type.id',
+      'course.group_type_id'
+    )
+    .join(
+      'school_grade',
+      'school_grade.id',
+      'course.school_grade_id'
+    )
     .join('level', 'level.id', 'course.level_id')
-    .join('course_schedule', 'course_schedule.id', 'course.course_schedule_id')
+    .join(
+      'course_schedule',
+      'course_schedule.id',
+      'course.course_schedule_id'
+    )
     .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
     .join('user', 'user.user_id', 'staff.user_id');
 };
 
 const create = body => {
-  return db('course')
-    .insert(body)
-    .returning('id');
+  return db('course').insert(body).returning('id');
 };
 
 const edit = (body, id) => {
@@ -109,11 +141,27 @@ const findCoursesByTeacherID = teacherID => {
     .where('teacher_id', '=', teacherID)
     .select(returning)
     .join('term', 'term.id', 'course.term_id')
-    .join('course_type', 'course_type.id', 'course.course_type_id')
-    .join('group_type', 'group_type.id', 'course.group_type_id')
-    .join('school_grade', 'school_grade.id', 'course.school_grade_id')
+    .join(
+      'course_type',
+      'course_type.id',
+      'course.course_type_id'
+    )
+    .join(
+      'group_type',
+      'group_type.id',
+      'course.group_type_id'
+    )
+    .join(
+      'school_grade',
+      'school_grade.id',
+      'course.school_grade_id'
+    )
     .join('level', 'level.id', 'course.level_id')
-    .join('course_schedule', 'course_schedule.id', 'course.course_schedule_id')
+    .join(
+      'course_schedule',
+      'course_schedule.id',
+      'course.course_schedule_id'
+    )
     .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
     .join('user', 'user.user_id', 'staff.user_id')
@@ -121,9 +169,7 @@ const findCoursesByTeacherID = teacherID => {
 };
 
 const remove = id => {
-  return db('course')
-    .where({ id })
-    .del();
+  return db('course').where({ id }).del();
 };
 
 /// THIS IS FOR POPULATING DROPDOWNS IN THE CLIENT
@@ -144,7 +190,10 @@ const findAllLevels = () => {
   return db('level').select('id', 'description');
 };
 const findAllCourseSchedules = () => {
-  return db('course_schedule').select('id', 'short_description');
+  return db('course_schedule').select(
+    'id',
+    'short_description'
+  );
 };
 const findAllRooms = () => {
   return db('room').select('id', 'chairs');
