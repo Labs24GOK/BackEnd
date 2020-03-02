@@ -25,7 +25,7 @@ exports.seed = function(knex) {
       },
       {
         result_type_code: 1,
-        short_description: 'Transfered',
+        short_description: 'Transferred',
         long_description: 'Long description'
       },
       {

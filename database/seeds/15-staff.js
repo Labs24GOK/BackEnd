@@ -33,7 +33,7 @@ exports.seed = function(knex) {
     },
     {
       teaching_rate: '10.00',
-      active: false,
+      active: true,
       user_id: 5,
       cpr: '9007XXXX4',
       mobile_number: '384-555-65',

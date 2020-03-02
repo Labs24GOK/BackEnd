@@ -20,7 +20,7 @@ exports.seed = function(knex) {
         end_date: new Date(2018, 5, 28),
         teacher_id: 1,
         notes: '',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 2
@@ -39,7 +39,7 @@ exports.seed = function(knex) {
         end_date: new Date(2018, 11, 26),
         teacher_id: 2,
         notes: '',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 3
@@ -58,7 +58,7 @@ exports.seed = function(knex) {
         end_date: new Date(2019, 2, 28),
         teacher_id: 3,
         notes: '',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 4
@@ -77,7 +77,7 @@ exports.seed = function(knex) {
         end_date: new Date(2019, 4, 26),
         teacher_id: 4,
         notes: '',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 5
@@ -96,7 +96,7 @@ exports.seed = function(knex) {
         end_date: new Date(2020, 4, 6),
         teacher_id: 1,
         notes: '',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 6
@@ -115,7 +115,7 @@ exports.seed = function(knex) {
         end_date: new Date(2019, 11, 25),
         teacher_id: 2,
         notes: 'Some notes about this course',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 7
@@ -134,7 +134,7 @@ exports.seed = function(knex) {
         end_date: new Date(2020, 2, 30),
         teacher_id: 3,
         notes: '',
-        status: 'completed'
+        status: 'Completed'
       },
       {
         // 8
@@ -153,7 +153,7 @@ exports.seed = function(knex) {
         end_date: new Date(2020, 5, 24),
         teacher_id: 4,
         notes: '',
-        status: 'waitlist'
+        status: 'Waitlist'
       }
     ]);
   });
