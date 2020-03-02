@@ -1,6 +1,9 @@
 const db = require('../../database/db-config');
 
-const returning = ['course.id as course_id', 'student.id as student_id'];
+const returning = [
+  'course.id as course_id',
+  'student.id as student_id'
+];
 
 const studentView = [
   'ce.id as course_enrollment_id',
@@ -29,8 +32,16 @@ const findByID = id => {
     .join('course_type as ct', 'ct.id', 'c.course_type_id')
     .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
-    .join('course_schedule as cs', 'cs.id', 'c.course_schedule_id')
-    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code')
+    .join(
+      'course_schedule as cs',
+      'cs.id',
+      'c.course_schedule_id'
+    )
+    .join(
+      'result_type as rt',
+      'rt.result_type_code',
+      'ce.result_type_code'
+    )
     .orderBy('course_id', 'desc')
     .first();
 };
@@ -47,8 +58,16 @@ const find = (studentID, courseID) => {
     .join('course_type as ct', 'ct.id', 'c.course_type_id')
     .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
-    .join('course_schedule as cs', 'cs.id', 'c.course_schedule_id')
-    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code')
+    .join(
+      'course_schedule as cs',
+      'cs.id',
+      'c.course_schedule_id'
+    )
+    .join(
+      'result_type as rt',
+      'rt.result_type_code',
+      'ce.result_type_code'
+    )
     .first();
 };
 
@@ -56,6 +75,8 @@ const findByCourseID = courseID => {
   return db('course_enrollment as ce')
     .select([
       ...studentView,
+      's.cpr as cpr',
+      's.gender as gender',
       's.first_name as student_first_name',
       's.additional_names as student_additional_names'
     ])
@@ -67,8 +88,16 @@ const findByCourseID = courseID => {
     .join('course_type as ct', 'ct.id', 'c.course_type_id')
     .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
-    .join('course_schedule as cs', 'cs.id', 'c.course_schedule_id')
-    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code')
+    .join(
+      'course_schedule as cs',
+      'cs.id',
+      'c.course_schedule_id'
+    )
+    .join(
+      'result_type as rt',
+      'rt.result_type_code',
+      'ce.result_type_code'
+    )
     .join('student as s', 's.id', 'ce.student_id');
 };
 
@@ -80,8 +109,16 @@ const findAll = () => {
     .join('course_type as ct', 'ct.id', 'c.course_type_id')
     .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
-    .join('course_schedule as cs', 'cs.id', 'c.course_schedule_id')
-    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code')
+    .join(
+      'course_schedule as cs',
+      'cs.id',
+      'c.course_schedule_id'
+    )
+    .join(
+      'result_type as rt',
+      'rt.result_type_code',
+      'ce.result_type_code'
+    )
     .orderBy('course_id', 'desc');
 };
 
@@ -92,12 +129,10 @@ const create = body => {
 };
 
 const remove = (studentID, courseID) => {
-  return db('course_enrollment')
-    .del()
-    .where({
-      student_id: studentID,
-      course_id: courseID
-    });
+  return db('course_enrollment').del().where({
+    student_id: studentID,
+    course_id: courseID
+  });
 };
 
 const edit = (studentID, courseID, body) => {
@@ -110,7 +145,10 @@ const edit = (studentID, courseID, body) => {
     .returning('id');
 };
 const getResultTypes = () => {
-  return db('result_type').select(['result_type_code', 'short_description']);
+  return db('result_type').select([
+    'result_type_code',
+    'short_description'
+  ]);
 };
 
 const findCoursesByStudentID = studentID => {
@@ -122,8 +160,16 @@ const findCoursesByStudentID = studentID => {
     .join('course_type as ct', 'ct.id', 'c.course_type_id')
     .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
-    .join('course_schedule as cs', 'cs.id', 'c.course_schedule_id')
-    .join('result_type as rt', 'rt.result_type_code', 'ce.result_type_code')
+    .join(
+      'course_schedule as cs',
+      'cs.id',
+      'c.course_schedule_id'
+    )
+    .join(
+      'result_type as rt',
+      'rt.result_type_code',
+      'ce.result_type_code'
+    )
     .orderBy('course_id', 'desc');
 };
 
