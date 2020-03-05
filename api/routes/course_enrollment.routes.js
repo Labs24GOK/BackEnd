@@ -12,23 +12,18 @@ const {
 const {
   validateCourseEnrollmentBody,
   validateIfStudentIsEnrolled
-} = require('../controllers/course_enrollment.middleware');
+} = require('../middlewares/course_enrollment.middleware');
 
 const {
-  validateCourseID,
-} = require('../controllers/course.middleware');
+  validateCourseID
+} = require('../middlewares/course.middleware');
 
 const {
   validateStudentID
-} = require('../controllers/student.middleware');
+} = require('../middlewares/student.middleware');
 
 const router = express.Router();
 
-// router.use(validateCourseID);
-// router.use(checkIfCourseExistsByID);
-// router.use(validateStudentID);
-// router.use(checkIfStudentExistsByID);
-// router.use(validateIfStudentIsEnrolled);
 
 const validation = [
   validateCourseID,

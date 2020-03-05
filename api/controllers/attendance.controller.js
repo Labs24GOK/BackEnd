@@ -1,8 +1,9 @@
 const { catchAsync } = require('../utils/catchAsync');
+
 const Attendance = require('../models/attendance.model');
-const Staff = require('../models/staff.model');
-const Course = require('../models/course.model');
-const CourseEnrollment = require('../models/course_enrollment.model');
+const Course = require('../models/course.model')
+const CourseEnrollment = require('../models/course_enrollment.model')
+
 
 const takeAttendance = catchAsync(async (req, res) => {
   if (req.meetingId) {

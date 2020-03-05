@@ -8,7 +8,7 @@ const {
 
 const {
   checkIfMeetingExists
-} = require('../controllers/attendance.middleware');
+} = require('../middlewares/attendance.middleware');
 
 const router = express.Router();
 

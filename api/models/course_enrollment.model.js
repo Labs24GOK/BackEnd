@@ -1,10 +1,5 @@
 const db = require('../../database/db-config');
 
-const returning = [
-  'course.id as course_id',
-  'student.id as student_id'
-];
-
 const studentView = [
   'ce.id as course_enrollment_id',
   'ce.student_id as student_id',

@@ -1,3 +1,5 @@
+const db = require('../../database/db-config');
+
 const returning = [
   's.id as student_id',
   's.cpr',
@@ -35,8 +37,6 @@ const returning = [
   's.emergency_relationship',
   's.emergency_phone'
 ];
-
-const db = require('../../database/db-config');
 
 const create = body => {
   return db('student')

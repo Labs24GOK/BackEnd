@@ -1,6 +1,7 @@
 const db = require('../../database/db-config');
 
 const takeAttendance = (meeting, students) => {
+  /// TRANSACTIONS ARE SO THAT IT EITHER DOES BOTH THINGS OR IT DOES NONE --> IN CASE THERE IS AN ERROR SAVING THE STUDENT ATTENDANCE, WE DONT WANT TO SAVE THE MEETING OR WE WILL HAVE A BUG WHEN TRYING TO FETCH
   return db.transaction(trx => {
     return db('meeting')
       .transacting(trx)

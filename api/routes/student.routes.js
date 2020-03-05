@@ -13,7 +13,7 @@ const {
 const {
   validateStudentID,
   validateStudentBody
-} = require('../controllers/student.middleware');
+} = require('../middlewares/student.middleware');
 
 const router = express.Router();
 

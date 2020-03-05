@@ -1,5 +1,6 @@
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
+
 const CourseEnrollment = require('../models/course_enrollment.model');
 
 const enrollAStudentInCourse = catchAsync(async (req, res, next) => {

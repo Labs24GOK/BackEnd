@@ -14,9 +14,9 @@ const {
   validateEditStaff,
   validateStaffID,
   checkIfStaffExistsByID
-} = require('../controllers/staff.middleware');
+} = require('../middlewares/staff.middleware'); 
 
-const router = express.Router();
+const router = express.Router(); 
 
 router.param('staffID', validateStaffID);
 

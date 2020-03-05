@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
-const Auth = require('../models/auth.model.js');
+
 const { catchAsync } = require('../utils/catchAsync');
+
+const Auth = require('../models/auth.model');
 
 const registerStudent = catchAsync(async (req, res) => {
   const hashedPassword = bcrypt.hashSync(

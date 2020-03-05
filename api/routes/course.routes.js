@@ -13,7 +13,7 @@ const {
 const {
   validateCourseBody,
   validateCourseID
-} = require('../controllers/course.middleware');
+} = require('../middlewares/course.middleware');
 
 const router = express.Router();
 

@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt');
-const Course = require('../models/course.model');
+
+const { catchAsync } = require('../utils/catchAsync');
 
 const Staff = require('../models/staff.model');
-const AppError = require('../utils/AppError');
-const { catchAsync } = require('../utils/catchAsync');
+const Course = require('../models/course.model');
+
 
 const findStaffById = catchAsync(async (req, res, next) => {
   return res.status(200).json(req.staffUser);

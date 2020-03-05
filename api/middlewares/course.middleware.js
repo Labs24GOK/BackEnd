@@ -1,7 +1,9 @@
-const Course = require('../models/course.model');
+const Joi = require('@hapi/joi');
+
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
-const Joi = require('@hapi/joi');
+
+const Course = require('../models/course.model');
 
 const validateCourseID = catchAsync(
   async (req, res, next) => {
