@@ -63,6 +63,7 @@ const findByCPR = cpr => {
 };
 
 const create = async (userBody, staffBody) => {
+  /// TRANSACTIONS ARE SO THAT IT EITHER DOES BOTH THINGS OR IT DOES NONE --> IN CASE THERE IS AN ERROR SAVING THE STAFF INFO, WE DONT WANT THE USER TO BE SAVED. ETC
   return db.transaction(trx => {
     return db('user')
       .transacting(trx)

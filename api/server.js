@@ -6,16 +6,18 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const model = require('./model.js');
+
 const initializePassport = require('../passport-config.js');
 const createSession = require('../middleware/createSession.js');
 const checkAuthenticated = require('../middleware/checkAuthenticated.js');
-const staffroutes = require('./routes/staff.routes');
-const studentroutes = require('./routes/student.routes');
 const globalErrorHandler = require('./controllers/errors.controller');
-const authroutes = require('./routes/auth.routes');
-const courseroutes = require('./routes/course.routes');
-const courseenrollmentroutes = require('./routes/course_enrollment.routes');
-const attendanceroutes = require('./routes/attendance.routes');
+
+const staffRoutes = require('./routes/staff.routes');
+const studentRoutes = require('./routes/student.routes');
+const authRoutes = require('./routes/auth.routes');
+const courseRoutes = require('./routes/course.routes');
+const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
+const attendanceRoutes = require('./routes/attendance.routes');
 
 // ------- Set up server -------
 const server = express();
@@ -39,13 +41,17 @@ server.use(express.json());
 createSession(server);
 initializePassport(passport);
 
-server.use(staffroutes);
-server.use(studentroutes);
-server.use(courseroutes);
-server.use(authroutes);
-server.use(courseenrollmentroutes);
-server.use(attendanceroutes);
 
+//// NEED TO BE MOVED BENEATH AUTH ROLE MIDDLEWARE -- NOT SECURED --> ANYONE CAN ACCESS THIS ENDPOINT AT THIS MOMENT
+server.use(authRoutes);
+server.use(staffRoutes);
+server.use(studentRoutes);
+server.use(courseRoutes);
+server.use(courseEnrollmentRoutes);
+server.use(attendanceRoutes);
+
+
+///// NEED TO BE REFACTORED INTO A MODEL ETC FOR PARENTS, STAFF REGISTRATION IS COMPLETE!
 // -------- Endpoints --------
 server.post('/register', (req, res) => {
   const hashedPassword = bcrypt.hashSync(
@@ -73,77 +79,7 @@ server.post('/register', (req, res) => {
     });
 });
 
-// ***********       OLD PARENT-REGISTER API      **********************
-
-// server.post('/parent-register', (req, res) => {
-//   console.log('parent-register');
-//   const user = req.body.user;
-//   const family = req.body.family;
-//   const student = req.body.student;
-
-//   const hashedPassword = bcrypt.hashSync(user.password, 10);
-
-//   model
-//     .addUser({
-//       username: user.username,
-//       password: hashedPassword,
-//       name: user.name || null,
-//       email: user.email || null,
-//       user_type: user.user_type
-//     })
-//     .then(user => {
-//       console.log('User return:', user);
-//       model
-//         .addFamily({
-//           mother_name: family.mother_name,
-//           father_name: family.father_name,
-//           primary_telephone: family.primary_telephone,
-//           secondary_telephone: family.secondary_telephone,
-//           user_id: user[0].user_id
-//         })
-//         .then(family => {
-//           console.log('Family return:', family);
-//           model
-//             .addStudent({
-//               first_name: student.first_name,
-//               additional_names: student.additional_names,
-//               cpr: student.cpr,
-//               email: student.email,
-//               birthdate: student.birthdate,
-//               registration_date: new Date(),
-//               location_id: student.location_id,
-//               family_id: family[0].user_id
-//             })
-//             .then(student => {
-//               console.log('Student return:', student);
-//               res.status(200).json({
-//                 student_name: student[0]
-//               });
-//             })
-//             .catch(error => {
-//               console.log('student', error);
-//               res.status(500).json({
-//                 message: `There was an error attempting to register a student: ${error}.`
-//               });
-//             });
-//         })
-//         .catch(error => {
-//           console.log('family', error);
-//           res.status(500).json({
-//             message: `There was an error attempting to add a family: ${error}.`
-//           });
-//         });
-//     })
-//     .catch(error => {
-//       console.log('user', error);
-//       res.status(500).json({
-//         message: `There was an error attempting to register user: ${error}.`
-//       });
-//     });
-// });
-
-// ***********       OLD PARENT-REGISTER API      **********************
-
+/// LOGIN / LOGOUT NEEDS TO BE REFACTORED TO AUTH ROUTES
 server.post(
   '/login',
   passport.authenticate('local', {
@@ -185,6 +121,11 @@ server.get('/user', async (req, res) => {
   });
 });
 
+
+//// END OF AUTH REFACTORING
+
+
+/// THIS IS FINE
 server.get('/', (req, res) => {
   res
     .status(200)
@@ -193,6 +134,8 @@ server.get('/', (req, res) => {
     );
 });
 
+
+//// NEED TO CHECK IF THERE ARE ANY OTHER ENDPOINTS ON THE FRONT END USING THIS ENDPOINTS AND REFACTORED INTO THEIR OWN ROUTES
 server.get('/api', checkAuthenticated, (req, res) => {
   const perPage = req.query.perPage;
   const skip = req.query.skip;
@@ -288,63 +231,5 @@ server.put('/', (req, res) => {
     });
 });
 
-server.post('/api/attendance', (req, res) => {
-  model
-    .addMeeting(req.body.meeting)
-    .then(saved => {
-      const meeting_id = saved[0];
-      //console.log('SAVED : ', saved);
-      req.body.students.forEach(student => {
-        const studentAttend = { ...student, meeting_id };
-        model
-          .add('attendance', studentAttend)
-          .then(saved => {
-            //console.log(saved);
-          })
-          .catch(err => {
-            res.status(500).json({
-              error: err + '',
-              message: 'Error saving students'
-            });
-          });
-      });
-      res.status(201).json(saved);
-    })
-    .catch(err =>
-      res.status(500).json({
-        error: err + '',
-        message: 'Error saving meeting'
-      })
-    );
-});
-
 server.use(globalErrorHandler);
-
-//http://localhost:3000/pagination?perPage=5&skip=10&table=students
-// server.get("/pagination", async (req, res) => {
-//     const perPage = req.query.perPage;
-//     const skip = req.query.skip;
-//     const table = req.query.table;
-//     //es5
-//     db(table)
-//       .offset(skip)
-//       .limit(perPage)
-//       .then(tableData => {
-//         res.json({ tableData });
-//       });
-//     //es6
-//     const tableData = await db(table)
-//       .offset(skip)
-//       .limit(perPage);
-//     res.json({ tableData });
-//     try {
-//       const tableData = await db(table)
-//         .offset(skip)
-//         .limit(perPage);
-//       res.json({ tableData });
-//     } catch (err) {
-//       res.json({ err });
-//     }
-//   });
-
 module.exports = server;

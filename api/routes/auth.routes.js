@@ -1,10 +1,6 @@
 const express = require('express');
 
 const {
-  validateRegisterStudent
-} = require('../controllers/auth.middleware');
-
-const {
   registerStudent
 } = require('../controllers/auth.controller');
 

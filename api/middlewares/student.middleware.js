@@ -1,7 +1,9 @@
+const Joi = require('@hapi/joi');
+
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
+
 const Student = require('../models/student.model');
-const Joi = require('@hapi/joi');
 
 const validateStudentID = catchAsync(
   async (req, res, next) => {

@@ -31,6 +31,7 @@ const returning = [
 const find = queries => {
   const query = db('course')
     .select(returning)
+    // THIS SELECTS GET THE ACTIVE STUDENTS ETC, IF THE RESULT_TYPE_CODE CHANGES, THIS NEEDS TO BE CHANGED
     .select(function() {
       this.from('course_enrollment as ce')
         .whereRaw('ce.course_id = course.id')
