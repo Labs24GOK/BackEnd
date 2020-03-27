@@ -32,7 +32,8 @@ server.use(
       'http://localhost:3000',
       'https://speakout-now.com',
       'https://speakout-bh.netlify.com',
-      'https://speak-out-bh.com'
+      'https://speak-out-bh.com',
+      'https://www.speak-out-bh.com'
     ],
     credentials: true
   })

@@ -12,7 +12,7 @@ exports.seed = function(knex) {
         mobile_telephone: '384-555-65',
         email: 'student@email.com',
         preferred_contact_type_id: 3,
-        birthdate: new Date(2014, 1, 01),
+        birhdate: new Date(2014, 1, 01),
         school_name: 'Alduraz',
         school_grade_id: 4,
         location_id: 1,
@@ -33,6 +33,37 @@ exports.seed = function(knex) {
         expelled: false,
         family_id: 1
       },
+
+      {
+        "cpr": "140412321",
+        "first_name": "Mariam",
+        "additional_names": "Akram Rahmani",
+        "gender": "F",
+        "home_telephone": "384-555-65",
+        "mobile_telephone": "384-555-65",
+        "email": "student@email.com
+        "preferred_contact_type_id": 3,
+        "birthdate": new Date(2014, 1, 01),
+        "school_name": "Alduraz",
+        "school_grade_id": 4,
+        "location_id": 1,
+        "block_code": 363,
+        "road": "2550",
+        "building": "298",
+        "flat": "12",
+        "primary_emergency_contact_name":
+          "Haroon Akram Rahmani",
+        "primary_emergency_relationship": "Father",
+        "primary_emergency_phone": "384-555-65",
+        "emergency_contact_name": "Fatwa Akram Rahmani",
+        "emergency_relationship": "Mother",
+        "emergency_phone": "384-555-65",
+        "notes": "asfdsadsada",
+        "no_call": false,
+        "delinquent": false,
+        "expelled": false,
+        "family_id": 1
+      }
       {
         cpr: '1404XXXX2',
         first_name: 'Hamad',
