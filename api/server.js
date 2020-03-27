@@ -33,7 +33,8 @@ server.use(
       'https://speakout-now.com',
       'https://speakout-bh.netlify.com',
       'https://speak-out-bh.com',
-      'https://www.speak-out-bh.com'
+      'https://www.speak-out-bh.com',
+      'https://RC1-staging.d3pg0n6842ntws.amplifyapp.com'
     ],
     credentials: true
   })
