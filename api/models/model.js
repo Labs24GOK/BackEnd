@@ -1,4 +1,4 @@
-const db = require('../database/db-config.js');
+const db = require('../../database/db-config.js');
 
 module.exports = {
   add,
@@ -86,9 +86,6 @@ function remove(tab, whe) {
 
 function update(table, where, body) {
   let id = where;
-  //   return db.raw(
-  //     'update "' + table + '" set ' + makeWhere(body, ",") + " where " + where
-  //   );
   return db(table)
     .where({ id: body.id })
     .update(body);
@@ -131,8 +128,3 @@ function addStaff(body) {
     .returning('*');
 }
 
-// function addUser(body) {
-//   return db('user')
-//     .insert(body)
-//     .returning(['first_name', 'last_name', 'email', 'user_type', 'username']);
-// }

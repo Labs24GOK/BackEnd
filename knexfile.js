@@ -17,20 +17,23 @@ module.exports = {
 			directory: './database/seeds'
 		}
 	},
-	development: {
-		client: 'postgresql',
-		connection: {
-			database: database_name,
-			user: database_user,
-			password: database_password
+	
+		development: {
+			client: 'pg',
+			connection: {
+				database: 'postgres',
+				user: 'lambda_school_loaner_198',
+				password: 'postgres'
 		},
-		seeds: {
-			directory: './database/seeds'
-		},
-		migrations: {
-			directory: './database/migrations'
-		}
-	},
+			migrations: {
+			  directory: './database/migrations',
+			},
+			seeds: {
+			  directory: './database/seeds',
+			},
+		  },
+		
+
 	testing: {
 		client: 'postgresql',
 		connection: {
