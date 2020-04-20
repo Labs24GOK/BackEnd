@@ -3,14 +3,14 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const model = require('../models/model.js');
 
-const {
-  registerStudent
-} = require('../controllers/auth.controller');
+// const {
+//   registerStudent
+// } = require('../controllers/auth.controller');
 
 // const server = express();
 const router = express.Router();
 
-router.post('/parent-register', registerStudent);
+// router.post('/parent-register', registerStudent);
 
 module.exports = router;
 
