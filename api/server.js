@@ -19,7 +19,7 @@ const authRoutes = require('./routes/auth.routes');
 const courseRoutes = require('./routes/course.routes');
 const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
-const tableRoutes= require('./routes/table.routes');
+const userRoutes = require('./routes/users.routes');
 // ------- Set up server -------
 const server = express();
 
@@ -52,7 +52,7 @@ server.use(studentRoutes);
 server.use(courseRoutes);
 server.use(courseEnrollmentRoutes);
 server.use(attendanceRoutes);
-server.use(tableRoutes);
+server.use(userRoutes);
 
 /// THIS IS FINE
 server.get('/', (req, res) => {
