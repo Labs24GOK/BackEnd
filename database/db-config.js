@@ -1,4 +1,4 @@
-const environment = process.env.DB_ENV || 'development';
+const environment = process.env.DB_ENV || 'production';
 
 const knex = require('knex');
 
