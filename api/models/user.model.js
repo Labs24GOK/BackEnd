@@ -17,8 +17,16 @@ const remove = id => {
     .where({ user_id: id });
 };
 
+const findAll = () => {
+  return db('user')
+    .select(['user_id', 'user.name'])
+    // .join('user', 'user.user_id')
+    // .orderBy('user.id', 'desc');
+};
+
 module.exports = {
   findBy,
   create,
-  remove
+  remove,
+  findAll
 };
