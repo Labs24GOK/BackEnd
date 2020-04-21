@@ -41,7 +41,7 @@ exports.seed = function(knex) {
         "gender": "F",
         "home_telephone": "384-555-65",
         "mobile_telephone": "384-555-65",
-        "email": "student@email.com
+        "email": "student@email.com",
         "preferred_contact_type_id": 3,
         "birthdate": new Date(2014, 1, 01),
         "school_name": "Alduraz",
@@ -63,7 +63,7 @@ exports.seed = function(knex) {
         "delinquent": false,
         "expelled": false,
         "family_id": 1
-      }
+      },
       {
         cpr: '1404XXXX2',
         first_name: 'Hamad',
