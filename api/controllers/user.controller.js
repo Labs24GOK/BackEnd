@@ -8,4 +8,9 @@ const findAllUsers = catchAsync(async (req, res, next) => {
   return res.status(200).json(users);
 });
 
-module.exports = { findAllUsers };
+const findUserById =  catchAsync(async (req, res, next) => {
+    const users= await Users.findBy();
+    return res.status(200).json(users);
+  });
+
+module.exports = { findAllUsers, findUserById };

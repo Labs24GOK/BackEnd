@@ -1,10 +1,23 @@
 const db = require('../../database/db-config');
 
-const findBy = (field, arg) => {
+const returning = [
+  'u.user_id',
+  'u.name',
+  'u.user_type',
+  'u.email'
+];
+
+// const findBy = (field, arg) => {
+//   return db('user')
+//     .where(field, '=', arg)
+//     .first();
+// };
+
+const findBy = user_id => {
   return db('user')
-    .where(field, '=', arg)
+    .where('user.user_id', '=', user_id)
     .first();
-};
+} 
 const create = body => {
   return db('user')
     .insert(body)
@@ -19,9 +32,8 @@ const remove = id => {
 
 const findAll = () => {
   return db('user')
-    .select(['user_id', 'user.name'])
-    // .join('user', 'user.user_id')
-    // .orderBy('user.id', 'desc');
+    .select(['user_id', 'user.name', 'user_type', 'email'])
+   
 };
 
 module.exports = {
