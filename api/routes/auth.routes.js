@@ -42,7 +42,7 @@ router.get('/api/auth/logout', (req, res) => {
   res.json({ message: 'bye' });
 });
 
-router.get('/api/auth/user', async (req, res) => {
+router.get('/user', async (req, res) => {
   console.log('====USER====');
   let userName = req.body ? req.body.username : undefined;
   let userType = req.body.user_type;
