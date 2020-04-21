@@ -20,6 +20,8 @@ const courseRoutes = require('./routes/course.routes');
 const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
 const userRoutes = require('./routes/users.routes');
+const familyRoutes = require('./routes/family.routes.js');
+
 // ------- Set up server -------
 const server = express();
 
@@ -53,6 +55,7 @@ server.use(courseRoutes);
 server.use(courseEnrollmentRoutes);
 server.use(attendanceRoutes);
 server.use(userRoutes);
+server.use(familyRoutes);
 
 /// THIS IS FINE
 server.get('/', (req, res) => {
