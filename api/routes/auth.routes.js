@@ -3,14 +3,14 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const model = require('../models/model.js');
 
-const {
-  registerStudent
-} = require('../controllers/auth.controller');
+// const {
+//   registerStudent
+// } = require('../controllers/auth.controller');
 
 // const server = express();
 const router = express.Router();
 
-router.post('/parent-register', registerStudent);
+// router.post('/parent-register', registerStudent);
 
 module.exports = router;
 
@@ -42,7 +42,7 @@ router.get('/api/auth/logout', (req, res) => {
   res.json({ message: 'bye' });
 });
 
-router.get('/api/auth/user', async (req, res) => {
+router.get('/user', async (req, res) => {
   console.log('====USER====');
   let userName = req.body ? req.body.username : undefined;
   let userType = req.body.user_type;
