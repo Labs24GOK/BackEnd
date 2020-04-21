@@ -21,9 +21,9 @@ module.exports = {
 		development: {
 			client: 'pg',
 			connection: {
-				database: 'postgres',
-				user: 'lambda_school_loaner_198',
-				password: 'postgres'
+				database: process.env.DB_NAME,
+				user: process.env.DB_USER,
+				password: process.env.DB_PASSWORD
 		},
 			migrations: {
 			  directory: './database/migrations',
