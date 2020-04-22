@@ -7,6 +7,8 @@ const model = require('../models/model.js');
 //   registerStudent
 // } = require('../controllers/auth.controller');
 
+const {validateRegistration}= require ('../middlewares/registration.middleware')
+
 // const server = express();
 const router = express.Router();
 
@@ -61,7 +63,7 @@ router.get('/user', async (req, res) => {
 
 ///// NEED TO BE REFACTORED INTO A MODEL ETC FOR PARENTS, STAFF REGISTRATION IS COMPLETE!
 // -------- Endpoints --------
-router.post('/api/auth/register', (req, res) => {
+router.post('/api/auth/register', validateRegistration, (req, res) => {
   const hashedPassword = bcrypt.hashSync(
     req.body.password,
     10
