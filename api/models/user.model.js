@@ -7,17 +7,17 @@ const returning = [
   'u.email'
 ];
 
-// const findBy = (field, arg) => {
-//   return db('user')
-//     .where(field, '=', arg)
-//     .first();
-// };
-
-const findBy = user_id => {
+const findBy = (field, arg) => {
   return db('user')
-    .where('user.user_id', '=', user_id)
+    .where(field, '=', arg)
     .first();
-} 
+};
+
+// const findBy = user_id => {
+//   return db('user')
+//     .where('user.user_id', '=', user_id)
+//     .first();
+// } 
 const create = body => {
   return db('user')
     .insert(body)
