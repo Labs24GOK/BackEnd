@@ -21,7 +21,7 @@ const validateRegistration = catchAsync(
                 !user_type 
             )
         ) {
-            next(new AppError('Wrong Body', 403));
+            next(new AppError('One or more input fields are missing', 403));
             return;
         }
         req.user = {
