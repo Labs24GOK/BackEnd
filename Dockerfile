@@ -1,14 +1,12 @@
 
 FROM node:latest
 
-COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-ENV NODE_ENV=production
-ENV PORT=4000
+COPY . . 
 
 RUN npm install
 
-EXPOSE $PORT
+EXPOSE 4000
 
-ENTRYPOINT ["npm", "start"]
+CMD ["npm", "start"]
