@@ -2,19 +2,19 @@ const db = require('../../database/db-config');
 
 
 
-const findsBy = (field, arg) => {
+const findUserByCriteria = (field, arg) => {
   return db('user')
     .where(field, '=', arg)
     .first();
 };
 
-const findBy = id => {
+const findUserById = id => {
   return db('user')
     .where({id})
-    // .first();
+    .first();
 }
 
-const findById = user_id => {
+const findAllStudentsByUserId = user_id => {
   return db('student')
   .where({user_id})
 }
@@ -39,10 +39,10 @@ const findAll = () => {
 };
 
 module.exports = {
-  findBy,
-  findById,
+  findUserById,
+  findAllStudentsByUserId,
   create,
   remove,
   findAll,
-  findsBy
+  findUserByCriteria
 };
