@@ -13,7 +13,8 @@ module.exports = {
   addUser,
   addMeeting,
   addFamily,
-  addStudent
+  addStudent,
+  findByUsername
 };
 
 function find(view, where) {
@@ -67,6 +68,10 @@ function findBy(view, filter) {
   return db.raw('select * from "' + view + '" where ' + filter);
 }
 
+function findByUsername(filter) {
+  return db('user').where(filter);
+}
+
 async function add(table, body) {
   let where = makeWhere(body);
   await db(table).insert(body);
@@ -100,7 +105,7 @@ function updateAny(table, where, body) {
 function addUser(userData) {
   return db('user')
     .insert(userData)
-    .returning(['user_id', 'username']);
+    .returning(['id', 'username']);
 }
 
 function addMeeting(meeting) {
