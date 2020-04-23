@@ -100,7 +100,7 @@ function updateAny(table, where, body) {
 function addUser(userData) {
   return db('user')
     .insert(userData)
-    .returning(['user_id', 'username']);
+    .returning(['id', 'username']);
 }
 
 function addMeeting(meeting) {
