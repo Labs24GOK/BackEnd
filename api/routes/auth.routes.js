@@ -1,5 +1,5 @@
 const express = require('express');
-const passport = require('passport');
+// const passport = require('passport');
 const bcrypt = require('bcrypt');
 const model = require('../models/model.js');
 const jwt = require('jsonwebtoken');
@@ -32,11 +32,11 @@ router.post('/api/auth/login', (req, res) => {
     });
 });
 
-router.get('/api/auth/logout', (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.json({ message: 'bye' });
-});
+// router.get('/api/auth/logout', (req, res) => {
+//   req.logout();
+//   req.session.destroy();
+//   res.json({ message: 'bye' });
+// });
 
 router.get('/user', async (req, res) => {
   let userName = req.body ? req.body.username : undefined;

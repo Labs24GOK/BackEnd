@@ -5,11 +5,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const passport = require('passport');
+// const passport = require('passport');
 
 
-const initializePassport = require('../passport-config.js');
-const createSession = require('../middleware/createSession.js');
+// const initializePassport = require('../passport-config.js');
+// const createSession = require('../middleware/createSession.js');
 
 const globalErrorHandler = require('./controllers/errors.controller');
 
@@ -43,8 +43,8 @@ server.use(
   })
 );
 server.use(express.json());
-createSession(server);
-initializePassport(passport);
+// createSession(server);
+// initializePassport(passport);
 
 
 //// NEED TO BE MOVED BENEATH AUTH ROLE MIDDLEWARE -- NOT SECURED --> ANYONE CAN ACCESS THIS ENDPOINT AT THIS MOMENT
