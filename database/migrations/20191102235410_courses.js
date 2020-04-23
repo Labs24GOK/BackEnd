@@ -78,7 +78,7 @@ exports.up = function(knex) {
       table
         .integer('user_id')
         .unsigned()
-        .references('user_id')
+        .references('id')
         .inTable('user')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE')

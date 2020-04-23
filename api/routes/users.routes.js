@@ -1,7 +1,5 @@
 const express = require('express');
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const model = require('../models/user.model.js');
+const Users = require('../models/user.model');
 
 const router = express.Router();
 
@@ -12,5 +10,19 @@ const {
 
 router.get('/users', findAllUsers);
 router.get('/users/:UserId', findUserById);
+
+router.get('/user/:id', (req, res) => {
+  console.log(req.params);
+  const id = req.params.id
+  Users.findById(id)
+  .then(student => {
+    res.status(200).json(student);
+  })
+  .catch(err => {
+    res.status(500).json(err)
+  })
+});
+
+// router.get('/users/:UserId/students', router);
 
 module.exports = router;

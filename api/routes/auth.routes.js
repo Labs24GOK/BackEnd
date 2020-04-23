@@ -7,6 +7,8 @@ const model = require('../models/model.js');
 //   registerStudent
 // } = require('../controllers/auth.controller');
 
+const {validateRegistration}= require ('../middlewares/registration.middleware')
+
 // const server = express();
 const router = express.Router();
 
@@ -16,25 +18,47 @@ module.exports = router;
 
 /// LOGIN / LOGOUT NEEDS TO BE REFACTORED TO AUTH ROUTES
 
-router.post('/api/auth/login',
-  passport.authenticate('local', {
-    session: true
-  }),
-  (req, res) => {
-    if (req.isAuthenticated()) {
-      res.status(200).json({
-        message: 'You have successfully logged in',
-        username: req.user.username,
-        user_type: req.user.user_type,
-        user_id: req.user.user_id
-      });
-    } else {
-      res
-        .status(500)
-        .json({ message: 'Invalid credentials' });
-    }
-  }
-);
+// router.post('/api/auth/login',
+//   passport.authenticate('local', {
+//     session: true
+//   }),
+//   (req, res) => {
+//     if (req.isAuthenticated()) {
+//       res.status(200).json({
+//         message: 'You have successfully logged in',
+//         username: req.user.username,
+//         user_type: req.user.user_type,
+//         user_id: req.user.user_id
+//       });
+//     } else {
+//       res
+//         .status(500)
+//         .json({ message: 'Invalid credentials' });
+//     }
+//   }
+// );
+
+router.post('/api/auth/login', (req, res) => {
+  let { username, password } = req.body;
+
+  model.findByUsername({ username })
+    .first()
+    .then(user => {
+      console.log(user);
+      if (user && bcrypt.compareSync(password, user.password)) {
+        // const token = generateToken(user);
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          // token,
+        });
+      } else {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 
 router.get('/api/auth/logout', (req, res) => {
   req.logout();
@@ -61,7 +85,7 @@ router.get('/user', async (req, res) => {
 
 ///// NEED TO BE REFACTORED INTO A MODEL ETC FOR PARENTS, STAFF REGISTRATION IS COMPLETE!
 // -------- Endpoints --------
-router.post('/api/auth/register', (req, res) => {
+router.post('/api/auth/register', validateRegistration, (req, res) => {
   const hashedPassword = bcrypt.hashSync(
     req.body.password,
     10

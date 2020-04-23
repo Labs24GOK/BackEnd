@@ -21,7 +21,7 @@ module.exports = {
 		development: {
 			client: 'pg',
 			connection: {
-				database: 'postgres',
+				database: process.env.DB_NAME,
 				user: database_user,
 				password: database_password
 		},
