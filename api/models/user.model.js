@@ -7,6 +7,7 @@ const db = require('../../database/db-config');
 //   'u.email'
 // ];
 
+
 // const findBy = (field, arg) => {
 //   return db('user')
 //     .where(field, '=', arg)
@@ -23,6 +24,7 @@ const findById = user_id => {
   return db('student')
   .where({user_id})
 }
+
 
 const create = body => {
   return db('user')
