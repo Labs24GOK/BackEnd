@@ -2,41 +2,14 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const model = require('../models/model.js');
-
-// const {
-//   registerStudent
-// } = require('../controllers/auth.controller');
+const jwt = require('jsonwebtoken');
 
 const {validateRegistration}= require ('../middlewares/registration.middleware')
+const {jwtSecret} = require('../config/secrets');
 
-// const server = express();
 const router = express.Router();
 
-// router.post('/parent-register', registerStudent);
-
 module.exports = router;
-
-/// LOGIN / LOGOUT NEEDS TO BE REFACTORED TO AUTH ROUTES
-
-// router.post('/api/auth/login',
-//   passport.authenticate('local', {
-//     session: true
-//   }),
-//   (req, res) => {
-//     if (req.isAuthenticated()) {
-//       res.status(200).json({
-//         message: 'You have successfully logged in',
-//         username: req.user.username,
-//         user_type: req.user.user_type,
-//         user_id: req.user.user_id
-//       });
-//     } else {
-//       res
-//         .status(500)
-//         .json({ message: 'Invalid credentials' });
-//     }
-//   }
-// );
 
 router.post('/api/auth/login', (req, res) => {
   let { username, password } = req.body;
@@ -46,10 +19,10 @@ router.post('/api/auth/login', (req, res) => {
     .then(user => {
       console.log(user);
       if (user && bcrypt.compareSync(password, user.password)) {
-        // const token = generateToken(user);
+        const token = generateToken(user);
         res.status(200).json({
           message: `Welcome ${user.username}!`,
-          // token,
+          token,
         });
       } else {
         res.status(401).json({ message: 'Invalid Credentials' });
@@ -80,11 +53,6 @@ router.get('/user', async (req, res) => {
   });
 });
 
-
-//// END OF AUTH REFACTORING
-
-///// NEED TO BE REFACTORED INTO A MODEL ETC FOR PARENTS, STAFF REGISTRATION IS COMPLETE!
-// -------- Endpoints --------
 router.post('/api/auth/register', validateRegistration, (req, res) => {
   const hashedPassword = bcrypt.hashSync(
     req.body.password,
@@ -111,3 +79,14 @@ router.post('/api/auth/register', validateRegistration, (req, res) => {
     });
 });
 
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username,
+    role: user.role || 'user'
+  };
+  const options = {
+    expiresIn: '1h',
+  }
+  return jwt.sign(payload, jwtSecret, options);
+}
