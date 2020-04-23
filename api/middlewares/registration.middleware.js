@@ -1,8 +1,6 @@
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
-const Auth = require('../models/auth.model');
 const User = require('../models/user.model');
-
 
 const validateRegistration = catchAsync(
     async (req, res, next) => {

@@ -1,4 +1,3 @@
-// const router = require('express').Router();
 const { catchAsync } = require('../utils/catchAsync');
 
 const Users = require('../models/user.model');
@@ -12,7 +11,5 @@ const findUserById = catchAsync(async (req, res, next) => {
     const users= await Users.findBy();
     return res.status(200).json(users);
   });
-
-
 
 module.exports = { findAllUsers, findUserById };

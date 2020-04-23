@@ -23,6 +23,4 @@ router.get('/user/:id', (req, res) => {
   })
 });
 
-// router.get('/users/:UserId/students', router);
-
 module.exports = router;

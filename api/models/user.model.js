@@ -1,7 +1,5 @@
 const db = require('../../database/db-config');
 
-
-
 const findsBy = (field, arg) => {
   return db('user')
     .where(field, '=', arg)
@@ -11,7 +9,6 @@ const findsBy = (field, arg) => {
 const findBy = id => {
   return db('user')
     .where({id})
-    // .first();
 }
 
 const findById = user_id => {
@@ -35,7 +32,6 @@ const remove = id => {
 const findAll = () => {
   return db('user')
     .select(['id', 'user.name', 'user_type', 'email'])
-   
 };
 
 module.exports = {
