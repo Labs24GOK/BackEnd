@@ -1,18 +1,6 @@
 const db = require('../../database/db-config');
 
-// const returning = [
-//   'u.id',
-//   'u.name',
-//   'u.user_type',
-//   'u.email'
-// ];
 
-
-// const findBy = (field, arg) => {
-//   return db('user')
-//     .where(field, '=', arg)
-//     .first();
-// };
 
 const findsBy = (field, arg) => {
   return db('user')
