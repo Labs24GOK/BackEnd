@@ -25,7 +25,7 @@ const takeAttendance = (meeting, students) => {
 const findMeeting = (date, course_id) => {
   return db('meeting')
     .join('staff as s', 's.id', 'meeting.teacher_id')
-    .join('user as u', 'u.user_id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .where({
       meeting_date: date,
       course_id: course_id
