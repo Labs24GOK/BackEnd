@@ -31,11 +31,11 @@ const validateRegistration = catchAsync(
             user_type
         };
         // CHECKS IF EMAIL USERNAME  IS IN USE
-        const userByEmail = await User.findBy(
+        const userByEmail = await User.findsBy(
             'email',
             email
         );
-        const userByUsername = await User.findBy(
+        const userByUsername = await User.findsBy(
             'username',
             username
         );

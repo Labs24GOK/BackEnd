@@ -14,6 +14,12 @@ const db = require('../../database/db-config');
 //     .first();
 // };
 
+const findsBy = (field, arg) => {
+  return db('user')
+    .where(field, '=', arg)
+    .first();
+};
+
 const findBy = id => {
   return db('user')
     .where({id})
@@ -49,5 +55,6 @@ module.exports = {
   findById,
   create,
   remove,
-  findAll
+  findAll,
+  findsBy
 };
