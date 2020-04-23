@@ -20,7 +20,7 @@ exports.seed = function(knex) {
       flat: '12',
       primary_telephone: '384-555-65',
       secondary_telephone: '384-555-65',
-      user_id: 1
+      user_id: 2
     },
     {
       mother_name: 'Wasifi Sharif Ozer Tariq',
@@ -31,7 +31,7 @@ exports.seed = function(knex) {
       flat: '12',
       primary_telephone: '384-555-65',
       secondary_telephone: '384-555-65',
-      user_id: 1
+      user_id: 3
     },
     {
       mother_name: 'Hulwi Mohammad Hussein Harroun',
@@ -42,7 +42,7 @@ exports.seed = function(knex) {
       flat: '12',
       primary_telephone: '384-555-65',
       secondary_telephone: '384-555-65',
-      user_id: 1
+      user_id: 4
     },
     {
       mother_name: 'Jaza Nasma Abdou',
@@ -53,7 +53,7 @@ exports.seed = function(knex) {
       flat: '12',
       primary_telephone: '384-555-65',
       secondary_telephone: '384-555-65',
-      user_id: 1
+      user_id: 5
     },
     {
       mother_name: 'Raja Abdou Ghani',
@@ -64,7 +64,7 @@ exports.seed = function(knex) {
       flat: '12',
       primary_telephone: '384-555-65',
       secondary_telephone: '384-555-65',
-      user_id: 1
+      user_id: 6
     }
   ]);
 };
