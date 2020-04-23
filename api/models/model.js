@@ -13,7 +13,8 @@ module.exports = {
   addUser,
   addMeeting,
   addFamily,
-  addStudent
+  addStudent,
+  findByUsername
 };
 
 function find(view, where) {
@@ -65,6 +66,10 @@ function makeWhere(body, conn) {
 
 function findBy(view, filter) {
   return db.raw('select * from "' + view + '" where ' + filter);
+}
+
+function findByUsername(filter) {
+  return db('user').where(filter);
 }
 
 async function add(table, body) {
