@@ -17,7 +17,6 @@ router.post('/api/auth/login', (req, res) => {
   model.findByUsername({ username })
     .first()
     .then(user => {
-      console.log(user);
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
         res.status(200).json({
@@ -40,7 +39,6 @@ router.get('/api/auth/logout', (req, res) => {
 });
 
 router.get('/user', async (req, res) => {
-  console.log('====USER====');
   let userName = req.body ? req.body.username : undefined;
   let userType = req.body.user_type;
   let userId = req.body.user_id;
