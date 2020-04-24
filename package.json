@@ -8,7 +8,9 @@
 		"start": "node index.js",
 		"test": "cross-env DB_ENV=testing jest --verbose --i --forceExit --detectOpenHandles",
 		"test-watch": "cross-env DB_ENV=testing jest --verbose --i --watchAll",
-		"coverage": "cross-env DB_ENV=testing jest --verbose --i --forceExit --coverage || true"
+		"coverage": "cross-env DB_ENV=testing jest --verbose --i --forceExit --coverage || true",
+		"migrate": "knex migrate:latest",
+		"seed": "knex seed:run"
 	},
 	"jest": {
 		"testEnvironment": "node"

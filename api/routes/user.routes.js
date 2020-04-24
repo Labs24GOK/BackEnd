@@ -1,16 +1,15 @@
 const express = require('express');
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const model = require('../models/user.model.js');
 
 const router = express.Router();
 
 const {
     findAllUsers,
-    findUserById
+    findUserById,
+    findAllStudentsByUserId
   } = require('../controllers/user.controller');
 
 router.get('/users', findAllUsers);
-router.get('/users/:UserId', findUserById);
+router.get('/users/:id', findUserById);
+router.get('/users/:id/students', findAllStudentsByUserId);
 
 module.exports = router;

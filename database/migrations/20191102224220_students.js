@@ -9,7 +9,7 @@ exports.up = function(knex) {
 			table.timestamps(true, true);
 		})
 		.createTable('user', table => {
-			table.increments('user_id');
+			table.increments();
 			table.string('user_type').notNullable();
 			table
 				.text('username')
@@ -69,7 +69,7 @@ exports.up = function(knex) {
 			table
 				.integer('user_id')
 				.unsigned()
-				.references('user_id')
+				.references('id')
 				.inTable('user')
 				.onDelete('CASCADE')
 				.onUpdate('CASCADE')
@@ -152,10 +152,10 @@ exports.up = function(knex) {
 				.onUpdate('CASCADE')
 				.index();
 			table
-				.integer('family_id')
+				.integer('user_id')
 				.unsigned()
 				.references('id')
-				.inTable('family')
+				.inTable('user')
 				.onDelete('CASCADE')
 				.onUpdate('CASCADE')
 				.index();

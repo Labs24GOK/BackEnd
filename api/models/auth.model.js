@@ -8,7 +8,7 @@ const registerStudent = async (
   return db.transaction(trx => {
     return db('user')
       .insert(userData)
-      .returning(['user_id', 'username'])
+      .returning(['id', 'username'])
       .then(res => {
         return db('family')
           .transacting(trx)

@@ -226,7 +226,7 @@ const getLocationByID = id => {
 const getParentByID = id => {
 	return db('family as f')
 		.where('f.id', '=', id)
-		.join('user as u', 'u.user_id', 'f.user_id')
+		.join('user as u', 'u.id', 'f.user_id')
 		.first();
 };
 

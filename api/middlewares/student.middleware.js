@@ -55,7 +55,7 @@ const validateStudentBody = catchAsync(
         .integer()
         .required(),
       location_id: Joi.number().integer().required(),
-      family_id: Joi.number().integer().required(),
+      user_id: Joi.number().integer().required(),
 
       /// NOT REQUIRED
       registration_date: Joi.string(),

@@ -33,7 +33,7 @@ const find = (queries) => {
 
   return db('staff as s')
     .select(returning)
-    .join('user as u', 's.user_id', 'u.user_id')
+    .join('user as u', 's.user_id', 'u.id')
     .orderBy('staff_id', 'desc')
     // .offset(offset)
     // .limit(limit);
@@ -42,7 +42,7 @@ const find = (queries) => {
 const findAll = () => {
   return db('staff as s')
     .select(['s.id', 'u.name'])
-    .join('user as u', 's.user_id', 'u.user_id')
+    .join('user as u', 's.user_id', 'u.id')
     .orderBy('s.id', 'desc');
 };
 
@@ -50,7 +50,7 @@ const findByID = id => {
   return db('staff as s')
     .select(returning)
     .where('s.id', '=', id)
-    .join('user as u', 's.user_id', 'u.user_id')
+    .join('user as u', 's.user_id', 'u.id')
     .first();
 };
 
@@ -58,7 +58,7 @@ const findByCPR = cpr => {
   return db('staff as s')
     .select(returning)
     .where('s.cpr', '=', cpr)
-    .join('user as u', 's.user_id', 'u.user_id')
+    .join('user as u', 's.user_id', 'u.id')
     .first();
 };
 
@@ -97,7 +97,7 @@ const edit = async (staffID, userBody, staffBody) => {
             return db('staff as s')
               .select(returning)
               .where('s.user_id', '=', res[0])
-              .join('user as u', 's.user_id', 'u.user_id')
+              .join('user as u', 's.user_id', 'u.id')
               .first();
           });
       })
