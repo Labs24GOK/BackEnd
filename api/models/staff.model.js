@@ -21,22 +21,10 @@ const returning = [
   's.user_id'
 ];
 const find = (queries) => {
-  // let limit = queries.limit || 15;
-  // let offset = 0;
-  // const { page } = queries;
-  // if (page) {
-  //   if (!offset) {
-  //     offset++;
-  //   }
-  //   offset = page * limit - limit;
-  // }
-
   return db('staff as s')
     .select(returning)
     .join('user as u', 's.user_id', 'u.id')
     .orderBy('staff_id', 'desc')
-    // .offset(offset)
-    // .limit(limit);
 };
 
 const findAll = () => {
