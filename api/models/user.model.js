@@ -35,7 +35,6 @@ const remove = id => {
 const findAll = () => {
   return db('user')
     .select(['id', 'user.name', 'user_type', 'email'])
-   
 };
 
 module.exports = {

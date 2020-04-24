@@ -1,4 +1,3 @@
-// const router = require('express').Router();
 const { catchAsync } = require('../utils/catchAsync');
 
 const Users = require('../models/user.model');
