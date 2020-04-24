@@ -19,7 +19,7 @@ const authRoutes = require('./routes/auth.routes');
 const courseRoutes = require('./routes/course.routes');
 const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
-const userRoutes = require('./routes/users.routes');
+const userRoutes = require('./routes/user.routes');
 const familyRoutes = require('./routes/family.routes.js');
 const restricted = require('./middlewares/restricted.middleware.js');
 
