@@ -1,5 +1,3 @@
-const Joi = require('@hapi/joi');
-
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 const User = require('../models/user.model');

@@ -5,11 +5,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const passport = require('passport');
+// const passport = require('passport');
 
 
-const initializePassport = require('../passport-config.js');
-const createSession = require('../middleware/createSession.js');
+// const initializePassport = require('../passport-config.js');
+// const createSession = require('../middleware/createSession.js');
 
 const globalErrorHandler = require('./controllers/errors.controller');
 
@@ -21,6 +21,7 @@ const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
 const userRoutes = require('./routes/user.routes');
 const familyRoutes = require('./routes/family.routes.js');
+const restricted = require('./middlewares/restricted.middleware.js');
 
 // ------- Set up server -------
 const server = express();
@@ -43,18 +44,18 @@ server.use(
   })
 );
 server.use(express.json());
-createSession(server);
-initializePassport(passport);
+// createSession(server);
+// initializePassport(passport);
 
 
 //// NEED TO BE MOVED BENEATH AUTH ROLE MIDDLEWARE -- NOT SECURED --> ANYONE CAN ACCESS THIS ENDPOINT AT THIS MOMENT
 server.use(authRoutes);
-server.use(staffRoutes);
-server.use(studentRoutes);
-server.use(courseRoutes);
-server.use(courseEnrollmentRoutes);
-server.use(attendanceRoutes);
-server.use(userRoutes);
+server.use(restricted, staffRoutes);
+server.use(restricted, studentRoutes);
+server.use(restricted, courseRoutes);
+server.use(restricted, courseEnrollmentRoutes);
+server.use(restricted, attendanceRoutes);
+server.use(restricted, userRoutes);
 server.use(familyRoutes);
 
 /// THIS IS FINE

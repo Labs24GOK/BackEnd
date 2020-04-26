@@ -32,21 +32,6 @@ const registerStudent = async (
   });
 };
 
-// function addUser(userData) {
-//   return db('user')
-//     .insert(userData)
-//     .returning(['user_id', 'username']);
-// }
-
-// function addFamily(familyData) {
-//   return db('family').insert(familyData).returning('id');
-// }
-
-// function addStudent(studentData) {
-//   return db('student')
-//     .insert(studentData)
-//     .returning('first_name');
-// }
 
 module.exports = {
   registerStudent
