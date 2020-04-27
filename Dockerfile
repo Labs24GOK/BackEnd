@@ -7,6 +7,7 @@ COPY . .
 
 RUN npm install
 
+
 EXPOSE 4000
 
 
