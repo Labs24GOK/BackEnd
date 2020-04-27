@@ -8,13 +8,14 @@ const findAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const findUserById = catchAsync(async (req, res, next) => {
-    const users= await Users.findUserById();
+    const id = req.params.id;
+    const users= await Users.findById(id);
     return res.status(200).json(users);
   });
 
   const findAllStudentsByUserId = catchAsync(async (req, res, next) => {
     const id = req.params.id;
-    const students = await Users.findAllStudentsByUserId(id);
+    const students = await Users.findAllByUserId(id);
     return res.status(200).json(students);
   });
 

@@ -8,13 +8,13 @@ const findUserByCriteria = (field, arg) => {
     .first();
 };
 
-const findUserById = id => {
+const findById = id => {
   return db('user')
     .where({id})
-    .first();
+    // .first();
 }
 
-const findAllStudentsByUserId = user_id => {
+const findAllByUserId = user_id => {
   return db('student')
   .where({user_id})
 }
@@ -38,8 +38,8 @@ const findAll = () => {
 };
 
 module.exports = {
-  findUserById,
-  findAllStudentsByUserId,
+  findById,
+  findAllByUserId,
   create,
   remove,
   findAll,
