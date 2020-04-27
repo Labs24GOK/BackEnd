@@ -75,7 +75,7 @@ function generateToken(user) {
     subject: user.id,
     username: user.username,
     name: user.name,
-    role: user.role || 'user'
+    user_type: user.user_type || 'user'
   };
   const options = {
     expiresIn: '1h',
