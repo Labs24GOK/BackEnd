@@ -54,8 +54,8 @@ const findAll = () => {
       's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    .join('family as f', 'f.id', 's.user_id')
-    .join('user as u', 'u.id', 'f.user_id')
+    // .join('family as f', 'f.id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .orderBy('s.id', 'desc');
 };
@@ -71,8 +71,8 @@ const findByID = id => {
       's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    .join('family as f', 'f.id', 's.user_id')
-    .join('user as u', 'u.id', 'f.user_id')
+    // .join('family as f', 'f.id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
 };
