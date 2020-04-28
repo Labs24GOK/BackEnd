@@ -54,8 +54,8 @@ const findAll = () => {
       's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    .join('family as f', 'f.id', 's.user_id')
-    .join('user as u', 'u.id', 'f.user_id')
+    // .join('family as f', 'f.id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .orderBy('s.id', 'desc');
 };
@@ -71,8 +71,8 @@ const findByID = id => {
       's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    .join('family as f', 'f.id', 's.user_id')
-    .join('user as u', 'u.id', 'f.user_id')
+    // .join('family as f', 'f.id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
 };
@@ -88,8 +88,8 @@ const findByCPR = cpr => {
       's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    .join('family as f', 'f.id', 's.user_id')
-    .join('user as u', 'u.id', 'f.user_id')
+    // .join('family as f', 'f.id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
 };
@@ -123,11 +123,11 @@ const getAllLocations = () => {
   return db('location').select(['id', 'name']);
 };
 
-const getAllFamilies = () => {
-  return db('family as f')
-    .join('user as u', 'u.id', 'f.user_id')
-    .select(['f.id', 'u.name']);
-};
+// const getAllFamilies = () => {
+//   return db('family as f')
+//     .join('user as u', 'u.id', 'f.user_id')
+//     .select(['f.id', 'u.name']);
+// };
 
 module.exports = {
   findAll,
@@ -140,5 +140,5 @@ module.exports = {
   getAllBlocks,
   getAllPreferredContactType,
   getAllLocations,
-  getAllFamilies
+  // getAllFamilies
 };
