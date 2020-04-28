@@ -31,18 +31,18 @@ router.post('/api/auth/login', (req, res) => {
     });
 });
 
-router.get('/user', async (req, res) => {
-  let userName = req.body ? req.body.username : undefined;
-  let userType = req.body.user_type;
-  let userId = req.body.user_id;
+// router.get('/user', async (req, res) => {
+//   let userName = req.body ? req.body.username : undefined;
+//   let userType = req.body.user_type;
+//   let userId = req.body.user_id;
 
-  res.status(200).json({
-    authenticated: req.isAuthenticated(),
-    username: userName,
-    user_type: userType,
-    user_id: userId
-  });
-});
+//   res.status(200).json({
+//     authenticated: req.isAuthenticated(),
+//     username: userName,
+//     user_type: userType,
+//     user_id: userId
+//   });
+// });
 
 router.post('/api/auth/register', validateRegistration, (req, res) => {
   const hashedPassword = bcrypt.hashSync(
@@ -75,7 +75,7 @@ function generateToken(user) {
     subject: user.id,
     username: user.username,
     name: user.name,
-    role: user.role || 'user'
+    user_type: user.user_type || 'user'
   };
   const options = {
     expiresIn: '1h',
