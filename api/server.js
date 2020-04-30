@@ -1,15 +1,8 @@
 require('dotenv').config();
 
-
 // ------- Imports --------
 const express = require('express');
 const cors = require('cors');
-
-// const passport = require('passport');
-
-
-// const initializePassport = require('../passport-config.js');
-// const createSession = require('../middleware/createSession.js');
 
 const globalErrorHandler = require('./controllers/errors.controller');
 
@@ -44,11 +37,7 @@ server.use(
   })
 );
 server.use(express.json());
-// createSession(server);
-// initializePassport(passport);
 
-
-//// NEED TO BE MOVED BENEATH AUTH ROLE MIDDLEWARE -- NOT SECURED --> ANYONE CAN ACCESS THIS ENDPOINT AT THIS MOMENT
 server.use(authRoutes);
 server.use(restricted, staffRoutes);
 server.use(restricted, studentRoutes);
@@ -56,9 +45,8 @@ server.use(restricted, courseRoutes);
 server.use(restricted, courseEnrollmentRoutes);
 server.use(restricted, attendanceRoutes);
 server.use(restricted, userRoutes);
-server.use(familyRoutes);
+server.use(restricted, familyRoutes);
 
-/// THIS IS FINE
 server.get('/', (req, res) => {
   res
     .status(200)
@@ -66,8 +54,6 @@ server.get('/', (req, res) => {
       'Find API documentation here: https://documenter.getpostman.com/view/8230639/SWTD8wyQ?version=latest#ab443920-3ba6-46b2-bff9-0de953af9172'
     );
 });
-
-
 
 server.use(globalErrorHandler);
 module.exports = server;
