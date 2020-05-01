@@ -2,8 +2,8 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 const User = require('../models/user.model');
 
-const validateRegistration = 
-   async (req, res, next) => {
+const validateRegistration = catchAsync(
+    async (req, res, next) => {
         const {
             username,
             password,
@@ -39,16 +39,24 @@ const validateRegistration =
         );
 
         if (userByEmail) {
-            res.json({message:"email already exists"})
+            return next(
+                new AppError(
+                    'User with that email already exists',
+                    403
+                )
+            );
         }
-        else if (userByUsername) {
-            res.json({message:"Usernam already exists"})
-            console.log("username exists")
-        } else {
-
-            next();
+        if (userByUsername) {
+            return next(
+                new AppError(
+                    'User with that username already exists',
+                    403
+                )
+            );
         }
+        next();
     }
+);
 
     module.exports = {
   validateRegistration
