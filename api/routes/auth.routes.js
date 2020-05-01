@@ -65,7 +65,7 @@ router.post('/api/auth/register', validateRegistration, (req, res) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: `There was an error attempting to register user: ${error}.`
+        message: `There was an error attempting to register user: ${error, message, stack}.`
       });
     });
 });
