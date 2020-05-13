@@ -78,7 +78,7 @@ const find = queries => {
     )
     .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
-    .join('user', 'user.user_id', 'staff.user_id')
+    .join('user', 'user.id', 'staff.user_id')
     .orderBy('course.id', 'desc');
 
   const { term, section, level } = queries;
@@ -123,7 +123,7 @@ const findByID = id => {
     )
     .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
-    .join('user', 'user.user_id', 'staff.user_id');
+    .join('user', 'user.id', 'staff.user_id');
 };
 
 const create = body => {
@@ -165,7 +165,7 @@ const findCoursesByTeacherID = teacherID => {
     )
     .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
-    .join('user', 'user.user_id', 'staff.user_id')
+    .join('user', 'user.id', 'staff.user_id')
     .orderBy('course.id', 'desc');
 };
 
