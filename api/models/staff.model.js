@@ -56,7 +56,7 @@ const create = async (userBody, staffBody) => {
     return db('user')
       .transacting(trx)
       .insert(userBody)
-      .returning('user_id')
+      .returning('user_id') // id invalid
       .then(res => {
         return db('staff')
           .transacting(trx)
@@ -80,7 +80,7 @@ const edit = async (staffID, userBody, staffBody) => {
           .transacting(trx)
           .update(userBody)
           .where({ user_id: res[0] })
-          .returning('user_id')
+          .returning('user_id') // id invalid
           .then(res => {
             return db('staff as s')
               .select(returning)
