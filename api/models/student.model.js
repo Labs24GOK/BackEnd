@@ -6,7 +6,6 @@ const returning = [
   's.first_name',
   's.additional_names',
   's.registration_date',
-  's.gender',
   's.birthdate',
   's.school_grade_id',
   'sg.name as school_grade',
@@ -14,11 +13,7 @@ const returning = [
   's.grade_updated',
   's.home_telephone',
   's.mobile_telephone',
-  's.block_code',
-  'b.neighborhood as block_code_neighborhood',
-  's.road',
-  's.building',
-  's.flat',
+  's.address',
   's.email',
   's.notes',
   's.preferred_contact_type_id',
@@ -47,7 +42,7 @@ const create = body => {
 const findAll = () => {
   return db('student as s')
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    .join('block as b', 'b.block_code', 's.block_code')
+    // .join('block as b', 'b.block_code', 's.block_code')
     .join(
       'preferred_contact_type as pct',
       'pct.id',
@@ -64,7 +59,7 @@ const findByID = id => {
   return db('student as s')
     .where('s.id', '=', id)
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    .join('block as b', 'b.block_code', 's.block_code')
+    // .join('block as b', 'b.block_code', 's.block_code')
     .join(
       'preferred_contact_type as pct',
       'pct.id',
@@ -81,15 +76,15 @@ const findByCPR = cpr => {
   return db('student as s')
     .where('s.cpr', '=', cpr)
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    .join('block as b', 'b.block_code', 's.block_code')
+    // .join('block as b', 'b.block_code', 's.block_code')
     .join(
       'preferred_contact_type as pct',
       'pct.id',
       's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    .join('family as f', 'f.id', 's.user_id')
-    .join('user as u', 'u.id', 'f.user_id')
+    // .join('family as f', 'f.id', 's.user_id')
+    .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
 };
@@ -111,9 +106,9 @@ const getAllSchoolGrades = () => {
   return db('school_grade').select(['id', 'name']);
 };
 
-const getAllBlocks = () => {
-  return db('block').select(['block_code', 'neighborhood']);
-};
+// const getAllBlocks = () => {
+//   return db('block').select(['block_code', 'neighborhood']);
+// };
 
 const getAllPreferredContactType = () => {
   return db('preferred_contact_type').select(['id', 'method']);
@@ -123,11 +118,11 @@ const getAllLocations = () => {
   return db('location').select(['id', 'name']);
 };
 
-const getAllFamilies = () => {
-  return db('family as f')
-    .join('user as u', 'u.id', 'f.user_id')
-    .select(['f.id', 'u.name']);
-};
+// const getAllFamilies = () => {
+//   return db('family as f')
+//     .join('user as u', 'u.id', 'f.user_id')
+//     .select(['f.id', 'u.name']);
+// };
 
 module.exports = {
   findAll,
@@ -137,8 +132,6 @@ module.exports = {
   create,
   update,
   getAllSchoolGrades,
-  getAllBlocks,
   getAllPreferredContactType,
   getAllLocations,
-  getAllFamilies
 };

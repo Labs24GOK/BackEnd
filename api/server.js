@@ -13,7 +13,7 @@ const courseRoutes = require('./routes/course.routes');
 const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
 const userRoutes = require('./routes/user.routes');
-const familyRoutes = require('./routes/family.routes.js');
+// const familyRoutes = require('./routes/family.routes.js');
 const restricted = require('./middlewares/restricted.middleware.js');
 
 // ------- Set up server -------
@@ -45,7 +45,7 @@ server.use(restricted, courseRoutes);
 server.use(restricted, courseEnrollmentRoutes);
 server.use(restricted, attendanceRoutes);
 server.use(restricted, userRoutes);
-server.use(restricted, familyRoutes);
+// server.use(restricted, familyRoutes);
 
 server.get('/', (req, res) => {
   res

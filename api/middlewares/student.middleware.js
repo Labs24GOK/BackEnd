@@ -50,7 +50,7 @@ const validateStudentBody = catchAsync(
       primary_emergency_relationship: Joi.string().required(),
       primary_emergency_phone: Joi.string().required(),
       school_grade_id: Joi.number().integer().required(),
-      block_code: Joi.number().integer().required(),
+      // block_code: Joi.number().integer().required(),
       preferred_contact_type_id: Joi.number()
         .integer()
         .required(),
@@ -63,9 +63,10 @@ const validateStudentBody = catchAsync(
       grade_updated: Joi.string(),
       home_telephone: Joi.string(),
       mobile_telephone: Joi.string().allow(''),
-      road: Joi.string(),
-      building: Joi.string(),
-      flat: Joi.string(),
+      // road: Joi.string(),
+      // building: Joi.string(),
+      // flat: Joi.string(),
+      address: Joi.string(),
       email: Joi.string(),
       emergency_relationship: Joi.string().allow(''),
       emergency_contact_name: Joi.string().allow(''),
