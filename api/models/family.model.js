@@ -1,12 +1,12 @@
-const db = require('../../database/db-config');
+// const db = require('../../database/db-config');
 
-const findAllFamilies = () => {
-  return db('family')
-    .select(['user_id','mother_name', 'father_name'])
+// const findAllFamilies = () => {
+//   return db('family')
+//     .select(['user_id','mother_name', 'father_name'])
    
-};
+// };
 
-module.exports = {
+// module.exports = {
  
-  findAllFamilies
-};
+//   findAllFamilies
+// };
