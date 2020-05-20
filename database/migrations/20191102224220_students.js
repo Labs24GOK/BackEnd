@@ -40,44 +40,9 @@ exports.up = function(knex) {
 				.unique();
 			table.timestamps(true, true);
 		})
-		.createTable('block', table => {
-			table.increments();
-			table
-				.integer('block_code')
-				.notNullable()
-				.unique();
-			table.text('neighborhood');
-			table.timestamps(true, true);
-		})
-		.createTable('family', table => {
-			table.increments();
-			table.text('mother_name');
-			table.text('father_name');
-			table
-				.integer('block_code')
-				.unsigned()
-				.references('block_code')
-				.inTable('block')
-				.onDelete('CASCADE')
-				.onUpdate('CASCADE')
-				.index();
-			table.text('road');
-			table.text('building');
-			table.text('flat');
-			table.text('primary_telephone').notNullable();
-			table.text('secondary_telephone').notNullable();
-			table
-				.integer('user_id')
-				.unsigned()
-				.references('id')
-				.inTable('user')
-				.onDelete('CASCADE')
-				.onUpdate('CASCADE')
-				.index();
-			table.timestamps(true, true);
-		})
 		.createTable('student', table => {
 			table.increments();
+			// CPR is Govt issued ID number
 			table.text('cpr').unique().notNullable();
 			table
 				.date('registration_date')
@@ -90,8 +55,8 @@ exports.up = function(knex) {
 				);
 			table.text('first_name');
 			table.text('additional_names');
-			table.text('gender');
 			table.date('birthdate');
+			table.text('gender');
 			table
 				.integer('school_grade_id')
 				.unsigned()
@@ -112,17 +77,7 @@ exports.up = function(knex) {
 				);
 			table.text('home_telephone');
 			table.text('mobile_telephone');
-			table
-				.integer('block_code')
-				.unsigned()
-				.references('block_code')
-				.inTable('block')
-				.onDelete('CASCADE')
-				.onUpdate('CASCADE')
-				.index();
-			table.text('road');
-			table.text('building');
-			table.text('flat');
+			table.text('address');
 			table.text('email');
 			table.text('primary_emergency_contact_name');
 			table.text('primary_emergency_relationship');
@@ -165,11 +120,9 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
 	return knex.schema
-		.dropTable('student')
-		.dropTable('family')
-		.dropTable('block')
-		.dropTable('location')
-		.dropTable('preferred_contact_type')
-		.dropTable('user')
-		.dropTable('school_grade');
+		.dropTableIfExists('student')
+		.dropTableIfExists('location')
+		.dropTableIfExists('preferred_contact_type')
+		.dropTableIfExists('user')
+		.dropTableIfExists('school_grade');
 };
