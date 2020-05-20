@@ -212,15 +212,15 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTable('course_enrollment')
-    .dropTable('result_type')
-    .dropTable('course')
-    .dropTable('staff')
-    .dropTable('room')
-    .dropTable('course_schedule')
-    .dropTable('level')
-    .dropTable('pacing_guide')
-    .dropTable('course_type')
-    .dropTable('group_type')
-    .dropTable('term');
+    .dropTableIfExists('course_enrollment')
+    .dropTableIfExists('result_type')
+    .dropTableIfExists('course')
+    .dropTableIfExists('staff')
+    .dropTableIfExists('room')
+    .dropTableIfExists('course_schedule')
+    .dropTableIfExists('level')
+    .dropTableIfExists('pacing_guide')
+    .dropTableIfExists('course_type')
+    .dropTableIfExists('group_type')
+    .dropTableIfExists('term');
 };
