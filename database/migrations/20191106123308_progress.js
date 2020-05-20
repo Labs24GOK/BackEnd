@@ -48,5 +48,5 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTable("progress_report");
+        .dropTableIfExists("progress_report");
 };
