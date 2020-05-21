@@ -5,8 +5,10 @@ const returning = [
   's.cpr',
   's.first_name',
   's.additional_names',
+  's.gender',
   's.registration_date',
   's.birthdate',
+  's.gender',
   's.school_grade_id',
   'sg.name as school_grade',
   's.school_name',
@@ -37,11 +39,6 @@ const create = body => {
 const findAll = () => {
   return db('student as s')
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    .join(
-      'preferred_contact_type as pct',
-      'pct.id',
-    )
-    .join('location as l', 'l.id', 's.location_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .orderBy('s.id', 'desc');
@@ -60,9 +57,6 @@ const findByCPR = cpr => {
   return db('student as s')
     .where('s.cpr', '=', cpr)
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    // .join('block as b', 'b.block_code', 's.block_code')
-    .join('location as l', 'l.id', 's.location_id')
-    // .join('family as f', 'f.id', 's.user_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
@@ -85,24 +79,6 @@ const getAllSchoolGrades = () => {
   return db('school_grade').select(['id', 'name']);
 };
 
-// const getAllBlocks = () => {
-//   return db('block').select(['block_code', 'neighborhood']);
-// };
-
-const getAllPreferredContactType = () => {
-  return db('preferred_contact_type').select(['id', 'method']);
-};
-
-const getAllLocations = () => {
-  return db('location').select(['id', 'name']);
-};
-
-// const getAllFamilies = () => {
-//   return db('family as f')
-//     .join('user as u', 'u.id', 'f.user_id')
-//     .select(['f.id', 'u.name']);
-// };
-
 module.exports = {
   findAll,
   findByID,
@@ -110,7 +86,5 @@ module.exports = {
   remove,
   create,
   update,
-  getAllSchoolGrades,
-  getAllPreferredContactType,
-  getAllLocations,
+  getAllSchoolGrades
 };

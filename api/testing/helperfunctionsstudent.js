@@ -6,19 +6,19 @@ const CourseModel = require('../models/course.model');
 const bcrypt = require('bcrypt');
 const password = bcrypt.hashSync('pass', 8);
 
-class Family {
-	constructor(user_id) {
-		this.mother_name = 'Mother Name';
-		this.father_name = 'Father Name';
-		this.block_code = 363;
-		this.road = '2550';
-		this.building = '298';
-		this.flat = '12';
-		this.primary_telephone = '12345678';
-		this.secondary_telephone = '12345678';
-		this.user_id = user_id;
-	}
-}
+// class Family {
+// 	constructor(user_id) {
+// 		this.mother_name = 'Mother Name';
+// 		this.father_name = 'Father Name';
+// 		this.block_code = 363;
+// 		this.road = '2550';
+// 		this.building = '298';
+// 		this.flat = '12';
+// 		this.primary_telephone = '12345678';
+// 		this.secondary_telephone = '12345678';
+// 		this.user_id = user_id;
+// 	}
+// }
 class User {
 	constructor(role, username, email) {
 		this.user_type = role;
@@ -40,10 +40,11 @@ class Student {
 		this.school_name = 'Alduraz';
 		this.home_telephone = '12345678';
 		this.mobile_telephone = '12345678';
-		this.block_code = 363;
-		this.road = '2550';
-		this.building = '298';
-		this.flat = '12';
+		this.address = '1234 address st block 2345';
+		// this.block_code = 363;
+		// this.road = '2550';
+		// this.building = '298';
+		// this.flat = '12';
 		this.email = 'Whatever';
 		this.notes = 'This student is just alright';
 		this.preferred_contact_type_id = 1;
@@ -51,7 +52,8 @@ class Student {
 		this.delinquent = false;
 		this.expelled = true;
 		this.location_id = 1;
-		this.family_id = family_id;
+		// this.family_id = family_id;
+		this.user_id = user_id;
 		this.primary_emergency_contact_name = "Father name"
 		this.primary_emergency_relationship = "Father"
 		this.primary_emergency_phone = "2335643636"
@@ -104,7 +106,7 @@ const cleanDB = async db => {
 			'preferred_contact_type',
 			'sessions',
 			'location',
-			'block',
+			// 'block',
 			'term',
 			'group_type',
 			'course_type',
