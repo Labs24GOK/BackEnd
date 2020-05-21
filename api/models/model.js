@@ -12,7 +12,6 @@ module.exports = {
   makeWhere,
   addUser,
   addMeeting,
-  addFamily,
   addStudent,
   findByUsername
 };
@@ -114,19 +113,13 @@ function addMeeting(meeting) {
     .returning({ id: 'id' });
 }
 
-function addFamily(familyData) {
-  return db('family')
-    .insert(familyData)
-    .returning('id');
-}
-
 function addStudent(studentData) {
   return db('student')
     .insert(studentData)
     .returning('first_name');
 }
 
-//// STAFF MODEL
+// STAFF MODEL
 function addStaff(body) {
   return db('staff')
     .insert(body)

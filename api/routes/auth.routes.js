@@ -31,19 +31,6 @@ router.post('/api/auth/login', (req, res) => {
     });
 });
 
-// router.get('/user', async (req, res) => {
-//   let userName = req.body ? req.body.username : undefined;
-//   let userType = req.body.user_type;
-//   let userId = req.body.user_id;
-
-//   res.status(200).json({
-//     authenticated: req.isAuthenticated(),
-//     username: userName,
-//     user_type: userType,
-//     user_id: userId
-//   });
-// });
-
 router.post('/api/auth/register', validateRegistration, (req, res) => {
   const hashedPassword = bcrypt.hashSync(
     req.body.password,
