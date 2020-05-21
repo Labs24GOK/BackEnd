@@ -11,18 +11,13 @@ const returning = [
   'sg.name as school_grade',
   's.school_name',
   's.grade_updated',
-  's.home_telephone',
-  's.mobile_telephone',
+  's.phone_number',
   's.address',
   's.email',
   's.notes',
-  's.preferred_contact_type_id',
-  'pct.method as preferred_contact_type',
   's.no_call',
   's.delinquent',
   's.expelled',
-  's.location_id',
-  'l.name as location',
   's.user_id',
   'u.name as parent_name',
   's.primary_emergency_contact_name',
@@ -42,14 +37,11 @@ const create = body => {
 const findAll = () => {
   return db('student as s')
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    // .join('block as b', 'b.block_code', 's.block_code')
     .join(
       'preferred_contact_type as pct',
       'pct.id',
-      's.preferred_contact_type_id'
     )
     .join('location as l', 'l.id', 's.location_id')
-    // .join('family as f', 'f.id', 's.user_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .orderBy('s.id', 'desc');
@@ -59,14 +51,6 @@ const findByID = id => {
   return db('student as s')
     .where('s.id', '=', id)
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
-    // .join('block as b', 'b.block_code', 's.block_code')
-    .join(
-      'preferred_contact_type as pct',
-      'pct.id',
-      's.preferred_contact_type_id'
-    )
-    .join('location as l', 'l.id', 's.location_id')
-    // .join('family as f', 'f.id', 's.user_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
@@ -77,11 +61,6 @@ const findByCPR = cpr => {
     .where('s.cpr', '=', cpr)
     .join('school_grade as sg', 'sg.id', 's.school_grade_id')
     // .join('block as b', 'b.block_code', 's.block_code')
-    .join(
-      'preferred_contact_type as pct',
-      'pct.id',
-      's.preferred_contact_type_id'
-    )
     .join('location as l', 'l.id', 's.location_id')
     // .join('family as f', 'f.id', 's.user_id')
     .join('user as u', 'u.id', 's.user_id')
