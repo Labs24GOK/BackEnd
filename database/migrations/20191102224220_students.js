@@ -24,22 +24,6 @@ exports.up = function(knex) {
 			table.text('short_name');
 			table.timestamps(true, true);
 		})
-		.createTable('preferred_contact_type', table => {
-			table.increments();
-			table
-				.text('method')
-				.notNullable()
-				.unique();
-			table.timestamps(true, true);
-		})
-		.createTable('location', table => {
-			table.increments();
-			table
-				.text('name')
-				.notNullable()
-				.unique();
-			table.timestamps(true, true);
-		})
 		.createTable('student', table => {
 			table.increments();
 			// CPR is Govt issued ID number
@@ -103,8 +87,6 @@ exports.up = function(knex) {
 exports.down = function(knex) {
 	return knex.schema
 		.dropTableIfExists('student')
-		.dropTableIfExists('location')
-		.dropTableIfExists('preferred_contact_type')
 		.dropTableIfExists('user')
 		.dropTableIfExists('school_grade');
 };
