@@ -5,6 +5,7 @@ const returning = [
   's.cpr',
   's.first_name',
   's.additional_names',
+  's.gender',
   's.registration_date',
   's.birthdate',
   's.school_grade_id',
