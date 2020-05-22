@@ -49,5 +49,5 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTable("placement_exam");
+        .dropTableIfExists("placement_exam");
 };

@@ -36,25 +36,13 @@ const getAllCoursesOfStudent = catchAsync(async (req, res) => {
 
 const getDropdowns = catchAsync(async (req, res) => {
   const dropdowns = [
-    Student.getAllSchoolGrades(),
-    Student.getAllBlocks(),
-    Student.getAllPreferredContactType(),
-    Student.getAllLocations(),
-    Student.getAllFamilies()
+    Student.getAllSchoolGrades()
   ];
   const [
-    school_grades,
-    blocks,
-    contact_types,
-    locations,
-    families
+    school_grades
   ] = await Promise.all(dropdowns);
   return res.status(200).json({
-    school_grades,
-    blocks,
-    contact_types,
-    locations,
-    families
+    school_grades
   });
 });
 
