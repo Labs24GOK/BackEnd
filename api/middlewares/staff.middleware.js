@@ -6,7 +6,7 @@ const Staff = require('../models/staff.model');
 
 const validateCreateStaff = catchAsync(async (req, res, next) => {
   const {
-    username,
+    // username,
     password,
     email,
     name,
@@ -18,12 +18,12 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
     birthdate,
     teaching_rate,
     admin,
-    active
+    active,
   } = req.body;
   if (
     admin === null ||
     admin === undefined ||
-    !username ||
+    // !username ||
     !email ||
     !name ||
     !password ||
@@ -34,28 +34,30 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
   }
   req.user = {
     user_type: admin ? 'admin' : 'staff',
-    username,
+    // username,
     email,
     name,
     password,
-    short_name: short_name || null
+    short_name: short_name || null,
   };
 
   // CHECKS IF EMAIL USERNAME OR CPR IS IN USE
   const userByEmail = await User.findBy('email', email);
-  const userByUsername = await User.findBy('username', username);
+  // const userByUsername = await User.findBy('username', username);
 
   if (userByEmail) {
     return next(new AppError('User with that email already exists', 401));
   }
-  if (userByUsername) {
-    return next(new AppError('User with that username already exists', 401));
-  }
+  // if (userByUsername) {
+  //   return next(new AppError('User with that username already exists', 401));
+  // }
 
   if (cpr) {
     const staffByCPR = await Staff.findByCPR(cpr);
     if (staffByCPR) {
-      return next(new AppError('Staff member with that CPR already exists', 401));
+      return next(
+        new AppError('Staff member with that CPR already exists', 401)
+      );
     }
   }
 
@@ -66,7 +68,7 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
     mobile_number: mobile_number || null,
     gender,
     accent: accent || null,
-    birthdate: birthdate || null
+    birthdate: birthdate || null,
   };
 
   next();
@@ -74,7 +76,7 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 
 const validateEditStaff = catchAsync(async (req, res, next) => {
   const {
-    username,
+    // username,
     email,
     name,
     short_name,
@@ -85,12 +87,12 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
     birthdate,
     teaching_rate,
     admin,
-    active
+    active,
   } = req.body;
   if (
     admin === null ||
     admin === undefined ||
-    !username ||
+    // !username ||
     !email ||
     !name ||
     !gender
@@ -99,10 +101,10 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
   }
   req.user = {
     user_type: admin ? 'admin' : 'staff',
-    username,
+    // username,
     email,
     name,
-    short_name: short_name || null
+    short_name: short_name || null,
   };
 
   req.staff = {
@@ -112,23 +114,25 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
     gender,
     accent: accent || null,
     birthdate: birthdate || null,
-    active
+    active,
   };
 
   const userByEmail = await User.findBy('email', email);
-  const userByUsername = await User.findBy('username', username);
+  // const userByUsername = await User.findBy('username', username);
 
   if (userByEmail && userByEmail.user_id !== req.staffUser.user_id) {
     return next(new AppError('User with that email already exists', 401));
   }
-  if (userByUsername && userByUsername.user_id !== req.staffUser.user_id) {
-    return next(new AppError('User with that username already exists', 401));
-  }
+  // if (userByUsername && userByUsername.user_id !== req.staffUser.user_id) {
+  //   return next(new AppError('User with that username already exists', 401));
+  // }
 
   if (cpr) {
     const staffByCPR = await Staff.findByCPR(cpr);
     if (staffByCPR && staffByCPR.staff_id !== req.staffUser.staff_id) {
-      return next(new AppError('Staff member with that CPR already exists', 401));
+      return next(
+        new AppError('Staff member with that CPR already exists', 401)
+      );
     }
   }
   next();
@@ -157,5 +161,5 @@ module.exports = {
   validateCreateStaff,
   validateStaffID,
   validateEditStaff,
-  checkIfStaffExistsByID
+  checkIfStaffExistsByID,
 };
