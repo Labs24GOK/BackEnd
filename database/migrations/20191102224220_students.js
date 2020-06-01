@@ -8,14 +8,9 @@ exports.up = function (knex) {
     .createTable('user', table => {
       table.increments();
       table.string('user_type').notNullable();
-      // table
-      // 	.text('username')
-      // 	.unique()
-      // 	.notNullable();
       table.text('password').notNullable();
       table.text('email').unique().notNullable();
       table.text('name').notNullable();
-      // table.text('short_name');
       table.timestamps(true, true);
     })
     .createTable('student', table => {
