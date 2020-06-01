@@ -18,7 +18,7 @@ describe.skip('staff routes', () => {
 
   //valid request body
   const requestBody1 = {
-    username: 'staff_test_3001',
+    // username: 'staff_test_3001',
     password: 'staff_test_3001',
     email: 'staff3001@gmail.com',
     name: 'Merry Teacher1',
@@ -34,7 +34,7 @@ describe.skip('staff routes', () => {
 
   //duplicate username
   const requestBody2 = {
-    username: 'staff_test_3001', //duplicate username
+    // username: 'staff_test_3001', //duplicate username
     password: 'staff_test_3002',
     email: 'staff3002@gmail.com',
     name: 'Merry Teacher2',
@@ -50,7 +50,7 @@ describe.skip('staff routes', () => {
 
   //malformed request body
   const malformedRequestBody = {
-    username: 'staff_test_3003',
+    // username: 'staff_test_3003',
     password: 'staff_test_3003',
     email: 'staff3003@gmail.com',
     name: '',
@@ -66,7 +66,7 @@ describe.skip('staff routes', () => {
 
   //edited request body
   const requestBody3 = {
-    username: 'staff_test_3001',
+    // username: 'staff_test_3001',
     password: 'staff_test_3001',
     email: 'staff3001@gmail.com',
     name: 'Gloomy Instructor',

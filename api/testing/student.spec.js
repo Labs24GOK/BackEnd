@@ -18,8 +18,9 @@ describe('admin - student routes', () => {
     beforeEach((done) => {
         request(server)
             .post('/api/auth/login')
-            .send({ username: 'admin', password: 'pass' })
+            .send({ email: 'admin@email.com', password: 'pass' })
             .then(res => {
+                console.log(res)
                 token = res.body.token;
                 done();
             })
@@ -41,7 +42,7 @@ describe('user - student routes', () => {
     beforeEach((done) => {
         request(server)
             .post('/api/auth/login')
-            .send({ username: 'parent', password: 'pass' })
+            .send({ email: 'parent@email.com', password: 'pass' })
             .then(res => {
                 token = res.body.token;
                 done();
