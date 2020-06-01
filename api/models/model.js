@@ -13,7 +13,8 @@ module.exports = {
   addUser,
   addMeeting,
   addStudent,
-  findByUsername
+  // findByUsername
+  findByEmail,
 };
 
 function find(view, where) {
@@ -32,7 +33,7 @@ function findAny(perPage, skip, table, where, orderBy) {
     propValue = where.split('=')[1];
   }
 
-  return db(table).modify(function(queryBuilder) {
+  return db(table).modify(function (queryBuilder) {
     if (orderBy) {
       queryBuilder.orderBy(orderBy);
     }
@@ -67,7 +68,11 @@ function findBy(view, filter) {
   return db.raw('select * from "' + view + '" where ' + filter);
 }
 
-function findByUsername(filter) {
+// function findByUsername(filter) {
+//   return db('user').where(filter);
+// }
+
+function findByEmail(filter) {
   return db('user').where(filter);
 }
 
@@ -79,9 +84,7 @@ async function add(table, body) {
 }
 
 function findById(view, id) {
-  return db(view)
-    .where({ id })
-    .first();
+  return db(view).where({ id }).first();
 }
 
 function remove(tab, whe) {
@@ -90,9 +93,7 @@ function remove(tab, whe) {
 
 function update(table, where, body) {
   let id = where;
-  return db(table)
-    .where({ id: body.id })
-    .update(body);
+  return db(table).where({ id: body.id }).update(body);
 }
 
 function updateAny(table, where, body) {
@@ -102,27 +103,18 @@ function updateAny(table, where, body) {
 }
 
 function addUser(userData) {
-  return db('user')
-    .insert(userData)
-    .returning(['id', 'username']);
+  return db('user').insert(userData).returning(['id', 'name']);
 }
 
 function addMeeting(meeting) {
-  return db('meeting')
-    .insert(meeting)
-    .returning({ id: 'id' });
+  return db('meeting').insert(meeting).returning({ id: 'id' });
 }
 
 function addStudent(studentData) {
-  return db('student')
-    .insert(studentData)
-    .returning('first_name');
+  return db('student').insert(studentData).returning('first_name');
 }
 
 // STAFF MODEL
 function addStaff(body) {
-  return db('staff')
-    .insert(body)
-    .returning('*');
+  return db('staff').insert(body).returning('*');
 }
-

@@ -4,7 +4,7 @@ const returning = [
   's.id as staff_id',
   'u.name',
   'u.short_name',
-  'u.username',
+  // 'u.username',
   's.cpr',
   's.mobile_number',
   'u.email',
@@ -18,13 +18,13 @@ const returning = [
   's.updated_at as staff_updated_at',
   'u.created_at as user_created_at',
   'u.updated_at as user_updated_at',
-  's.user_id'
+  's.user_id',
 ];
-const find = (queries) => {
+const find = queries => {
   return db('staff as s')
     .select(returning)
     .join('user as u', 's.user_id', 'u.id')
-    .orderBy('staff_id', 'desc')
+    .orderBy('staff_id', 'desc');
 };
 
 const findAll = () => {
@@ -102,10 +102,7 @@ const remove = id => {
       .where({ id })
       .returning('user_id')
       .then(res => {
-        return db('user')
-          .transacting(trx)
-          .del()
-          .where({ user_id: res[0] });
+        return db('user').transacting(trx).del().where({ user_id: res[0] });
       })
       .then(trx.commit)
       .catch(trx.rollback);
@@ -119,5 +116,5 @@ module.exports = {
   find,
   findAll,
   edit,
-  remove
+  remove,
 };
