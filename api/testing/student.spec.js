@@ -14,7 +14,7 @@ describe('server', function() {
 
 let token;
 
-describe('admin - student routes', () => {
+describe.skip('admin - student routes', () => {
     beforeEach((done) => {
         request(server)
             .post('/api/auth/login')
