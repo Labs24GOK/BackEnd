@@ -16,8 +16,7 @@ router.post('/api/auth/login', (req, res) => {
   let { email, password } = req.body;
 
   model
-    .findByEmail({ email })
-    .first()
+    .findByEmail({email})
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
@@ -39,7 +38,6 @@ router.post('/api/auth/register', validateRegistration, (req, res) => {
   model
     .addUser({
       user_type: req.body.user_type,
-      // username: req.body.username,
       password: hashedPassword,
       name: req.body.name,
       email: req.body.email,
@@ -61,13 +59,12 @@ router.post('/api/auth/register', validateRegistration, (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id,
-    // username: user.username,
     email: user.email,
     name: user.name,
     user_type: user.user_type || 'user',
   };
   const options = {
-    expiresIn: '1h',
+    expiresIn: '3h',
   };
   return jwt.sign(payload, jwtSecret, options);
 }
