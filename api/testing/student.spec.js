@@ -38,7 +38,7 @@ describe.skip('admin - student routes', () => {
 
 });
 
-describe('user - student routes', () => {
+describe.skip('user - student routes', () => {
     beforeEach((done) => {
         request(server)
             .post('/api/auth/login')
