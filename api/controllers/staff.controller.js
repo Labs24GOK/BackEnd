@@ -16,7 +16,6 @@ const findAllStaff = catchAsync(async (req, res) => {
 });
 
 const createAStaff = catchAsync(async (req, res) => {
-
   const hashedPassword = bcrypt.hashSync(req.user.password, 10);
   req.user = { ...req.user, password: hashedPassword };
   const newStaffID = await Staff.create(req.user, req.staff);
