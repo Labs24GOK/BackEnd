@@ -4,8 +4,8 @@ const db = require('../../database/db-config.js');
 
 const request = require('supertest');
 
-describe('server', function() {
-  it('should set environment to testing', function() {
+describe('server', function () {
+  it('should set environment to testing', function () {
     expect(process.env.DB_ENV).toBe('testing');
   });
 });
@@ -18,7 +18,6 @@ describe.skip('staff routes', () => {
 
   //valid request body
   const requestBody1 = {
-    // username: 'staff_test_3001',
     password: 'staff_test_3001',
     email: 'staff3001@gmail.com',
     name: 'Merry Teacher1',
@@ -29,55 +28,48 @@ describe.skip('staff routes', () => {
     gender: 'M',
     teaching_rate: 7.8,
     admin: false,
-    active: true
+    active: true,
   };
 
-  //duplicate username
   const requestBody2 = {
-    // username: 'staff_test_3001', //duplicate username
     password: 'staff_test_3002',
     email: 'staff3002@gmail.com',
     name: 'Merry Teacher2',
-    short_name: 'Teacher',
     cpr: 86763583102,
     mobile_number: 4906578658,
     accent: 'Canadian',
     gender: 'F',
     teaching_rate: 7.8,
     admin: false,
-    active: true
+    active: true,
   };
 
   //malformed request body
   const malformedRequestBody = {
-    // username: 'staff_test_3003',
     password: 'staff_test_3003',
     email: 'staff3003@gmail.com',
     name: '',
-    short_name: 'Teacher',
     cpr: 86763583103,
     mobile_number: 4906578658,
     accent: 'Canadian',
     gender: 'F',
     teaching_rate: 7.8,
     admin: false,
-    active: true
+    active: true,
   };
 
   //edited request body
   const requestBody3 = {
-    // username: 'staff_test_3001',
     password: 'staff_test_3001',
     email: 'staff3001@gmail.com',
     name: 'Gloomy Instructor',
-    short_name: 'Teacher',
     cpr: 86763583101,
     mobile_number: 4906578658,
     accent: 'Jamaican',
     gender: 'M',
     teaching_rate: 7.8,
     admin: false,
-    active: true
+    active: true,
   };
 
   describe('GET /staff', () => {
