@@ -3,7 +3,7 @@ const db = require('../../database/db-config');
 const returning = [
   's.id as staff_id',
   'u.name',
-  'u.short_name',
+  // 'u.short_name',
   // 'u.username',
   's.cpr',
   's.mobile_number',
@@ -50,14 +50,16 @@ const findByCPR = cpr => {
     .first();
 };
 
-const create = async (userBody, staffBody) => {
+const create = (userBody, staffBody) => {
   /// TRANSACTIONS ARE SO THAT IT EITHER DOES BOTH THINGS OR IT DOES NONE --> IN CASE THERE IS AN ERROR SAVING THE STAFF INFO, WE DONT WANT THE USER TO BE SAVED. ETC
+
   return db.transaction(trx => {
     return db('user')
       .transacting(trx)
       .insert(userBody)
-      .returning('user_id') // id invalid
+      .returning('id') // id invalid
       .then(res => {
+        console.log(res)
         return db('staff')
           .transacting(trx)
           .insert({ ...staffBody, user_id: res[0] })
