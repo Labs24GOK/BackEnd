@@ -21,7 +21,6 @@ describe.skip('staff routes', () => {
     password: 'staff_test_3001',
     email: 'staff3001@gmail.com',
     name: 'Merry Teacher1',
-    short_name: 'Teacher',
     cpr: 86763583101,
     mobile_number: 4906578658,
     accent: 'Jamaican',

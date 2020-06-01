@@ -9,7 +9,6 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
     password,
     email,
     name,
-    short_name,
     cpr,
     mobile_number,
     accent,
@@ -35,7 +34,6 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
     email,
     name,
     password,
-    short_name: short_name || null,
   };
 
   // CHECKS IF EMAIL OR CPR IS IN USE
@@ -71,7 +69,6 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
   const {
     email,
     name,
-    short_name,
     cpr,
     mobile_number,
     accent,
@@ -88,7 +85,6 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
     user_type: admin ? 'admin' : 'staff',
     email,
     name,
-    short_name: short_name || null,
   };
 
   req.staff = {
