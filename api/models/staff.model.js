@@ -59,7 +59,6 @@ const create = (userBody, staffBody) => {
       .insert(userBody)
       .returning('id') // id invalid
       .then(res => {
-        console.log(res)
         return db('staff')
           .transacting(trx)
           .insert({ ...staffBody, user_id: res[0] })
