@@ -39,7 +39,6 @@ router.post('/api/auth/register', validateRegistration, (req, res) => {
   model
     .addUser({
       user_type: req.body.user_type,
-      // username: req.body.username,
       password: hashedPassword,
       name: req.body.name,
       email: req.body.email,
@@ -61,7 +60,6 @@ router.post('/api/auth/register', validateRegistration, (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id,
-    // username: user.username,
     email: user.email,
     name: user.name,
     user_type: user.user_type || 'user',
