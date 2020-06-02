@@ -19,28 +19,27 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 		active,
 	} = req.body;
 	if (
-	  admin === null ||
-	  admin === undefined ||
-	  !email ||
-	  !name ||
-	  !password ||
-	  !gender
+		admin === null ||
+		admin === undefined ||
+		!email ||
+		!name ||
+		!password ||
+		!gender
 	) {
-	  next(new AppError('Wrong Body', 400));
-	  return;
+		next(new AppError('Wrong Body', 400));
+		return;
 	}
 	req.user = {
 		user_type: admin,
 		email,
 		name,
 		password,
-		
 	};
 
 	// CHECKS IF EMAIL OR CPR IS IN USE
 
 	if (email) {
-		const userByEmail = await Model.findByEmail({email});
+		const userByEmail = await Model.findByEmail({ email });
 		if (userByEmail) {
 			return next(new AppError('User with that email already exists', 401));
 		}
@@ -81,13 +80,7 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 		admin,
 		active,
 	} = req.body;
-	if (
-		admin === null ||
-		admin === undefined ||
-		!email ||
-		!name ||
-		!gender
-	) {
+	if (admin === null || admin === undefined || !email || !name || !gender) {
 		return next(new AppError('Wrong Body', 400));
 	}
 	req.user = {
@@ -106,23 +99,20 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 		active,
 	};
 
-		// CHECKS IF EMAIL OR CPR IS IN USE
+	// CHECKS IF EMAIL OR CPR IS IN USE
+	const userByEmail = await Model.findByEmail({ email });
+	if (userByEmail && userByEmail.id !== req.staffUser.user_id) {
+		return next(new AppError('User with that email already exists', 401));
+	}
 
-		// if (email) {
-		// 	const userByEmail = await Model.findByEmail({email});
-		// 	if (userByEmail) {
-		// 		return next(new AppError('User with that email already exists', 401));
-		// 	}
-		// }
-	
-		// if (cpr) {
-		// 	const staffByCPR = await Staff.findByCPR(cpr);
-		// 	if (staffByCPR) {
-		// 		return next(
-		// 			new AppError('Staff member with that CPR already exists', 401)
-		// 		);
-		// 	}
-		// }
+	if (cpr) {
+		const staffByCPR = await Staff.findByCPR(cpr);
+		if (staffByCPR && staffByCPR.staff_id !== req.staffUser.staff_id) {
+			return next(
+				new AppError('Staff member with that CPR already exists', 401)
+			);
+		}
+	}
 	next();
 });
 
