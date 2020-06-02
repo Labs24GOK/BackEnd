@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const Model = require('../models/model.js');
 const Staff = require('../models/staff.model');
 
+// Create Staff Middleware identify req.user, req.staff and validate for errors
 const validateCreateStaff = catchAsync(async (req, res, next) => {
 	const {
 		password,
@@ -18,6 +19,25 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 		admin,
 		active,
 	} = req.body;
+	
+	req.user = {
+		user_type: admin,
+		email,
+		name,
+		password,
+	};
+
+	req.staff = {
+		teaching_rate,
+		active: active || true,
+		cpr: cpr || null,
+		mobile_number: mobile_number || null,
+		gender,
+		accent: accent || null,
+		birthdate: birthdate || null,
+	};
+
+// Validate for errors
 	if (
 		admin === null ||
 		admin === undefined ||
@@ -29,12 +49,6 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 		next(new AppError('Wrong Body', 400));
 		return;
 	}
-	req.user = {
-		user_type: admin,
-		email,
-		name,
-		password,
-	};
 
 	// CHECKS IF EMAIL OR CPR IS IN USE
 
@@ -54,19 +68,10 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 		}
 	}
 
-	req.staff = {
-		teaching_rate,
-		active: active || true,
-		cpr: cpr || null,
-		mobile_number: mobile_number || null,
-		gender,
-		accent: accent || null,
-		birthdate: birthdate || null,
-	};
-
 	next();
 });
 
+// Edit Staff Middleware to identify req.user, req.staff and validate for errors
 const validateEditStaff = catchAsync(async (req, res, next) => {
 	const {
 		email,
@@ -80,9 +85,7 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 		admin,
 		active,
 	} = req.body;
-	if (admin === null || admin === undefined || !email || !name || !gender) {
-		return next(new AppError('Wrong Body', 400));
-	}
+	
 	req.user = {
 		user_type: admin ? 'admin' : 'staff',
 		email,
@@ -98,6 +101,10 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 		birthdate: birthdate || null,
 		active,
 	};
+
+	if (admin === null || admin === undefined || !email || !name || !gender) {
+		return next(new AppError('Wrong Body', 400));
+	}
 
 	// CHECKS IF EMAIL OR CPR IS IN USE
 	const userByEmail = await Model.findByEmail({ email });
@@ -116,6 +123,7 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 	next();
 });
 
+// Middleware for validating StaffId 
 const validateStaffID = (req, res, next) => {
 	const staffID = +req.params.staffID;
 	if (isNaN(staffID)) {
