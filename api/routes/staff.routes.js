@@ -1,4 +1,5 @@
 const express = require('express');
+const Staff = require('../models/staff.model');
 
 const {
   findStaffById,
@@ -16,6 +17,7 @@ const {
   checkIfStaffExistsByID
 } = require('../middlewares/staff.middleware'); 
 
+
 const router = express.Router(); 
 
 router.param('staffID', validateStaffID);
@@ -28,6 +30,21 @@ router.get(
   checkIfStaffExistsByID,
   getAllCoursesByStaff
 );
+
+router.get('/staffdashboard/:userId', (req, res) => {
+  const id = req.params.userId;
+
+  Staff.findStaffByUserId(id)
+  .then(found => {
+    res.status(200).json(found)
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: "better luck next time", err
+    })
+  })
+});
+
 router.put(
   '/staff/:staffID',
   checkIfStaffExistsByID,
