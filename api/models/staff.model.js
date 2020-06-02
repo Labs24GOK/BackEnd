@@ -104,7 +104,7 @@ const remove = id => {
       .where({ id })
       .returning('user_id')
       .then(res => {
-        return db('user').transacting(trx).del().where({ user_id: res[0] });
+        return db('user').transacting(trx).del().where({ id: res[0] });
       })
       .then(trx.commit)
       .catch(trx.rollback);
