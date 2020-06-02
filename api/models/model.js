@@ -67,8 +67,9 @@ function findBy(view, filter) {
   return db.raw('select * from "' + view + '" where ' + filter);
 }
 
-function findByEmail(filter) {
-  return db('user').where(filter);
+
+function findByEmail(email) {
+  return db('user').where(email).first();
 }
 
 async function add(table, body) {
@@ -109,7 +110,7 @@ function addStudent(studentData) {
   return db('student').insert(studentData).returning('first_name');
 }
 
-// STAFF MODEL
-function addStaff(body) {
-  return db('staff').insert(body).returning('*');
-}
+
+
+
+

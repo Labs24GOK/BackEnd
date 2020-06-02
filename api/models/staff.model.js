@@ -48,13 +48,14 @@ const findByCPR = cpr => {
     .first();
 };
 
-const create = async (userBody, staffBody) => {
+const create = (userBody, staffBody) => {
   /// TRANSACTIONS ARE SO THAT IT EITHER DOES BOTH THINGS OR IT DOES NONE --> IN CASE THERE IS AN ERROR SAVING THE STAFF INFO, WE DONT WANT THE USER TO BE SAVED. ETC
+
   return db.transaction(trx => {
     return db('user')
       .transacting(trx)
       .insert(userBody)
-      .returning('user_id') // id invalid
+      .returning('id') // id invalid
       .then(res => {
         return db('staff')
           .transacting(trx)
@@ -77,8 +78,8 @@ const edit = async (staffID, userBody, staffBody) => {
         return db('user')
           .transacting(trx)
           .update(userBody)
-          .where({ user_id: res[0] })
-          .returning('user_id') // id invalid
+          .where({ id: res[0] })
+          .returning('id') // id invalid
           .then(res => {
             return db('staff as s')
               .select(returning)
@@ -100,7 +101,7 @@ const remove = id => {
       .where({ id })
       .returning('user_id')
       .then(res => {
-        return db('user').transacting(trx).del().where({ user_id: res[0] });
+        return db('user').transacting(trx).del().where({ id: res[0] });
       })
       .then(trx.commit)
       .catch(trx.rollback);

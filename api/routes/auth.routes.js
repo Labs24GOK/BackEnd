@@ -16,8 +16,7 @@ router.post('/api/auth/login', (req, res) => {
   let { email, password } = req.body;
 
   model
-    .findByEmail({ email })
-    .first()
+    .findByEmail({email})
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
@@ -65,7 +64,7 @@ function generateToken(user) {
     user_type: user.user_type || 'user',
   };
   const options = {
-    expiresIn: '1h',
+    expiresIn: '3h',
   };
   return jwt.sign(payload, jwtSecret, options);
 }
