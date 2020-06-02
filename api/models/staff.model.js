@@ -3,8 +3,6 @@ const db = require('../../database/db-config');
 const returning = [
   's.id as staff_id',
   'u.name',
-  // 'u.short_name',
-  // 'u.username',
   's.cpr',
   's.mobile_number',
   'u.email',

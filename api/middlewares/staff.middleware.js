@@ -6,51 +6,54 @@ const Staff = require('../models/staff.model');
 
 // Create Staff Middleware identify req.user, req.staff and validate for errors
 const validateCreateStaff = catchAsync(async (req, res, next) => {
-	const {
-		password,
-		email,
-		name,
-		cpr,
-		mobile_number,
-		accent,
-		gender,
-		birthdate,
-		teaching_rate,
-		admin,
-		active,
-	} = req.body;
-	
-	req.user = {
-		user_type: admin,
-		email,
-		name,
-		password,
-	};
+  const {
+    password,
+    email,
+    name,
+    cpr,
+    mobile_number,
+    accent,
+    gender,
+    birthdate,
+    teaching_rate,
+    admin,
+    active,
+  } = req.body;
+  
+  req.user = {
+    user_type: admin ? 'admin' : 'staff',
+    email,
+    name,
+    password,
+  };
 
-	req.staff = {
-		teaching_rate,
-		active: active || true,
-		cpr: cpr || null,
-		mobile_number: mobile_number || null,
-		gender,
-		accent: accent || null,
-		birthdate: birthdate || null,
-	};
+  req.staff = {
+	teaching_rate,
+	cpr: cpr || null,
+	mobile_number: mobile_number || null,
+	gender,
+	accent: accent || null,
+	birthdate: birthdate || null,
+	active,
+};
 
-// Validate for errors
-	if (
-		admin === null ||
-		admin === undefined ||
-		!email ||
-		!name ||
-		!password ||
-		!gender
-	) {
-		next(new AppError('Wrong Body', 400));
-		return;
-	}
+if (
+    admin === null ||
+    admin === undefined ||
+    !email ||
+    !name ||
+    !password ||
+    !gender
+  ) {
+    next(new AppError('Wrong Body', 400));
+    return;
+  }
+  // CHECKS IF EMAIL OR CPR IS IN USE
+  const userByEmail = await User.findBy('email', email);
 
-	// CHECKS IF EMAIL OR CPR IS IN USE
+  if (userByEmail) {
+    return next(new AppError('User with that email already exists', 401));
+  }
 
 	if (email) {
 		const userByEmail = await Model.findByEmail({ email });
@@ -73,24 +76,24 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 
 // Edit Staff Middleware to identify req.user, req.staff and validate for errors
 const validateEditStaff = catchAsync(async (req, res, next) => {
-	const {
-		email,
-		name,
-		cpr,
-		mobile_number,
-		accent,
-		gender,
-		birthdate,
-		teaching_rate,
-		admin,
-		active,
-	} = req.body;
-	
-	req.user = {
-		user_type: admin ? 'admin' : 'staff',
-		email,
-		name,
-	};
+  const {
+    email,
+    name,
+    cpr,
+    mobile_number,
+    accent,
+    gender,
+    birthdate,
+    teaching_rate,
+    admin,
+    active,
+  } = req.body;
+ 
+  req.user = {
+    user_type: admin ? 'admin' : 'staff',
+    email,
+    name,
+  };
 
 	req.staff = {
 		teaching_rate,

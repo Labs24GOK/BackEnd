@@ -6,26 +6,11 @@ const CourseModel = require('../models/course.model');
 const bcrypt = require('bcrypt');
 const password = bcrypt.hashSync('pass', 8);
 
-// class Family {
-// 	constructor(user_id) {
-// 		this.mother_name = 'Mother Name';
-// 		this.father_name = 'Father Name';
-// 		this.block_code = 363;
-// 		this.road = '2550';
-// 		this.building = '298';
-// 		this.flat = '12';
-// 		this.primary_telephone = '12345678';
-// 		this.secondary_telephone = '12345678';
-// 		this.user_id = user_id;
-// 	}
-// }
 class User {
   constructor(role, name, email) {
     this.user_type = role;
-    // this.username = username;
     this.password = password;
     this.name = name;
-    // this.short_name = 'OneWordName';
     this.email = email;
   }
 }
@@ -38,22 +23,14 @@ class Student {
     this.birthdate = new Date(2003, 4, 23);
     this.school_grade_id = 1;
     this.school_name = 'Alduraz';
-    // this.home_telephone = '12345678';
-    // this.mobile_telephone = '12345678';
     this.phone_number = '12345678';
     this.address = '1234 address st block 2345';
-    // this.block_code = 363;
-    // this.road = '2550';
-    // this.building = '298';
-    // this.flat = '12';
     this.email = 'Whatever';
     this.notes = 'This student is just alright';
-    // this.preferred_contact_type_id = 1;
     this.no_call = true;
     this.delinquent = false;
     this.expelled = true;
     this.location_id = 1;
-    // this.family_id = family_id;
     this.user_id = user_id;
     this.primary_emergency_contact_name = 'Father name';
     this.primary_emergency_relationship = 'Father';
@@ -95,7 +72,6 @@ class Course {
     this.status = 'active';
   }
 }
-// const course = new Course(id);
 
 const cleanDB = async db => {
   return cleaner.clean(db, {
@@ -120,25 +96,6 @@ const cleanDB = async db => {
   });
 };
 
-// const cleanDBStudent = async db => {
-// 	return cleaner.clean(db, {
-// 		mode: 'truncate',
-// 		ignoreTables: [
-// 			'knex_migrations',
-// 			'knex_migrations_lock',
-// 			'school_grade',
-// 			'sessions',
-// 			'term',
-// 			'group_type',
-// 			'course_type',
-// 			'level',
-// 			'course_schedule',
-// 			'room',
-//       'teacher'
-// 		]
-// 	});
-// };
-
 // IF YOU ONLY NEED USER/STAFF SEED
 const seedAStaff = async obj => {
   const user = new User('staff', obj.username, obj.email);
@@ -155,14 +112,6 @@ const seedACourse = async staffObj => {
   const [id] = await db('course').insert(course).returning('course_id');
   return Course.findByID(id);
 };
-// const getStaff = async () => {
-// 	const staff = await seedAStaff({
-// 		username: 'whatever12345',
-// 		email: 'whatever12345@gmail.com',
-// 		cpr: '58039258'
-// 	});
-// 	console.log(staff, 'STAFF');
-// };
 
 // getStaff();
 // IF YOU ONLY NEED USER/STAFF(ADMIN) SEED
