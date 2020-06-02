@@ -15,6 +15,7 @@ const findAllStaff = catchAsync(async (req, res) => {
   return res.status(200).json(allStaff);
 });
 
+//Hash Staff Password and plug in user & staff info into separate tables
 const createAStaff = catchAsync(async (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.user.password, 10);
   req.user = { ...req.user, password: hashedPassword };
