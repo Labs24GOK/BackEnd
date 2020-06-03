@@ -15,7 +15,7 @@ const studentView = [
   'ce.last_day as last_day',
   'ce.result_type_code as result_type_code',
   'rt.short_description as student_result_type',
-  'ce.notes',
+  'c.notes',
   'c.start_time as start_time',
   'c.end_time as end_time'
 ];
