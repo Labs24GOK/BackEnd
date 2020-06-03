@@ -7,7 +7,8 @@ const {
   createAStaff,
   editAStaff,
   deleteAStaff,
-  getAllCoursesByStaff
+  getAllCoursesByStaff,
+  findStaffByUserId
 } = require('../controllers/staff.controller');
 
 const {
@@ -31,19 +32,7 @@ router.get(
   getAllCoursesByStaff
 );
 
-router.get('/staffdashboard/:userId', (req, res) => {
-  const id = req.params.userId;
-
-  Staff.findStaffByUserId(id)
-  .then(found => {
-    res.status(200).json(found)
-  })
-  .catch(err => {
-    res.status(500).json({
-      message: "better luck next time", err
-    })
-  })
-});
+router.get('/staffdashboard/:userId', findStaffByUserId);
 
 router.put(
   '/staff/:staffID',
