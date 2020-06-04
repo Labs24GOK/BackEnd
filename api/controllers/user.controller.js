@@ -23,11 +23,9 @@ const findAllStudentsByUserId = catchAsync(async (req, res, next) => {
 const updateUser = (req, res) => {
   const id = req.params.id;
   const userData = req.body;
-  const hash = bcrypt.hashSync(userData.password, 10);
-  userData.password = hash;
 
-  if (!id || !userData.name || !userData.email || !userData.password) {
-    res.status(404).json({ message: 'User ID is required' });
+  if (!id || !userData.name || !userData.email) {
+    res.status(404).json({ message: 'Missing required user data or id' });
   } else {
     Users.findById(id)
       .then(found => {
