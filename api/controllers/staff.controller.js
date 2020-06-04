@@ -15,6 +15,28 @@ const findAllStaff = catchAsync(async (req, res) => {
   return res.status(200).json(allStaff);
 });
 
+const findStaffByUserId = (req, res) => {
+  const id = req.params.userId;
+  if (!id) {
+    res.status(404).json({message: 'user id is required'});
+  } else {
+    Staff.findStaffByUserId(id)
+    .then(found => {
+      if (!found) {
+        res.status(400).json({message:'no staff found with that user id'})
+      } else {
+        res.status(200).json(found)
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "there was a problem finding that staff", err
+      })
+    })
+  }
+} 
+
+//Hash Staff Password and plug in user & staff info into separate tables
 const createAStaff = catchAsync(async (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.user.password, 10);
   req.user = { ...req.user, password: hashedPassword };
@@ -45,5 +67,6 @@ module.exports = {
   createAStaff,
   editAStaff,
   deleteAStaff,
-  getAllCoursesByStaff
+  getAllCoursesByStaff,
+  findStaffByUserId
 };
