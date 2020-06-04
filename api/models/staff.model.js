@@ -40,6 +40,14 @@ const findByID = id => {
     .first();
 };
 
+const findStaffByUserId = userId => {
+  return db('staff as s')
+  .select(returning)
+  .where('s.user_id', '=', userId)
+  .join('user as u', 's.user_id', 'u.id')
+  .first();
+};
+
 const findByCPR = cpr => {
   return db('staff as s')
     .select(returning)
@@ -116,4 +124,5 @@ module.exports = {
   findAll,
   edit,
   remove,
+  findStaffByUserId,
 };

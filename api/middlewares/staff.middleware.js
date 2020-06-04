@@ -1,6 +1,5 @@
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
-const User = require('../models/user.model');
 const Model = require('../models/model.js');
 const Staff = require('../models/staff.model');
 
@@ -48,13 +47,8 @@ if (
     next(new AppError('Wrong Body', 400));
     return;
   }
+
   // CHECKS IF EMAIL OR CPR IS IN USE
-  const userByEmail = await User.findBy('email', email);
-
-  if (userByEmail) {
-    return next(new AppError('User with that email already exists', 401));
-  }
-
 	if (email) {
 		const userByEmail = await Model.findByEmail({ email });
 		if (userByEmail) {
