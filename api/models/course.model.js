@@ -2,8 +2,9 @@ const db = require('../../database/db-config');
 
 const returning = [
   'course.id as course_id',
-  'course.term_id as term_id',
-  'term.name as term',
+  'course.term as term',
+  // 'term.name as term',
+  'course.term as term',
   'course.section',
   'course.hourly_rate',
   'course.start_time',
@@ -12,18 +13,12 @@ const returning = [
   'course.end_date',
   'course.notes',
   'course.status',
-  'course_type.description as course_type',
-  'course.course_type_id as course_type_id',
-  'group_type.long_description as group_type',
-  'course.group_type_id as group_type_id',
-  'school_grade.name as school_grade',
-  'course.school_grade_id as school_grade_id',
-  'course.level_id as level_id',
-  'level.description as level',
-  'course_schedule.short_description as course_schedule',
-  'course.course_schedule_id as course_schedule_id',
-  'room.chairs as room',
-  'course.room_id as room_id',
+  'course.course_type as course_type',
+  'course.group_type as group_type',
+  'course.school_grade as school_grade',
+  'course.level as level',
+  'course.course_schedule as course_schedule',
+  'course.room as room',
   'course.teacher_id as teacher_id',
   'user.name as teacher'
 ];
@@ -54,29 +49,6 @@ const find = queries => {
         .count()
         .as('unconfirmed_students');
     })
-    .join('term', 'term.id', 'course.term_id')
-    .join(
-      'course_type',
-      'course_type.id',
-      'course.course_type_id'
-    )
-    .join(
-      'group_type',
-      'group_type.id',
-      'course.group_type_id'
-    )
-    .join(
-      'school_grade',
-      'school_grade.id',
-      'course.school_grade_id'
-    )
-    .join('level', 'level.id', 'course.level_id')
-    .join(
-      'course_schedule',
-      'course_schedule.id',
-      'course.course_schedule_id'
-    )
-    .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
     .join('user', 'user.id', 'staff.user_id')
     .orderBy('course.id', 'desc');
@@ -99,31 +71,8 @@ const findByID = id => {
     .select(returning)
     .where('course.id', '=', id)
     .first()
-    .join('term', 'term.id', 'course.term_id')
-    .join(
-      'course_type',
-      'course_type.id',
-      'course.course_type_id'
-    )
-    .join(
-      'group_type',
-      'group_type.id',
-      'course.group_type_id'
-    )
-    .join(
-      'school_grade',
-      'school_grade.id',
-      'course.school_grade_id'
-    )
-    .join('level', 'level.id', 'course.level_id')
-    .join(
-      'course_schedule',
-      'course_schedule.id',
-      'course.course_schedule_id'
-    )
-    .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
-    .join('user', 'user.id', 'staff.user_id');
+    .join('user', 'user.id', 'staff.user_id')
 };
 
 const create = body => {
@@ -141,29 +90,6 @@ const findCoursesByTeacherID = teacherID => {
   return db('course')
     .where('teacher_id', '=', teacherID)
     .select(returning)
-    .join('term', 'term.id', 'course.term_id')
-    .join(
-      'course_type',
-      'course_type.id',
-      'course.course_type_id'
-    )
-    .join(
-      'group_type',
-      'group_type.id',
-      'course.group_type_id'
-    )
-    .join(
-      'school_grade',
-      'school_grade.id',
-      'course.school_grade_id'
-    )
-    .join('level', 'level.id', 'course.level_id')
-    .join(
-      'course_schedule',
-      'course_schedule.id',
-      'course.course_schedule_id'
-    )
-    .join('room', 'room.id', 'course.room_id')
     .join('staff', 'staff.id', 'course.teacher_id')
     .join('user', 'user.id', 'staff.user_id')
     .orderBy('course.id', 'desc');
