@@ -22,16 +22,26 @@ exports.up = function(knex) {
 
     tbl.dropColumn('room_id')
     tbl.string('room')
+  
   })
 };
 
 exports.down = function(knex) {
-  return knex.schema
-    .dropColumnIfExists('room')
-    .dropColumnIfExists('course_schedule')
-    .dropColumnIfExists('level')
-    .dropColumnIfExists('school_grade')
-    .dropColumnIfExists('group_type')
-    .dropColumnIfExists('course_type')
-    .dropColumnIfExists('term')
+  return knex.schema.table('course', table => {
+    table.dropColumn('room')
+    tbl.integer('room_id')
+    table.dropColumn('course_schedule')
+    tbl.integer('course_schedule_id')
+    table.dropColumn('level')
+    tbl.integer('level_id')
+    table.dropColumn('school_grade')
+    tbl.integer('school_grade_id')
+    table.dropColumn('group_type')
+    tbl.integer('group_type_id')
+    table.dropColumn('course_type')
+    tbl.integer('course_type_id')
+    table.dropColumn('term')
+    tbl.integer('term_id')
+  })
+    
 };
