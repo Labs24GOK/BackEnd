@@ -40,7 +40,7 @@ const validateCourseBody = catchAsync(
       section: Joi.string().required(),
 
       term: Joi.string().required(),
-      course_type:string().required(),
+      course_type: Joi.string().required(),
       group_type: Joi.string().required(),
       school_grade: Joi.string().required(),
       level: Joi.string().required(),
