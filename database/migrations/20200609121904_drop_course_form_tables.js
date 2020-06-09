@@ -27,20 +27,20 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.table('course', table => {
-    table.dropColumn('room')
+  return knex.schema.table('course', tbl => {
+    tbl.dropColumn('room')
     tbl.integer('room_id')
-    table.dropColumn('course_schedule')
+    tbl.dropColumn('course_schedule')
     tbl.integer('course_schedule_id')
-    table.dropColumn('level')
+    tbl.dropColumn('level')
     tbl.integer('level_id')
-    table.dropColumn('school_grade')
+    tbl.dropColumn('school_grade')
     tbl.integer('school_grade_id')
-    table.dropColumn('group_type')
+    tbl.dropColumn('group_type')
     tbl.integer('group_type_id')
-    table.dropColumn('course_type')
+    tbl.dropColumn('course_type')
     tbl.integer('course_type_id')
-    table.dropColumn('term')
+    tbl.dropColumn('term')
     tbl.integer('term_id')
   })
     
