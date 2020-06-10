@@ -31,10 +31,6 @@ const validateCourseID = catchAsync(
 
 const validateCourseBody = catchAsync(
   async (req, res, next) => {
-    if (!req.body.school_grade_id) {
-      //// DEFAULTS TO N/A
-      req.body.school_grade_id = 1;
-    }
     const schema = Joi.object({
       // REQUIRED
       end_date: Joi.string().required(),
@@ -43,14 +39,14 @@ const validateCourseBody = catchAsync(
       start_time: Joi.string().required(),
       section: Joi.string().required(),
 
-      term_id: Joi.number().integer().required(),
-      course_type_id: Joi.number().integer().required(),
-      group_type_id: Joi.number().integer().required(),
-      school_grade_id: Joi.number().integer().required(),
-      level_id: Joi.number().integer().required(),
-      course_schedule_id: Joi.number().integer().required(),
+      term: Joi.string().required(),
+      course_type: Joi.string().required(),
+      group_type: Joi.string().required(),
+      school_grade: Joi.string().required(),
+      level: Joi.string().required(),
+      course_schedule: Joi.string().required(),
       teacher_id: Joi.number().integer().required(),
-      room_id: Joi.number().integer().required(),
+      room: Joi.number().integer().required(),
 
       /// NOT REQUIRED
       hourly_rate: Joi.number(),
