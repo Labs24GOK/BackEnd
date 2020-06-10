@@ -35,10 +35,7 @@ const validateStudentBody = catchAsync(
     if (!req.body.grade_updated) {
       delete req.body.grade_updated;
     }
-    if (!req.body.school_grade_id) {
-      //// DEFAULTS TO N/A
-      req.body.school_grade_id = 1;
-    }
+    
     const schema = Joi.object({
       // REQUIRED
       cpr: Joi.string().required(),
@@ -49,7 +46,7 @@ const validateStudentBody = catchAsync(
       primary_emergency_contact_name: Joi.string().required(),
       primary_emergency_relationship: Joi.string().required(),
       primary_emergency_phone: Joi.string().required(),
-      school_grade_id: Joi.number().integer().required(),
+      school_grade: Joi.string().required(),
       user_id: Joi.number().integer().required(),
       address: Joi.string().required(),
       phone_number: Joi.string().required(),
