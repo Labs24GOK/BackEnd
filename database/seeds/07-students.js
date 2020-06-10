@@ -14,7 +14,7 @@ exports.seed = function (knex) {
           email: 'student@email.com',
           birthdate: new Date(2014, 1, 01),
           school_name: 'Alduraz',
-          school_grade_id: 4,
+          school_grade: 'None',
           address: '1234 address',
           primary_emergency_contact_name: 'Haroon Akram Rahmani',
           primary_emergency_relationship: 'Father',
@@ -38,7 +38,7 @@ exports.seed = function (knex) {
 
           birthdate: new Date(2014, 3, 18),
           school_name: 'Alduraz',
-          school_grade_id: 4,
+          school_grade: 'None',
           address: '1234 address',
           primary_emergency_contact_name: 'Yasira Mohammad Hussein Khalili',
           primary_emergency_relationship: 'Sister',
@@ -62,7 +62,7 @@ exports.seed = function (knex) {
 
           birthdate: new Date(2015, 11, 23),
           school_name: 'Alduraz',
-          school_grade_id: 4,
+          school_grade: 'None',
 
           address: '1234 address',
           primary_emergency_contact_name: 'Siraj Sharif Ozer Tariq',
@@ -87,7 +87,7 @@ exports.seed = function (knex) {
 
           birthdate: new Date(2014, 3, 02),
           school_name: 'Alduraz',
-          school_grade_id: 4,
+          school_grade: 'None',
 
           address: '1234 address',
           primary_emergency_contact_name: 'Hulwi Mohammad Hussein Harroun',
@@ -112,7 +112,7 @@ exports.seed = function (knex) {
 
           birthdate: new Date(2015, 4, 16),
           school_name: 'Alduraz',
-          school_grade_id: 4,
+          school_grade: 'None',
 
           address: '1234 address',
           primary_emergency_contact_name: 'Aiza Nasma Abdou',
@@ -137,7 +137,7 @@ exports.seed = function (knex) {
 
           birthdate: new Date(2014, 1, 21),
           school_name: 'Alduraz',
-          school_grade_id: 4,
+          school_grade: 'None',
 
           address: '1234 address',
           primary_emergency_contact_name: 'Talib Abdou Ghani',

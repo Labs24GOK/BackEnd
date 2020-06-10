@@ -1,6 +1,5 @@
 const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
-const User = require('../models/user.model');
 const Model = require('../models/model.js');
 const Staff = require('../models/staff.model');
 
@@ -16,12 +15,12 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
     gender,
     birthdate,
     teaching_rate,
-    admin,
+    user_type,
     active,
   } = req.body;
   
   req.user = {
-    user_type: admin ? 'admin' : 'staff',
+    user_type,
     email,
     name,
     password,
@@ -38,8 +37,8 @@ const validateCreateStaff = catchAsync(async (req, res, next) => {
 };
 
 if (
-    admin === null ||
-    admin === undefined ||
+    user_type === null ||
+    user_type === undefined ||
     !email ||
     !name ||
     !password ||
@@ -48,13 +47,8 @@ if (
     next(new AppError('Wrong Body', 400));
     return;
   }
+
   // CHECKS IF EMAIL OR CPR IS IN USE
-  const userByEmail = await User.findBy('email', email);
-
-  if (userByEmail) {
-    return next(new AppError('User with that email already exists', 401));
-  }
-
 	if (email) {
 		const userByEmail = await Model.findByEmail({ email });
 		if (userByEmail) {
@@ -85,12 +79,12 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
     gender,
     birthdate,
     teaching_rate,
-    admin,
+	user_type,
     active,
   } = req.body;
  
   req.user = {
-    user_type: admin ? 'admin' : 'staff',
+	user_type,
     email,
     name,
   };
@@ -105,7 +99,7 @@ const validateEditStaff = catchAsync(async (req, res, next) => {
 		active,
 	};
 
-	if (admin === null || admin === undefined || !email || !name || !gender) {
+	if (user_type === null || user_type === undefined || !email || !name || !gender) {
 		return next(new AppError('Wrong Body', 400));
 	}
 

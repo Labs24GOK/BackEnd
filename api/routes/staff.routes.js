@@ -1,4 +1,5 @@
 const express = require('express');
+const Staff = require('../models/staff.model');
 
 const {
   findStaffById,
@@ -6,7 +7,8 @@ const {
   createAStaff,
   editAStaff,
   deleteAStaff,
-  getAllCoursesByStaff
+  getAllCoursesByStaff,
+  findStaffByUserId
 } = require('../controllers/staff.controller');
 
 const {
@@ -15,6 +17,7 @@ const {
   validateStaffID,
   checkIfStaffExistsByID
 } = require('../middlewares/staff.middleware'); 
+
 
 const router = express.Router(); 
 
@@ -28,6 +31,9 @@ router.get(
   checkIfStaffExistsByID,
   getAllCoursesByStaff
 );
+
+router.get('/staffdashboard/:userId', findStaffByUserId);
+
 router.put(
   '/staff/:staffID',
   checkIfStaffExistsByID,

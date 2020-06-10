@@ -9,8 +9,7 @@ const returning = [
   's.registration_date',
   's.birthdate',
   's.gender',
-  's.school_grade_id',
-  'sg.name as school_grade',
+  's.school_grade',
   's.school_name',
   's.grade_updated',
   's.phone_number',
@@ -20,6 +19,7 @@ const returning = [
   's.no_call',
   's.delinquent',
   's.expelled',
+  's.enrolled',
   's.user_id',
   's.enrolled',
   'u.name as parent_name',
@@ -39,7 +39,6 @@ const create = body => {
 
 const findAll = () => {
   return db('student as s')
-    .join('school_grade as sg', 'sg.id', 's.school_grade_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .orderBy('s.id', 'desc');
@@ -48,7 +47,6 @@ const findAll = () => {
 const findByID = id => {
   return db('student as s')
     .where('s.id', '=', id)
-    .join('school_grade as sg', 'sg.id', 's.school_grade_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
@@ -57,7 +55,6 @@ const findByID = id => {
 const findByCPR = cpr => {
   return db('student as s')
     .where('s.cpr', '=', cpr)
-    .join('school_grade as sg', 'sg.id', 's.school_grade_id')
     .join('user as u', 'u.id', 's.user_id')
     .select(returning)
     .first();
