@@ -21,6 +21,7 @@ const returning = [
   's.expelled',
   's.enrolled',
   's.user_id',
+  's.enrolled',
   'u.name as parent_name',
   's.primary_emergency_contact_name',
   's.primary_emergency_relationship',

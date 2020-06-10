@@ -2,6 +2,7 @@ const AppError = require('../utils/AppError');
 const { catchAsync } = require('../utils/catchAsync');
 
 const CourseEnrollment = require('../models/course_enrollment.model');
+const Student = require('../models/student.model');
 
 const validateCourseEnrollmentBody = (req, res, next) => {
   const { first_day, last_day, result_type_code, notes } = req.body;
@@ -22,6 +23,15 @@ const validateCourseEnrollmentBody = (req, res, next) => {
   next();
 };
 
+const updateEnrollment = async (req, res, next) => {
+  await Student.update(req.courseEnrollment.student_id, { enrolled: true })
+    .then(res => {
+      req.studentSatus = res;
+    })
+  
+  next();
+}
+
 const validateIfStudentIsEnrolled = catchAsync(async (req, res, next) => {
   const enrolledStudent = await CourseEnrollment.find(
     req.studentID,
@@ -33,5 +43,6 @@ const validateIfStudentIsEnrolled = catchAsync(async (req, res, next) => {
 
 module.exports = {
   validateCourseEnrollmentBody,
-  validateIfStudentIsEnrolled
+  validateIfStudentIsEnrolled,
+  updateEnrollment
 };
