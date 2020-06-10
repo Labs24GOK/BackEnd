@@ -39,33 +39,33 @@ const getAllStudentsInACourse = catchAsync(async (req, res) => {
 
 const populateCourseDropdowns = catchAsync(async (req, res) => {
   const dropdowns = [
-    Course.findAllTerms(),
-    Course.findAllCourseTypes(),
-    Course.findAllGroupTypes(),
-    Course.findAllSchoolGrades(),
-    Course.findAllLevels(),
-    Course.findAllCourseSchedules(),
-    Course.findAllRooms(),
+    // Course.findAllTerms(),
+    // Course.findAllCourseTypes(),
+    // Course.findAllGroupTypes(),
+    // Course.findAllSchoolGrades(),
+    // Course.findAllLevels(),
+    // Course.findAllCourseSchedules(),
+    // Course.findAllRooms(),
     Staff.findAll()
   ];
   const [
-    terms,
-    course_types,
-    group_types,
-    school_grades,
-    levels,
-    course_schedules,
-    rooms,
+    // terms,
+    // course_types,
+    // group_types,
+    // school_grades,
+    // levels,
+    // course_schedules,
+    // rooms,
     staff
   ] = await Promise.all(dropdowns);
   return res.status(200).json({
-    terms,
-    course_types,
-    group_types,
-    school_grades,
-    levels,
-    course_schedules,
-    rooms,
+    // terms,
+    // course_types,
+    // group_types,
+    // school_grades,
+    // levels,
+    // course_schedules,
+    // rooms,
     staff
   });
 });
