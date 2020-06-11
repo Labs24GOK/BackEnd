@@ -64,15 +64,15 @@ const findByCourseID = courseID => {
       'ce.course_id': courseID
     })
     .join('course as c', 'c.id', '=', 'ce.course_id')
-    .join('term as t', 't.id', 'c.term_id')
-    .join('course_type as ct', 'ct.id', 'c.course_type_id')
-    .join('group_type as gt', 'gt.id', 'c.group_type_id')
-    .join('level as l', 'l.id', 'c.level_id')
-    .join(
-      'course_schedule as cs',
-      'cs.id',
-      'c.course_schedule_id'
-    )
+    // .join('term as t', 't.id', 'c.term_id')
+    // .join('course_type as ct', 'ct.id', 'c.course_type_id')
+    // .join('group_type as gt', 'gt.id', 'c.group_type_id')
+    // .join('level as l', 'l.id', 'c.level')
+    // .join(
+    //   'course_schedule as cs',
+    //   'cs.id',
+    //   'c.course_schedule_id'
+    // )
     .join(
       'result_type as rt',
       'rt.result_type_code',
@@ -85,15 +85,15 @@ const findAll = () => {
   return db('course_enrollment as ce')
     .select(studentView)
     .join('course as c', 'c.id', '=', 'ce.course_id')
-    .join('term as t', 't.id', 'c.term_id')
-    .join('course_type as ct', 'ct.id', 'c.course_type_id')
-    .join('group_type as gt', 'gt.id', 'c.group_type_id')
+    // .join('term as t', 't.id', 'c.term_id')
+    // .join('course_type as ct', 'ct.id', 'c.course_type_id')
+    // .join('group_type as gt', 'gt.id', 'c.group_type_id')
     .join('level as l', 'l.id', 'c.level_id')
-    .join(
-      'course_schedule as cs',
-      'cs.id',
-      'c.course_schedule_id'
-    )
+    // .join(
+    //   'course_schedule as cs',
+    //   'cs.id',
+    //   'c.course_schedule_id'
+    // )
     .join(
       'result_type as rt',
       'rt.result_type_code',
