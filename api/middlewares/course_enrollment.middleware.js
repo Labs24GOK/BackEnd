@@ -32,6 +32,17 @@ const updateEnrollment = async (req, res, next) => {
   next();
 }
 
+const removeEnrollment = async (req, res, next) => {
+  const courses = await CourseEnrollment.findCoursesByStudentID(req.studentID)
+  if(courses.length <= 1) {
+    Student.update(req.studentID, { enrolled: false })
+    .then(res => {
+      req.studentStatus = res;
+    })
+  }
+  next();
+}
+
 const validateIfStudentIsEnrolled = catchAsync(async (req, res, next) => {
   const enrolledStudent = await CourseEnrollment.find(
     req.studentID,
@@ -44,5 +55,6 @@ const validateIfStudentIsEnrolled = catchAsync(async (req, res, next) => {
 module.exports = {
   validateCourseEnrollmentBody,
   validateIfStudentIsEnrolled,
-  updateEnrollment
+  updateEnrollment,
+  removeEnrollment
 };
