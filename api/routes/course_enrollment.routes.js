@@ -12,7 +12,8 @@ const {
 const {
   validateCourseEnrollmentBody,
   validateIfStudentIsEnrolled,
-  updateEnrollment
+  updateEnrollment,
+  removeEnrollment
 } = require('../middlewares/course_enrollment.middleware');
 
 const {
@@ -51,7 +52,8 @@ router.post(
 router.delete(
   '/student/:studentID/course/:courseID',
   ...validation,
-  unenrollAStudentInCourse
+  removeEnrollment,
+  unenrollAStudentInCourse,
 );
 
 router.put(
