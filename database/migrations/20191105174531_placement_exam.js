@@ -21,9 +21,9 @@ exports.up = function (knex) {
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
-            table.integer('speaking_fluency');
-            table.integer('spoken_accuracy');
-            table.integer('listening_comprehension');
+            table.integer('fluency');
+            table.integer('accuracy');
+            table.integer('comprehension');
             table.integer('mc_correct');
             table.integer('mc_marked');
             table.text('notes');
