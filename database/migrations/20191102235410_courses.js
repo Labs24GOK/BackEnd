@@ -19,14 +19,6 @@ exports.up = function(knex) {
         .unique();
       table.timestamps(true, true);
     })
-    .createTable('pacing_guide', table => {
-      table.increments();
-      table.text('name').notNullable();
-      table.text('section').notNullable();
-      table.integer('lesson').notNullable();
-      table.text('content').notNullable();
-      table.timestamps(true, true);
-    })
     .createTable('level', table => {
       table.increments();
       table
@@ -38,14 +30,6 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       table.text('cef_equivalent').notNullable();
-      table
-        .integer('pacing_guide_id')
-        .unsigned()
-        .references('id')
-        .inTable('pacing_guide')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE')
-        .index();
       table.text('certificate_text').notNullable();
       table.timestamps(true, true);
     })
@@ -219,7 +203,6 @@ exports.down = function(knex) {
     .dropTableIfExists('room')
     .dropTableIfExists('course_schedule')
     .dropTableIfExists('level')
-    .dropTableIfExists('pacing_guide')
     .dropTableIfExists('course_type')
     .dropTableIfExists('group_type')
     .dropTableIfExists('term');

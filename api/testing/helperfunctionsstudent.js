@@ -83,11 +83,9 @@ const cleanDB = async db => {
       'preferred_contact_type',
       'sessions',
       'location',
-      // 'block',
       'term',
       'group_type',
       'course_type',
-      'pacing_guide',
       'level',
       'course_schedule',
       'room',
@@ -143,15 +141,6 @@ const seedAStudent = async (parentObj, studentObj) => {
 const getSchoolGradeByID = id => {
   return db('school_grade').where('id', '=', id).first();
 };
-const getBlockByBlockCode = blockcode => {
-  return db('block').where('block_code', '=', blockcode).first();
-};
-const getPreferredContactTypeByID = id => {
-  return db('preferred_contact_type').where('id', '=', id).first();
-};
-const getLocationByID = id => {
-  return db('location').where('id', '=', id).first();
-};
 
 const getParentByID = id => {
   return db('family as f')
@@ -167,9 +156,6 @@ module.exports = {
   seedAStaff,
   seedAnAdmin,
   getSchoolGradeByID,
-  getBlockByBlockCode,
-  getPreferredContactTypeByID,
-  getLocationByID,
   getParentByID,
   seedACourse,
 };
