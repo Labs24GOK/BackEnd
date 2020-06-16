@@ -8,6 +8,7 @@ const globalErrorHandler = require('./controllers/errors.controller');
 
 const staffRoutes = require('./routes/staff.routes');
 const studentRoutes = require('./routes/student.routes');
+const placementExamRoutes = require('./routes/placement.exam.routes');
 const authRoutes = require('./routes/auth.routes');
 const courseRoutes = require('./routes/course.routes');
 const courseEnrollmentRoutes = require('./routes/course_enrollment.routes');
@@ -41,6 +42,7 @@ server.use(express.json());
 server.use(authRoutes);
 server.use(restricted, staffRoutes);
 server.use(restricted, studentRoutes);
+server.use(restricted, placementExamRoutes);
 server.use(restricted, courseRoutes);
 server.use(restricted, courseEnrollmentRoutes);
 server.use(restricted, attendanceRoutes);
