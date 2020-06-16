@@ -30,7 +30,6 @@ class Student {
     this.no_call = true;
     this.delinquent = false;
     this.expelled = true;
-    this.location_id = 1;
     this.user_id = user_id;
     this.primary_emergency_contact_name = 'Father name';
     this.primary_emergency_relationship = 'Father';
@@ -80,12 +79,11 @@ const cleanDB = async db => {
       'knex_migrations',
       'knex_migrations_lock',
       'school_grade',
-      'preferred_contact_type',
       'sessions',
-      'location',
       'term',
       'group_type',
       'course_type',
+      'pacing_guide',
       'level',
       'course_schedule',
       'room',
