@@ -28,12 +28,12 @@ exports.up = function (knex) {
                 .onUpdate("CASCADE")
                 .index();
             table.date('report_date');
-            table.integer('speaking_fluency');
-            table.integer('speaking_accuracy');
+            table.integer('fluency');
+            table.integer('accuracy');
             table.integer('vocabulary');
             table.integer('pronunciation');
             table.integer('grammar');
-            table.integer('listening');
+            table.integer('comprehension');
             table.integer('writing');
             table.integer('reading');
             table.integer('interest');

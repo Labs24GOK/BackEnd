@@ -14,9 +14,9 @@ const validatePlacementExamBody = catchAsync(
 
             // Not Required
             level: Joi.number().integer(),
-            speaking_fluency: Joi.number().integer(),
-            spoken_accuracy: Joi.number().integer(),
-            listening_comprehension: Joi.number().integer(),
+            fluency: Joi.number().integer(),
+            accuracy: Joi.number().integer(),
+            comprehension: Joi.number().integer(),
             mc_correct: Joi.number().integer(),
             mc_marked: Joi.number().integer(),
             notes: Joi.string(),
