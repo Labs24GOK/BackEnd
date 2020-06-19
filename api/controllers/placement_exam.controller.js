@@ -22,11 +22,15 @@ const findPlacementExamsByStudentId = (req, res) => {
         })
 };
 
-const createPlacementExam = catchAsync(async (req, res) => {
-    const [newExam] = await PlacementExam.create(req.body);
-    const exam = await PlacementExam.findByExamId(newExam.id);
-    res.status(201).json(exam);
-});
+const createPlacementExam = (req, res) => {
+    PlacementExam.create(req.body)
+        .then(response => {
+            res.status(201).json(response);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Jeremy, go eat a butterfinger!", error: err })
+        })
+};
 
 const deletePlacementExam = catchAsync(async (req, res) => {
     const { id } = req.params;
