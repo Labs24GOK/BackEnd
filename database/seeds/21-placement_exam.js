@@ -24,6 +24,7 @@ exports.seed = function (knex) {
           fluency: 5,
           accuracy: 8,
           comprehension: 6,
+          writing_level: 4,
           mc_correct: 15,
           mc_marked: 50,
           notes: 'Some notes about this exam'
@@ -48,6 +49,7 @@ exports.seed = function (knex) {
           fluency: 5,
           accuracy: 8,
           comprehension: 6,
+          writing_level: 1,
           mc_correct: 10,
           mc_marked: 50,
           notes: 'Some notes about this exam'
@@ -60,6 +62,7 @@ exports.seed = function (knex) {
           fluency: 5,
           accuracy: 8,
           comprehension: 6,
+          writing_level: 10,
           mc_correct: 38,
           mc_marked: 50,
           notes: 'Some notes about this exam'

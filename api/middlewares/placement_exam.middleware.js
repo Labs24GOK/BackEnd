@@ -17,6 +17,7 @@ const validatePlacementExamBody = catchAsync(
             fluency: Joi.number().integer(),
             accuracy: Joi.number().integer(),
             comprehension: Joi.number().integer(),
+            writing_level: Joi.number().integer(),
             mc_correct: Joi.number().integer(),
             mc_marked: Joi.number().integer(),
             notes: Joi.string(),

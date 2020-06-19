@@ -9,6 +9,7 @@ const returning = [
     'pe.fluency',
     'pe.accuracy',
     'pe.comprehension',
+    'pe.writing_level',
     'pe.mc_correct',
     'pe.mc_marked',
     'pe.notes',

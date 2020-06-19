@@ -24,6 +24,7 @@ exports.up = function (knex) {
             table.integer('fluency');
             table.integer('accuracy');
             table.integer('comprehension');
+            table.integer('writing_level').nullable();
             table.integer('mc_correct');
             table.integer('mc_marked');
             table.text('notes');
