@@ -3,6 +3,7 @@ const db = require('../../database/db-config');
 const returning = [
     'pe.id',
     'pe.student_id',
+    'pe.test_type',
     'pe.test_date',
     'pe.test',
     'pe.level_id',
@@ -12,6 +13,7 @@ const returning = [
     'pe.writing_level',
     'pe.mc_correct',
     'pe.mc_marked',
+    'pe.answers',
     'pe.notes',
     'l.description',
     'l.certificate_text'
@@ -46,6 +48,21 @@ const findByStudentId = id => {
         .orderBy('pe.test_date', 'desc');
 };
 
+const findByType = typeID => {
+    return db('placement_exam as pe')
+        .where('pe.test_type', '=', typeID)
+        .join('level as l', 'l.id', 'pe.level_id')
+        .select(returning);
+};
+
+const findByStudentIdAndType = (id, typeID) => {
+    return db('placement_exam as pe')
+        .where('pe.student_id', '=', id)
+        .where('pe.test_type', '=', typeID)
+        .join('level as l', 'l.id', 'pe.level_id')
+        .select(returning);
+};
+
 const remove = id => {
     return db('placement_exam as pe')
         .del()
@@ -64,6 +81,8 @@ module.exports = {
     findAll,
     findByExamId,
     findByStudentId,
+    findByType,
+    findByStudentIdAndType,
     remove,
     update
 };

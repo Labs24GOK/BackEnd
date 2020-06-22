@@ -11,6 +11,7 @@ exports.up = function (knex) {
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
+            table.integer('test_type').notNullable().comment("1 for online, 2 for oral");
             table.date('test_date');
             table.text('test');
             table
@@ -21,12 +22,13 @@ exports.up = function (knex) {
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
-            table.integer('fluency');
-            table.integer('accuracy');
-            table.integer('comprehension');
-            table.integer('writing_level').nullable();
-            table.integer('mc_correct');
-            table.integer('mc_marked');
+            table.integer('fluency').defaultTo(null);
+            table.integer('accuracy').defaultTo(null);
+            table.integer('comprehension').defaultTo(null);
+            table.integer('writing_level').defaultTo(null);
+            table.integer('mc_correct').defaultTo(null);
+            table.integer('mc_marked').defaultTo(null);
+            table.specificType('answers', 'json[]').defaultTo(null);
             table.text('notes');
             table.timestamps(true, true);
         })

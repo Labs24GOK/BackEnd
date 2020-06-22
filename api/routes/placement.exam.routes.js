@@ -4,6 +4,8 @@ const {
     findAllPlacementExams,
     findPlacementExamById,
     findPlacementExamsByStudentId,
+    findPlacementExamsByType,
+    findPlacementExamsByStudentIDAndType,
     createPlacementExam,
     deletePlacementExam,
     editPlacementExam
@@ -12,6 +14,7 @@ const {
 const {
     validateStudentID
 } = require('../middlewares/student.middleware');
+const { fullOuterJoin } = require('../../database/db-config');
 
 const router = express.Router();
 
@@ -23,6 +26,10 @@ router.get('/placementExam', findAllPlacementExams); // gets all records in PE t
 router.get('/placementExam/:id', findPlacementExamById); // gets a single placement exam
 
 router.get('/placementExam/student/:studentID', findPlacementExamsByStudentId); // gets all placement exams taken by a single student
+
+router.get('/placementExam/examType/:typeID', findPlacementExamsByType); // gets all placement exams taken online or oral
+
+router.get('/placementExam/:examType/:studentID', findPlacementExamsByStudentIDAndType); // gets all placement exams by a single student with either oral or online type
 
 router.post('/placementExam', createPlacementExam); // creates a new record in PE table
 
