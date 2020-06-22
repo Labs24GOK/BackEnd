@@ -25,29 +25,21 @@ const findPlacementExamsByStudentId = (req, res) => {
 const findPlacementExamsByType = (req, res) => {
     const { typeID } = req.params;
     console.log("typeID: ", typeID);
-    // let examType;
-    // if (typeID === 1) {
-    //     console.log("in If 1")
-    //     examType = 'online'
-    // } else if (typeID === 2) {
-    //     console.log("in If 2")
-    //     examType = 'oral'
-    // }
-    // console.log("examType: ", examType);
     PlacementExam.findByType(typeID)
         .then(response => {
-            console.log("Find by type: ", response);
-            res.status(200).json({ message: "response" })
+            res.status(200).json(response)
         })
 }
 
 const findPlacementExamsByStudentIDAndType = (req, res) => {
-    const { studentID } = req.params.studentID;
-    const { type } = req.params.type;
-    PlacementExam.findByStudentIdAndType(studentID, req.type)
+    const { typeID, studentID } = req.params;
+    PlacementExam.findByStudentIdAndType(studentID, typeID)
         .then(response => {
-            console.log("Find by student id & type: ", response);
-            res.status(200).json({ message: "ID & TYPES SUCCESS" })
+            response.map(item => {
+                item.answers = JSON.parse(item.answers);
+            })
+            console.log(response);
+            res.status(200).json(response)
         })
 }
 

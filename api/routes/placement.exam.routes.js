@@ -29,7 +29,7 @@ router.get('/placementExam/student/:studentID', findPlacementExamsByStudentId); 
 
 router.get('/placementExam/examType/:typeID', findPlacementExamsByType); // gets all placement exams taken online or oral
 
-router.get('/placementExam/:examType/:studentID', findPlacementExamsByStudentIDAndType); // gets all placement exams by a single student with either oral or online type
+router.get('/placementExam/examType/:typeID/student/:studentID', findPlacementExamsByStudentIDAndType); // gets all placement exams by a single student with either oral or online type
 
 router.post('/placementExam', createPlacementExam); // creates a new record in PE table
 

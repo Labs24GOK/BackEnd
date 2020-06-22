@@ -21,14 +21,15 @@ exports.up = function (knex) {
                 .inTable("level")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
-                .index();
+                .index()
+                .defaultTo(1);
             table.integer('fluency').defaultTo(null);
             table.integer('accuracy').defaultTo(null);
             table.integer('comprehension').defaultTo(null);
             table.integer('writing_level').defaultTo(null);
             table.integer('mc_correct').defaultTo(null);
             table.integer('mc_marked').defaultTo(null);
-            table.specificType('answers', 'json[]').defaultTo(null);
+            table.text('answers').defaultTo(null);
             table.text('notes');
             table.timestamps(true, true);
         })
