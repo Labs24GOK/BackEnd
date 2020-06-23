@@ -48,120 +48,120 @@ exports.seed = function(knex) {
       {
         textbook: 'Kids Box 1',
         description: 'CB 1',
-        pacing_guide_id: 1,
         cef_equivalent: 'Starters - Pre-A1',
+        pacing_guide_id: 1,
         certificate_text: 'Kids Box Level 1'
       },
       {
         textbook: 'Kids Box 2',
         description: 'CB 2',
-        pacing_guide_id: 1,
         cef_equivalent: 'Starters - Pre-A1',
+        pacing_guide_id: 1,
         certificate_text: 'Kids Box Level 2'
       },
       {
         textbook: 'Kids Box 3',
         description: 'CB 3',
-        pacing_guide_id: 1,
         cef_equivalent: 'Movers - A1',
+        pacing_guide_id: 1,
         certificate_text: 'Kids Box Level 3'
       },
       {
         textbook: 'Kids Box 4',
         description: 'CB 4',
-        pacing_guide_id: 1,
         cef_equivalent: 'Movers - A1',
+        pacing_guide_id: 1,
         certificate_text: 'Kids Box Level 4'
       },
       {
         textbook: 'Kids Box 5',
         description: 'CB 5',
-        pacing_guide_id: 1,
         cef_equivalent: 'Flyers - A2',
+        pacing_guide_id: 1,
         certificate_text: 'Kids Box Level 5'
       },
       {
         textbook: 'Kids Box 6',
         description: 'CB 6',
-        pacing_guide_id: 1,
         cef_equivalent: 'Flyers - A2',
+        pacing_guide_id: 1,
         certificate_text: 'Kids Box Level 6'
       },
       {
         textbook: 'Ventures',
         description: 'V Beginner',
-        pacing_guide_id: 1,
         cef_equivalent: 'Pre-A1',
+        pacing_guide_id: 1,
         certificate_text: 'Ventures Beginner'
       },
       {
         textbook: 'English in Mind Starter',
         description: 'EiM Intro',
-        pacing_guide_id: 1,
         cef_equivalent: 'A1',
+        pacing_guide_id: 1,
         certificate_text: 'English in Mind Intro'
       },
       {
         textbook: 'English in Mind 1',
         description: 'EiM 1',
-        pacing_guide_id: 1,
         cef_equivalent: 'A2',
+        pacing_guide_id: 1,
         certificate_text: 'English in Mind Level 1'
       },
       {
         textbook: 'English in Mind 2',
         description: 'EiM 2',
-        pacing_guide_id: 1,
         cef_equivalent: 'A2/B1',
+        pacing_guide_id: 1,
         certificate_text: 'English in Mind Level 2'
       },
       {
         textbook: 'English in Mind 3',
         description: 'EiM 3',
-        pacing_guide_id: 1,
         cef_equivalent: 'B1/B2',
+        pacing_guide_id: 1,
         certificate_text: 'English in Mind Level 3'
       },
       {
         textbook: 'English in Mind 4',
         description: 'EiM 4',
-        pacing_guide_id: 1,
         cef_equivalent: 'B2',
+        pacing_guide_id: 1,
         certificate_text: 'English in Mind Level 4'
       },
       {
         textbook: 'English in Mind 5',
         description: 'EiM 5',
-        pacing_guide_id: 1,
         cef_equivalent: 'C1',
+        pacing_guide_id: 1,
         certificate_text: 'English in Mind Level 5'
       },
       {
         textbook: '4 Corners 1',
         description: '4C 1',
-        pacing_guide_id: 1,
         cef_equivalent: 'A1',
+        pacing_guide_id: 1,
         certificate_text: '4 Corners Level 1'
       },
       {
         textbook: '4 Corners 2',
         description: '4C 2',
-        pacing_guide_id: 1,
         cef_equivalent: 'A2',
+        pacing_guide_id: 1,
         certificate_text: '4 Corners Level 2'
       },
       {
         textbook: '4 Corners 3',
         description: '4C 3',
-        pacing_guide_id: 1,
         cef_equivalent: 'B1',
+        pacing_guide_id: 1,
         certificate_text: '4 Corners Level 3'
       },
       {
         textbook: '4 Corners 4',
         description: '4C 4',
-        pacing_guide_id: 1,
         cef_equivalent: 'B2+',
+        pacing_guide_id: 1,
         certificate_text: '4 Corners Level 4'
       }
     ]);

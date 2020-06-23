@@ -11,37 +11,25 @@ exports.up = function (knex) {
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
                 .index();
+            table.integer('test_type').notNullable().comment("1 for online, 2 for oral");
             table.date('test_date');
             table.text('test');
             table
-                .integer("overall_level_id")
+                .integer("level_id")
                 .unsigned()
                 .references("id")
                 .inTable("level")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE")
-                .index();
-            table.integer('speaking_fluency');
-            table.integer('spoken_accuracy');
-            table.integer('listening_comprehension');
-            table
-                .integer("oral_level_id")
-                .unsigned()
-                .references("id")
-                .inTable("level")
-                .onDelete("CASCADE")
-                .onUpdate("CASCADE")
-                .index();
-            table.integer('mc_correct');
-            table.integer('mc_marked');
-            table
-                .integer("mc_level_id")
-                .unsigned()
-                .references("id")
-                .inTable("level")
-                .onDelete("CASCADE")
-                .onUpdate("CASCADE")
-                .index();
+                .index()
+                .defaultTo(1);
+            table.integer('fluency').defaultTo(null);
+            table.integer('accuracy').defaultTo(null);
+            table.integer('comprehension').defaultTo(null);
+            table.integer('writing_level').defaultTo(null);
+            table.integer('mc_correct').defaultTo(null);
+            table.integer('mc_marked').defaultTo(null);
+            table.text('answers').defaultTo(null);
             table.text('notes');
             table.timestamps(true, true);
         })

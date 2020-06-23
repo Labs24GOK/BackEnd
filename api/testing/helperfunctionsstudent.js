@@ -30,7 +30,6 @@ class Student {
     this.no_call = true;
     this.delinquent = false;
     this.expelled = true;
-    this.location_id = 1;
     this.user_id = user_id;
     this.primary_emergency_contact_name = 'Father name';
     this.primary_emergency_relationship = 'Father';
@@ -80,10 +79,7 @@ const cleanDB = async db => {
       'knex_migrations',
       'knex_migrations_lock',
       'school_grade',
-      'preferred_contact_type',
       'sessions',
-      'location',
-      // 'block',
       'term',
       'group_type',
       'course_type',
@@ -143,15 +139,6 @@ const seedAStudent = async (parentObj, studentObj) => {
 const getSchoolGradeByID = id => {
   return db('school_grade').where('id', '=', id).first();
 };
-const getBlockByBlockCode = blockcode => {
-  return db('block').where('block_code', '=', blockcode).first();
-};
-const getPreferredContactTypeByID = id => {
-  return db('preferred_contact_type').where('id', '=', id).first();
-};
-const getLocationByID = id => {
-  return db('location').where('id', '=', id).first();
-};
 
 const getParentByID = id => {
   return db('family as f')
@@ -167,9 +154,6 @@ module.exports = {
   seedAStaff,
   seedAnAdmin,
   getSchoolGradeByID,
-  getBlockByBlockCode,
-  getPreferredContactTypeByID,
-  getLocationByID,
   getParentByID,
   seedACourse,
 };
