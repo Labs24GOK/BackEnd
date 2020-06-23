@@ -49,9 +49,19 @@ const createPlacementExam = (req, res) => {
             res.status(201).json(response);
         })
         .catch(err => {
-            res.status(500).json({ message: "Jeremy, go eat a butterfinger!", error: err })
+            res.status(500).json({ message: "Jeremy, go eat a Butterfinger!", error: err })
         })
 };
+
+const createOnlineExam = (req, res) => {
+    PlacementExam.createOnline(req.body)
+        .then(response => {
+            res.status(201).json(response);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Jeremy, go eat a Snickers!", error: err })
+        })
+}
 
 const deletePlacementExam = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -73,6 +83,7 @@ module.exports = {
     findPlacementExamsByType,
     findPlacementExamsByStudentIDAndType,
     createPlacementExam,
+    createOnlineExam,
     deletePlacementExam,
     editPlacementExam
 };

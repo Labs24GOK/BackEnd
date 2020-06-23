@@ -25,6 +25,22 @@ const create = body => {
         .returning('*');
 };
 
+const createOnline = (body) => {
+    let newBody = {
+        student_id: body.student_id,
+        mc_marked: body.questionsDone,
+        mc_correct: body.score,
+        answers: JSON.stringify(body.answers),
+        test_date: new Date(),
+        test_type: 1,
+        test: 'primary',
+        level_id: 1,
+    }
+    return db('placement_exam')
+        .insert(newBody)
+        .returning('*');
+}
+
 const findAll = () => {
     return db('placement_exam as pe')
         .join('level as l', 'l.id', 'pe.level_id')
@@ -78,6 +94,7 @@ const update = (id, body) => {
 
 module.exports = {
     create,
+    createOnline,
     findAll,
     findByExamId,
     findByStudentId,

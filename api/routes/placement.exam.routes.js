@@ -7,6 +7,7 @@ const {
     findPlacementExamsByType,
     findPlacementExamsByStudentIDAndType,
     createPlacementExam,
+    createOnlineExam,
     deletePlacementExam,
     editPlacementExam
 } = require('../controllers/placement_exam.controller');
@@ -32,6 +33,8 @@ router.get('/placementExam/examType/:typeID', findPlacementExamsByType); // gets
 router.get('/placementExam/examType/:typeID/student/:studentID', findPlacementExamsByStudentIDAndType); // gets all placement exams by a single student with either oral or online type
 
 router.post('/placementExam', createPlacementExam); // creates a new record in PE table
+
+router.post('/placementExam/student', createOnlineExam); // creates a new Online record in PE table
 
 router.put('/placementExam/:id', editPlacementExam); // edits a current record in PE table
 
