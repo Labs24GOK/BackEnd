@@ -22,11 +22,46 @@ const findPlacementExamsByStudentId = (req, res) => {
         })
 };
 
-const createPlacementExam = catchAsync(async (req, res) => {
-    const [newExam] = await PlacementExam.create(req.body);
-    const exam = await PlacementExam.findByExamId(newExam.id);
-    res.status(201).json(exam);
-});
+const findPlacementExamsByType = (req, res) => {
+    const { typeID } = req.params;
+    console.log("typeID: ", typeID);
+    PlacementExam.findByType(typeID)
+        .then(response => {
+            res.status(200).json(response)
+        })
+}
+
+const findPlacementExamsByStudentIDAndType = (req, res) => {
+    const { typeID, studentID } = req.params;
+    PlacementExam.findByStudentIdAndType(studentID, typeID)
+        .then(response => {
+            response.map(item => {
+                item.answers = JSON.parse(item.answers);
+            })
+            console.log(response);
+            res.status(200).json(response)
+        })
+}
+
+const createPlacementExam = (req, res) => {
+    PlacementExam.create(req.body)
+        .then(response => {
+            res.status(201).json(response);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Jeremy, go eat a Butterfinger!", error: err })
+        })
+};
+
+const createOnlineExam = (req, res) => {
+    PlacementExam.createOnline(req.body)
+        .then(response => {
+            res.status(201).json(response);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Jeremy, go eat a Snickers!", error: err })
+        })
+}
 
 const deletePlacementExam = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -45,7 +80,10 @@ module.exports = {
     findAllPlacementExams,
     findPlacementExamById,
     findPlacementExamsByStudentId,
+    findPlacementExamsByType,
+    findPlacementExamsByStudentIDAndType,
     createPlacementExam,
+    createOnlineExam,
     deletePlacementExam,
     editPlacementExam
 };

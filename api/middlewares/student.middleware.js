@@ -62,7 +62,8 @@ const validateStudentBody = catchAsync(
       notes: Joi.string().allow(''),
       no_call: Joi.boolean(),
       delinquent: Joi.boolean(),
-      expelled: Joi.boolean()
+      expelled: Joi.boolean(),
+      attempts: Joi.number().integer()
     });
     await schema.validateAsync(req.body);
     next();
