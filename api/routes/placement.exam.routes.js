@@ -12,9 +12,7 @@ const {
     editPlacementExam
 } = require('../controllers/placement_exam.controller');
 
-const {
-    validateStudentID
-} = require('../middlewares/student.middleware');
+const { validateStudentID } = require('../middlewares/student.middleware');
 const { fullOuterJoin } = require('../../database/db-config');
 
 const router = express.Router();
