@@ -28,7 +28,8 @@ const returning = [
   's.primary_emergency_phone',
   's.emergency_contact_name',
   's.emergency_relationship',
-  's.emergency_phone'
+  's.emergency_phone',
+  's.attempts'
 ];
 
 const create = body => {
