@@ -3,6 +3,7 @@ require('dotenv').config();
 // ------- Imports --------
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const globalErrorHandler = require('./controllers/errors.controller');
 
@@ -21,6 +22,9 @@ const restricted = require('./middlewares/restricted.middleware.js');
 const server = express();
 
 // ------- Middleware --------
+server.use(helmet());
+server.use(express.json());
+
 server.use(
   cors({
     origin: [
@@ -37,7 +41,6 @@ server.use(
     credentials: true
   })
 );
-server.use(express.json());
 
 server.use(authRoutes);
 server.use(restricted, staffRoutes);
@@ -47,7 +50,6 @@ server.use(restricted, courseRoutes);
 server.use(restricted, courseEnrollmentRoutes);
 server.use(restricted, attendanceRoutes);
 server.use(restricted, userRoutes);
-// server.use(restricted, familyRoutes);
 
 server.get('/', (req, res) => {
   res
