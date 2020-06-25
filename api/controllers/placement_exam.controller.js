@@ -24,7 +24,6 @@ const findPlacementExamsByStudentId = (req, res) => {
 
 const findPlacementExamsByType = (req, res) => {
     const { typeID } = req.params;
-    console.log("typeID: ", typeID);
     PlacementExam.findByType(typeID)
         .then(response => {
             res.status(200).json(response)
@@ -38,7 +37,6 @@ const findPlacementExamsByStudentIDAndType = (req, res) => {
             response.map(item => {
                 item.answers = JSON.parse(item.answers);
             })
-            console.log(response);
             res.status(200).json(response)
         })
 }

@@ -125,7 +125,6 @@ describe.skip('staff routes', () => {
         .post('/staff')
         .send(requestBody1)
         .then(res => {
-          // console.log("RES", res)
           return request(server)
             .get(`/staff/${res.body.staff_id}`)
             .then(resp => {
@@ -147,7 +146,6 @@ describe.skip('staff routes', () => {
             .put(`/staff/${res.body.staff_id}`)
             .send(requestBody3)
             .then(resp => {
-              // console.log("RESP", resp)
               expect(resp.status).toEqual(201);
               expect(resp.type).toMatch(/json/i);
               expect(resp.body.name).toBe('Gloomy Instructor');
@@ -165,7 +163,6 @@ describe.skip('staff routes', () => {
           return request(server)
             .del(`/staff/${res.body.staff_id}`)
             .then(resp => {
-              // console.log("RESP", resp)
               expect(resp.status).toEqual(200);
               expect(resp.body.message).toBe('Staff Deleted');
             });
