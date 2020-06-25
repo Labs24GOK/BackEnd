@@ -28,15 +28,8 @@ server.use(express.json());
 server.use(
   cors({
     origin: [
-      'https://stagingspeakout.netlify.com',
-      'https://speakout-stage.netlify.com',
-      'https://adminspeakout.netlify.com',
       'http://localhost:3000',
-      'https://speakout-now.com',
-      'https://speakout-bh.netlify.com',
-      'https://speak-out-bh.com',
-      'https://www.speak-out-bh.com',
-      'https://rc1-staging.d3pg0n6842ntws.amplifyapp.com'
+      'https://gardenofknowledge.netlify.app'
     ],
     credentials: true
   })
