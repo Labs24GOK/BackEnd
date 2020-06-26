@@ -5,7 +5,7 @@
 # API Documentation
 
 #### Backend delpoyed at [Heroku](https://speakout-lambda.herokuapp.com/) <br>
-#### [Postman API Documentation](https://documenter.getpostman.com/view/10351450/SzfDwk7U)
+#### [Postman API Documentation](https://documenter.getpostman.com/view/10643459/T17AiAhf?version=latest)
 
 ## Getting started
 

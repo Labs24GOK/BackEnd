@@ -48,7 +48,7 @@ server.get('/', (req, res) => {
   res
     .status(200)
     .send(
-      'Find API documentation here: https://documenter.getpostman.com/view/8230639/SWTD8wyQ?version=latest#ab443920-3ba6-46b2-bff9-0de953af9172'
+      'Find API documentation here: https://documenter.getpostman.com/view/10643459/T17AiAhf?version=latest'
     );
 });
 
